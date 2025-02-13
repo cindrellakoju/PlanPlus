@@ -1,7 +1,7 @@
 /* Date field */
 .datecontainer{
     border: 1px solid black;
-    width: 23%;
+    width: 18%;
     min-width: 100px;
     border-radius: 1rem;
     display: grid;
@@ -29,40 +29,54 @@
 /* dayfield */
 .daycontainer{
     border: 1px solid black;
-    width: 23%;
+    width: 28%;
     border-radius: 1rem;
     padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.daycontainer .days{
+    display: flex;
+    justify-content: space-between; /* Spread days across the row */
+    margin-bottom: 0.5rem; /* Space between days and dates */
+}
+
+.daycontainer .dates{
+    display: flex;
+    justify-content: space-between;
+}
+
+.daycontainer .day, .daycontainer .date {
+    font-size: 1rem;
+    text-align: center;
+    width: 13%; /* Adjust width of each item to fit nicely */
+}
+
+.highlight {
+    color: pink;
 }
 
 @media(max-width:1200px){
     .datecontainer{
-        width: 21%;
+        width: 15%;
     }
     .quotecontainer{
         width: 46%;
     }
     .daycontainer{
-        width: 21%;
+        width: 27%;
     }
 }
 
 @media(max-width:800px){
+    .daycontainer{
+        margin-top: 1.2rem;
+        width: 88%;
+    }
     .datecontainer{
-        width: 20%;
-    }
-    .quotecontainer{
-        width: 45%;
-    }
-    .daycontainer{
-        width: 20%;
-    }
-}
-
-@media(max-width:570px){
-    .daycontainer{
-        margin-top: 1rem;
-        width: 85%;
-    }    .datecontainer{
         width: 25%;
     }
     .quotecontainer{
@@ -76,11 +90,14 @@
         width: 92%;
     }
     .datecontainer{
-        min-width: 40px;
+        min-width: 30px;
     }
-}
+    .quotecontainer{
+        min-width: 240px;
+    }
+} 
 
-@media(max-width:390px){
+@media(max-width:400px){
     .daycontainer{
         margin-top: 1rem;
         width: 92%;

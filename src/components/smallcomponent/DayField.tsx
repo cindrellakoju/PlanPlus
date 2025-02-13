@@ -1,5 +1,6 @@
 import React from "react";
-import { getWeekDates } from "../../utils/formatDate";
+import { getWeekDates, today_date, today_day } from "../../utils/formatDate";
+import "../../styles/Header.css";
 
 const DayField: React.FC = () => {
   const weekDays: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -7,16 +8,26 @@ const DayField: React.FC = () => {
 
   return (
     <div className="daycontainer">
-      {weekDays.map((day, index) => (
-        <div key={index} className="day">
-          {day}
-        </div>
-      ))}
-      {weekDates.map((date, index) => (
-        <div key={index} className="date">
-          {date}
-        </div>
-      ))}
+      <div className="days">
+        {weekDays.map((day, index) => (
+          <div
+            key={index}
+            className={`day ${day === today_day ? "highlight" : ""}`}
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+      <div className="dates">
+        {weekDates.map((date, index) => (
+          <div
+            key={index}
+            className={`date ${date === today_date ? "highlight" : ""}`}
+          >
+            {date}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

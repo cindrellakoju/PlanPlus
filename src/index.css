@@ -7,9 +7,15 @@
   background-color: #B7D1E5;
 }
 
-@media(max-width: 600px){
+@media(max-width: 950px){
   :root{
   font-size : 14px;
+  }
+}
+
+@media(max-width: 600px){
+  :root{
+  font-size : 13px;
 }
 }
 @media(max-width: 400px){
