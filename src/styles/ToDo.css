@@ -1,12 +1,40 @@
-.todocontainer{
+.todocontainer {
     margin-top: 1rem;
     border: 1px solid black;
-    width: 23%;
+    width: 30%;
     border-radius: 1rem;
     max-height: 300px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.todocontainer h1{
+    font-size: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+    margin: 1rem; 
+}
+.todofield{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.todofield .todolist {
+    background-color: rgb(179, 158, 231);
+    border-radius: 1rem;
+    overflow-y: auto;   /* Enables vertical scrolling */
+    height: 170px;      /* Set a fixed height for scrolling */
+    padding: 10px;      /* Optional: Adds space inside the list */
 }
 
-.todolist li{
+.todolist ul {
+    margin: 0;
+    padding-left: 1.7rem;
+    /* padding: 0 2rem 0 1rem; */
+}
+/* Uncomment to add space between list items */
+.todolist ul li {
     margin-bottom: 0.3rem;
 }
