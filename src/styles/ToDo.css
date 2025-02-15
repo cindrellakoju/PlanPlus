@@ -1,0 +1,12 @@
+.todocontainer{
+    margin-top: 1rem;
+    border: 1px solid black;
+    width: 23%;
+    border-radius: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.todolist li{
+    margin-bottom: 0.3rem;
+}
