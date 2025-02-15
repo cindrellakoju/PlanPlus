@@ -1,11 +1,11 @@
 import Header from "./components/layoutcomponent/Header"
-import TopPriority from "./components/toppriority/TopPriority"
+import { FirstRow } from "./components/rows/FirstRow"
 
 function App() {
   return(
     <>
       <Header/>
-      <TopPriority/>
+      <FirstRow/>
     </>
 )
 }
