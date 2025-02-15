@@ -7,7 +7,7 @@ const InputField:React.FC = () =>{
             <div className="inputs">
                 <input type="text"/>
             </div>
-            <button></button>
+            <i className='bx bx-send'></i>
         </div>
     )
 }
