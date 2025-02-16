@@ -8,6 +8,7 @@ export const formatDate = (fullDate:Date):string=>{
 const today = new Date();
 export const today_date = String(today.getDate());
 export const today_day = today.toLocaleString('en-US',{ weekday:'short'})
+export const today_day_long = today.toLocaleString('en-US',{ weekday:'long'})
 
 export function getWeekDates(): string[] {
     const today = new Date();
