@@ -1,0 +1,57 @@
+.schedulecontainer{
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.schedulecontainer h1{
+    font-size: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+    margin: 1rem;
+}
+
+/* Schedule Field */
+h2{
+    font-size: 1.3rem;
+    font-weight: 100;
+    text-align: center;
+}
+
+.schedulefield{
+    background-color: rgb(228, 186, 193);
+    width: 90%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0 1rem 0;
+    overflow-y: auto;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.schedulefield .fields{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+}
+.fields .timeslot{
+    /* background-color: aqua; */
+    width: 15%;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+.fields .infoslot{
+    /* background-color: aquamarine; */
+    width:85% ;
+    margin: 0;
+    padding: 0;
+}
