@@ -2,7 +2,7 @@ import React from 'react'
 import TopPriority from '../toppriority/TopPriority'
 import ToDo from '../todo/ToDo'
 import BucketList from '../bucketlist/BucketList'
-import Schedule from '../schdedule/Schedule'
+import Schedule from '../schedule/Schedule'
 
 
 export const FirstRow:React.FC =() =>{
