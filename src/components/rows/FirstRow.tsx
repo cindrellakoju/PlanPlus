@@ -3,6 +3,7 @@ import TopPriority from '../toppriority/TopPriority'
 import ToDo from '../todo/ToDo'
 import BucketList from '../bucketlist/BucketList'
 import Schedule from '../schedule/Schedule'
+import Money from '../money/Money'
 
 
 export const FirstRow:React.FC =() =>{
@@ -18,6 +19,7 @@ export const FirstRow:React.FC =() =>{
         <ToDo/>
         <BucketList/>
         <Schedule/>
+        <Money/>
     </div>
   )
 }

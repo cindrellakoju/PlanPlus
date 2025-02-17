@@ -1,0 +1,6 @@
+.moneycontainer{
+    width: 35%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    max-height: 300px;
+}
