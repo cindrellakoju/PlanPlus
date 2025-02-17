@@ -4,3 +4,33 @@
     border-radius: 1rem;
     max-height: 300px;
 }
+
+/* Money field */
+.moneyfieldcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.moneyfieldcontainer .chooseoption{
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.chooseoption select{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.moneyfieldcontainer .tablefield{
+    /* background-color: aqua; */
+    width: 90%;
+    border: 1px solid black;
+}
+
+
+
