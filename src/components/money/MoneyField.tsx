@@ -2,6 +2,7 @@ import ToTake from "./moneycomponent/ToTake";
 import ClzFee from "./moneycomponent/ClzFee";
 import ToGive from "./moneycomponent/ToGive";
 import useMoney from "../../context/useMoney";
+import MoneyButton from "./moneycomponent/MoneyButton";
 
 const MoneyField: React.FC = () => {
     const {transactionState,setTransactionState} = useMoney()
@@ -31,6 +32,9 @@ const MoneyField: React.FC = () => {
                         <ClzFee/>
                     </>
                 )}
+            </div>
+            <div>
+                <MoneyButton/>
             </div>
         </div>
 

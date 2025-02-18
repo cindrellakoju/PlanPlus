@@ -1,7 +1,5 @@
-import React from "react";
 import useMoney from "../../../context/useMoney";
-
-const MoneyButton:React.FC = () =>{
+const MoneyButton: React.FC = () => {
     const {
         moneyFrom, setMoneyFrom,
         takeAmount, setTakeAmount,
@@ -18,19 +16,12 @@ const MoneyButton:React.FC = () =>{
         (giveMoney !== undefined && giveAmount !== undefined && giveReason !== undefined) || 
         (clzPaidAmount !== undefined && clzReason !== undefined)
     );
+
+    console.log(moneyFrom, takeAmount, takeReason, giveMoney, giveAmount, giveReason, clzPaidAmount, clzReason);
     
-    return(
-        <>
-            {
-                candisplaybutton ?
-                    <>  
-                        <button>Click me</button>
-                    </>
-                    :
-                    <></>
-            }
-        </>
-    )
+    return (
+        candisplaybutton ? <button>Click me</button> : null
+    );
 }
 
 export default MoneyButton;
