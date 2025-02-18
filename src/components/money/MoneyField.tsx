@@ -18,16 +18,40 @@ const MoneyField:React.FC = () =>{
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Take Money From</th>
-                                            <th>Amount</th>
-                                            <th>Reason</th>
+                                            <th style={{width:"30%"}}>Take Money From</th>
+                                            <th style={{width:"10%"}}>Amount</th>
+                                            <th style={{width:"50%"}}>Reason</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        {/* <tr>
                                             <td>Sanjib</td>
                                             <td>Rs. 500</td>
                                             <td>Chips of dharansdhisb scss sdhj</td>
+                                        </tr> */}
+                                        <tr>
+                                            <td>
+                                                <input
+                                                type="text"
+                                                placeholder="Take Money From..."
+                                                id="moneyfrom"
+                                                className="input-field"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                type="text"
+                                                placeholder="Amount..."
+                                                className="input-field"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                type="text"
+                                                placeholder="Reason..."
+                                                className="input-field"
+                                                />
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -36,14 +60,38 @@ const MoneyField:React.FC = () =>{
                             <>
                                 <table>
                                     <tr>
-                                        <th>Give Money To</th>
-                                        <th>Amount</th>
-                                        <th>Reason</th>
+                                        <th style={{width:"30%"}}>Give Money To</th>
+                                        <th style={{ width:"10%"}}>Amount</th>
+                                        <th style={{width:"50%"}}>Reason</th>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                         <td>Saurav</td>
                                         <td>Rs. 500</td>
                                         <td>Dharan totle</td>
+                                    </tr> */}
+                                    <tr>
+                                        <td>
+                                            <input
+                                            type="text"
+                                            placeholder="Give Money To..."
+                                            id="moneyfrom"
+                                            className="input-field"
+                                        />
+                                        </td>
+                                        <td>
+                                            <input
+                                            type="text"
+                                            placeholder="Amount..."
+                                            className="input-field"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                            type="text"
+                                            placeholder="Reason..."
+                                            className="input-field"
+                                        />
+                                        </td>
                                     </tr>
                                 </table>
                             </>
