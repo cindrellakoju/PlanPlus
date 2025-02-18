@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ToTake from "./moneycomponent/ToTake";
 
 const MoneyField: React.FC = () => {
     const [transactionstate, setTransactionState] = useState<string>("totake");
@@ -26,44 +27,7 @@ const MoneyField: React.FC = () => {
             <div className="tablefield">
                 {transactionstate === "totake" ? (
                     <>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: "30%" }}>Take Money From</th>
-                                    <th style={{ width: "10%" }}>Amount</th>
-                                    <th style={{ width: "50%" }}>Reason</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Take Money From..."
-                                            id="moneyfrom"
-                                            className="input-field"
-                                            onChange={(event)=>{setMoneyFrom(event.target.value)}}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Amount..."
-                                            className="input-field"
-                                            onChange={(event)=>{setTakeAmount(event.target.value)}}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Reason..."
-                                            className="input-field"
-                                            onChange={(event)=>{setTakeReason(event.target.value)}}
-                                        />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ToTake/>
                     </>
                 ) : ( transactionstate === "togive" ?
                     <>
