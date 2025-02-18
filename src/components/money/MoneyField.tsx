@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import ToTake from "./moneycomponent/ToTake";
+import ClzFee from "./moneycomponent/ClzFee";
+import ToGive from "./moneycomponent/ToGive";
+import useMoney from "../../context/useMoney";
 
 const MoneyField: React.FC = () => {
-    const [transactionstate, setTransactionState] = useState<string>("totake");
-    const [moneyfrom,setMoneyFrom] = useState<string>("");
-    const [takeamount,setTakeAmount] = useState<string>("");
-    const [takereason,setTakeReason] = useState<string>("");
-    const [givemoney, setGiveMoney] = useState<string>("");
-    const [giveamount, setGiveAmount] = useState<string>("");
-    const [givereason, setGiveReason] = useState<string>("");
-    const [clzpaidamount, setClzPaidAmount] = useState<string>("");
-    const [clzreason, setClzReason] = useState<string>("");
+    const {transactionState,setTransactionState} = useMoney()
     const handleTransactionChange = (event : React.ChangeEvent<HTMLSelectElement>) =>{
         setTransactionState(event.target.value)
     }
@@ -25,81 +20,16 @@ const MoneyField: React.FC = () => {
                 </select>
             </div>
             <div className="tablefield">
-                {transactionstate === "totake" ? (
+                {transactionState === "totake" ? (
                     <>
                         <ToTake/>
                     </>
-                ) : ( transactionstate === "togive" ?
+                ) : ( transactionState === "togive" ?
                     <>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: "30%" }}>Give Money To</th>
-                                    <th style={{ width: "10%" }}>Amount</th>
-                                    <th style={{ width: "50%" }}>Reason</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Give Money To..."
-                                            id="giveto"
-                                            className="input-field"
-                                            onChange={(event)=> setGiveMoney(event.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Amount..."
-                                            className="input-field"
-                                            onChange={(event)=> setGiveAmount(event.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Reason..."
-                                            className="input-field"
-                                            onChange={(event)=> setGiveReason(event.target.value)}
-                                        />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ToGive/>
                     </>:
                     <>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: "30%" }}>Paid Amount</th>
-                                    <th style={{ width: "50%" }}>Reason</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Paid Amount"
-                                            id="paidamount"
-                                            className="input-field"
-                                            onChange={(event)=> setClzPaidAmount(event.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            placeholder="Reason..."
-                                            className="input-field"
-                                            onChange={(event)=> setClzReason(event.target.value)}
-                                        />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ClzFee/>
                     </>
                 )}
             </div>
