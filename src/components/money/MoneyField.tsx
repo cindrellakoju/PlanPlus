@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import ToTake from "./moneycomponent/ToTake";
 import ClzFee from "./moneycomponent/ClzFee";
 import ToGive from "./moneycomponent/ToGive";
