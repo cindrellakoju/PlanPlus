@@ -25,6 +25,26 @@ const ToGive:React.FC= () =>{
             </thead>
             <tbody>
                 <tr>
+                    <td>Saurav</td>
+                    <td>500</td>
+                    <td>pathau and dharan final</td>
+                </tr>
+                <tr>
+                    <td>Saurav</td>
+                    <td>500</td>
+                    <td>pathau and dharan final</td>
+                </tr>
+                <tr>
+                    <td>Saurav</td>
+                    <td>500</td>
+                    <td>pathau and dharan final</td>
+                </tr>
+                <tr>
+                    <td>Saurav</td>
+                    <td>500</td>
+                    <td>pathau and dharan final</td>
+                </tr>
+                <tr>
                     <td>
                         <input
                             type="text"

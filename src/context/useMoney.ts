@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 const useMoney = () => {
     const [transactionState, setTransactionState] = useState<string>("totake");
-    const [moneyFrom, setMoneyFrom] = useState<string>("");
-    const [takeAmount, setTakeAmount] = useState<string>("");
-    const [takeReason, setTakeReason] = useState<string>("");
-    const [giveMoney, setGiveMoney] = useState<string>("");
-    const [giveAmount, setGiveAmount] = useState<string>("");
-    const [giveReason, setGiveReason] = useState<string>("");
-    const [clzPaidAmount, setClzPaidAmount] = useState<string>("");
-    const [clzReason, setClzReason] = useState<string>("");
+    const [moneyFrom, setMoneyFrom] = useState<string | undefined>(undefined);
+    const [takeAmount, setTakeAmount] = useState<string | undefined>(undefined);
+    const [takeReason, setTakeReason] = useState<string | undefined>(undefined);
+    const [giveMoney, setGiveMoney] = useState<string | undefined>(undefined);
+    const [giveAmount, setGiveAmount] = useState<string | undefined>(undefined);
+    const [giveReason, setGiveReason] = useState<string | undefined>(undefined);
+    const [clzPaidAmount, setClzPaidAmount] = useState<string | undefined>(undefined);
+    const [clzReason, setClzReason] = useState<string | undefined>(undefined);
 
     // return the state values and setters so they can be used in the component
     return {

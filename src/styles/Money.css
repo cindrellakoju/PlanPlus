@@ -1,9 +1,8 @@
-.moneycontainer{
+.moneycontainer {
     width: 37%;
     border: 1px solid black;
     border-radius: 1rem;
-    height: 270px;
-    /* max-height: 400px; */
+    max-height: 400px;  /* Maximum height */
 }
 
 /* Money field */
@@ -35,6 +34,8 @@
     padding: 0;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
+    height: 250px;
+    overflow-y: auto;   /* Allows scrolling if content exceeds max-height */
 }
 
 table th,
