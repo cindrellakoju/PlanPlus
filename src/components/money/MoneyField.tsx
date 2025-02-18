@@ -2,6 +2,14 @@ import React, { useState } from "react";
 
 const MoneyField: React.FC = () => {
     const [transactionstate, setTransactionState] = useState<string>("totake");
+    const [moneyfrom,setMoneyFrom] = useState<string>("");
+    const [takeamount,setTakeAmount] = useState<string>("");
+    const [takereason,setTakeReason] = useState<string>("");
+    const [givemoney, setGiveMoney] = useState<string>("");
+    const [giveamount, setGiveAmount] = useState<string>("");
+    const [givereason, setGiveReason] = useState<string>("");
+    const [clzpaidamount, setClzPaidAmount] = useState<string>("");
+    const [clzreason, setClzReason] = useState<string>("");
     const handleTransactionChange = (event : React.ChangeEvent<HTMLSelectElement>) =>{
         setTransactionState(event.target.value)
     }
@@ -34,6 +42,7 @@ const MoneyField: React.FC = () => {
                                             placeholder="Take Money From..."
                                             id="moneyfrom"
                                             className="input-field"
+                                            onChange={(event)=>{setMoneyFrom(event.target.value)}}
                                         />
                                     </td>
                                     <td>
@@ -41,6 +50,7 @@ const MoneyField: React.FC = () => {
                                             type="text"
                                             placeholder="Amount..."
                                             className="input-field"
+                                            onChange={(event)=>{setTakeAmount(event.target.value)}}
                                         />
                                     </td>
                                     <td>
@@ -48,6 +58,7 @@ const MoneyField: React.FC = () => {
                                             type="text"
                                             placeholder="Reason..."
                                             className="input-field"
+                                            onChange={(event)=>{setTakeReason(event.target.value)}}
                                         />
                                     </td>
                                 </tr>
@@ -72,6 +83,7 @@ const MoneyField: React.FC = () => {
                                             placeholder="Give Money To..."
                                             id="giveto"
                                             className="input-field"
+                                            onChange={(event)=> setGiveMoney(event.target.value)}
                                         />
                                     </td>
                                     <td>
@@ -79,6 +91,7 @@ const MoneyField: React.FC = () => {
                                             type="text"
                                             placeholder="Amount..."
                                             className="input-field"
+                                            onChange={(event)=> setGiveAmount(event.target.value)}
                                         />
                                     </td>
                                     <td>
@@ -86,6 +99,7 @@ const MoneyField: React.FC = () => {
                                             type="text"
                                             placeholder="Reason..."
                                             className="input-field"
+                                            onChange={(event)=> setGiveReason(event.target.value)}
                                         />
                                     </td>
                                 </tr>
@@ -108,6 +122,7 @@ const MoneyField: React.FC = () => {
                                             placeholder="Enter Paid Amount"
                                             id="paidamount"
                                             className="input-field"
+                                            onChange={(event)=> setClzPaidAmount(event.target.value)}
                                         />
                                     </td>
                                     <td>
@@ -115,6 +130,7 @@ const MoneyField: React.FC = () => {
                                             type="text"
                                             placeholder="Reason..."
                                             className="input-field"
+                                            onChange={(event)=> setClzReason(event.target.value)}
                                         />
                                     </td>
                                 </tr>
@@ -124,6 +140,7 @@ const MoneyField: React.FC = () => {
                 )}
             </div>
         </div>
+
     );
 };
 
