@@ -1,14 +1,16 @@
+import React, { useEffect, useState } from 'react';
 import ToTake from "./moneycomponent/ToTake";
 import ClzFee from "./moneycomponent/ClzFee";
 import ToGive from "./moneycomponent/ToGive";
-import useMoney from "../../context/useMoney";
-import MoneyButton from "./moneycomponent/MoneyButton";
+import useMoney from '../../context/useMoney';
 
 const MoneyField: React.FC = () => {
-    const {transactionState,setTransactionState} = useMoney()
-    const handleTransactionChange = (event : React.ChangeEvent<HTMLSelectElement>) =>{
-        setTransactionState(event.target.value)
-    }
+    const { transactionState, setTransactionState } = useMoney();
+ 
+    const handleTransactionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setTransactionState(event.target.value);
+    };
+
     return (
         <div className="moneyfieldcontainer">
             <div className="chooseoption">
@@ -21,23 +23,17 @@ const MoneyField: React.FC = () => {
             </div>
             <div className="tablefield">
                 {transactionState === "totake" ? (
-                    <>
-                        <ToTake/>
-                    </>
-                ) : ( transactionState === "togive" ?
-                    <>
-                        <ToGive/>
-                    </>:
-                    <>
-                        <ClzFee/>
-                    </>
+                    <ToTake />
+                ) : transactionState === "togive" ? (
+                    <ToGive />
+                ) : (
+                    <ClzFee />
                 )}
             </div>
             <div>
-                <MoneyButton/>
+                <button>Send</button>
             </div>
         </div>
-
     );
 };
 

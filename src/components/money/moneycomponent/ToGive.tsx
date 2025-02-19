@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useMoney from "../../../context/useMoney";
 
 const ToGive:React.FC= () =>{
@@ -8,12 +8,11 @@ const ToGive:React.FC= () =>{
         setGiveMoney(event.target.value)
     };
     const handlegiveamount= (event:React.ChangeEvent<HTMLInputElement>) => {
-        setGiveAmount(event.target.value)
+        setGiveAmount(Number(event.target.value))
     };
     const handlegivereason = (event:React.ChangeEvent<HTMLInputElement>) => {
         setGiveReason(event.target.value)
     };
-
     return(
         <table>
             <thead>

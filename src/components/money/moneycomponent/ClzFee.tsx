@@ -5,13 +5,13 @@ const ClzFee: React.FC = () =>{
     const {  setClzPaidAmount, setClzReason } = useMoney()
 
     const handleclzpaidamount = (event:React.ChangeEvent<HTMLInputElement>) => {
-        setClzPaidAmount(event.target.value)
+        setClzPaidAmount(Number(event.target.value))
     };
 
     const handleclzreason = (event:React.ChangeEvent<HTMLInputElement>) =>{
         setClzReason(event.target.value)
     };
-    
+
     return(
         <table>
             <thead>

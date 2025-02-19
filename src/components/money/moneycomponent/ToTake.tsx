@@ -9,7 +9,7 @@ const ToTake:React.FC = () =>{
     }
 
     const handletakeamount = (event:React.ChangeEvent<HTMLInputElement>) =>{
-        setTakeAmount(event.target.value)
+        setTakeAmount(Number(event.target.value))
     }
 
     const handletakereason = (event:React.ChangeEvent<HTMLInputElement>) =>{
