@@ -1,0 +1,10 @@
+.tobuycontainer {
+    width: 37%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    max-height: 415px;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
