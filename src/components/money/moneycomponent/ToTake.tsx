@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useMoney from "../../../hooks/useMoney";
 
 interface ToTakeProps {
@@ -6,11 +6,10 @@ interface ToTakeProps {
 }
 
 const ToTake:React.FC<ToTakeProps>= ({setButtonCondition}) =>{
-    const {buttoncondition,setMoneyFrom,setTakeAmount,setTakeReason}= useMoney()
+    const {buttoncondition,setMoneyFrom,setTakeAmount,setTakeReason,setTransactionState}= useMoney()
     const handlemoneyfrom = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMoneyFrom(event.target.value);
     };
-    setButtonCondition(buttoncondition)
     const handletakeamount = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTakeAmount(Number(event.target.value));
     };
@@ -18,6 +17,14 @@ const ToTake:React.FC<ToTakeProps>= ({setButtonCondition}) =>{
     const handletakereason = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTakeReason(event.target.value);
     };
+    
+    useEffect(()=>{
+        setTransactionState("totake")
+    },[])
+    
+    useEffect(()=>{
+        setButtonCondition(buttoncondition)
+    },[buttoncondition,setButtonCondition])
     
     return(
         <table>
