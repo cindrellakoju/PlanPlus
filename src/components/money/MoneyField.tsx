@@ -30,9 +30,9 @@ const MoneyField: React.FC = () => {
                     <ClzFee setbuttoncondition={setButtonCondition} />
                 )}
             </div>
-            <div>
+            <div className="button">
                 {buttoncondition ? (
-                    <button>Click ME</button>
+                    <button>Send</button>
                 ) : (
                     <></>
                 )}
