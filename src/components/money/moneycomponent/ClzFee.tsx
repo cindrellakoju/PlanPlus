@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useMoney from "../../../hooks/useMoney"
 
-const ClzFee: React.FC = () =>{
-    const {  setClzPaidAmount, setClzReason } = useMoney()
+interface ClzFeeProps{
+    setbuttoncondition: (condition:boolean)=>void
+}
+const ClzFee: React.FC<ClzFeeProps> = ({setbuttoncondition}) =>{
+    const {  setClzPaidAmount, setClzReason, buttoncondition,setButtonCondition, setTransactionState } = useMoney()
 
     const handleclzpaidamount = (event:React.ChangeEvent<HTMLInputElement>) => {
         setClzPaidAmount(Number(event.target.value))
@@ -12,6 +15,14 @@ const ClzFee: React.FC = () =>{
         setClzReason(event.target.value)
     };
 
+    useEffect(()=>{
+        setbuttoncondition(buttoncondition)
+        console.log(buttoncondition)
+    },[buttoncondition,setButtonCondition])
+
+    useEffect(()=>{
+        setTransactionState("clzfee")
+    },[])
     return(
         <table>
             <thead>

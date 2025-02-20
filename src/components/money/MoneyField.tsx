@@ -11,7 +11,6 @@ const MoneyField: React.FC = () => {
     };
     console.log("Transction State", transactionState)
 
-    // console.log(buttoncondition)
     return (
         <div className="moneyfieldcontainer">
             <div className="chooseoption">
@@ -28,7 +27,7 @@ const MoneyField: React.FC = () => {
                 ) : transactionState === "togive" ? (
                     <ToGive setButtonCondition={setButtonCondition}/>
                 ) : (
-                    <ClzFee />
+                    <ClzFee setbuttoncondition={setButtonCondition} />
                 )}
             </div>
             <div>
