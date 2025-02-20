@@ -9,7 +9,9 @@ const MoneyField: React.FC = () => {
     const handleTransactionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setTransactionState(event.target.value);
     };
+    console.log("Transction State", transactionState)
 
+    // console.log(buttoncondition)
     return (
         <div className="moneyfieldcontainer">
             <div className="chooseoption">
@@ -24,7 +26,7 @@ const MoneyField: React.FC = () => {
                 {transactionState === "totake" ? (
                     <ToTake setButtonCondition = {setButtonCondition} />
                 ) : transactionState === "togive" ? (
-                    <ToGive />
+                    <ToGive setButtonCondition={setButtonCondition}/>
                 ) : (
                     <ClzFee />
                 )}

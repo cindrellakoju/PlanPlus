@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import useMoney from "../../../hooks/useMoney";
 
-const ToGive:React.FC= () =>{
-    const {setGiveMoney,setGiveAmount,setGiveReason} = useMoney()
+interface ToGiveProps{
+    setButtonCondition: (condition:boolean) => void
+}
+const ToGive:React.FC<ToGiveProps>= ({setButtonCondition}) =>{
+    const {giveMoney,giveAmount,giveReason,setGiveMoney,setGiveAmount,setGiveReason,buttoncondition,transactionState,setTransactionState} = useMoney()
 
+    console.log(giveMoney,giveAmount,giveReason,buttoncondition,transactionState)
     const handlegivemoney = (event:React.ChangeEvent<HTMLInputElement>) => {
         setGiveMoney(event.target.value)
     };
@@ -12,6 +17,13 @@ const ToGive:React.FC= () =>{
     const handlegivereason = (event:React.ChangeEvent<HTMLInputElement>) => {
         setGiveReason(event.target.value)
     };
+    useEffect(()=>{
+        setTransactionState("togive")
+    },[])
+    
+    useEffect(()=>{
+        setButtonCondition(buttoncondition)
+    },[buttoncondition,setButtonCondition])
     return(
         <table>
             <thead>

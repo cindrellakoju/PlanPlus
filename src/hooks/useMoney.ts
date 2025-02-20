@@ -12,20 +12,15 @@ const useMoney = () => {
     const [clzReason, setClzReason] = useState<string | undefined>("");
     const [buttoncondition, setButtonCondition] = useState<boolean>(false);
 
-    // Modify useEffect to depend on the actual state values
     useEffect(() => {
-        const isButtonEnabled = !!(
+        const btncondition =!!(
             (transactionState === "totake" && moneyFrom !== "" && takeAmount !== 0 && takeReason !== "") ||
             (transactionState === "togive" && giveMoney !== "" && giveAmount !== 0 && giveReason !== "") ||
             (transactionState === "clzfee" && clzPaidAmount !== 0 && clzReason !== "")
-        );
-        setButtonCondition(isButtonEnabled);
+        )
+        setButtonCondition(btncondition);
     }, [moneyFrom, takeAmount, takeReason, giveMoney, giveAmount, giveReason, clzPaidAmount, clzReason]);
-    // console.log("button useMoney",buttoncondition)
-    // console.log(moneyFrom)
-    // console.log(takeAmount)
-    // console.log(takeReason)
-    // console.log(giveAmount)
+
     return {
         transactionState, setTransactionState,
         moneyFrom, setMoneyFrom,
