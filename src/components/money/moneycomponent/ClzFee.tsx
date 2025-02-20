@@ -1,5 +1,5 @@
 import React from "react";
-import useMoney from "../../../context/useMoney"
+import useMoney from "../../../hooks/useMoney"
 
 const ClzFee: React.FC = () =>{
     const {  setClzPaidAmount, setClzReason } = useMoney()

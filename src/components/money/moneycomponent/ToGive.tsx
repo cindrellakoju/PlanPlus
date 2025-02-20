@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import useMoney from "../../../context/useMoney";
+import useMoney from "../../../hooks/useMoney";
 
 const ToGive:React.FC= () =>{
     const {setGiveMoney,setGiveAmount,setGiveReason} = useMoney()

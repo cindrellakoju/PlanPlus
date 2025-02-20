@@ -1,21 +1,24 @@
 import React from "react";
-import useMoney from "../../../context/useMoney";
+import useMoney from "../../../hooks/useMoney";
 
-const ToTake:React.FC = () =>{
-    const {setMoneyFrom,setTakeAmount,setTakeReason}= useMoney()
+interface ToTakeProps {
+    setButtonCondition: (condition:boolean)=> void
+}
 
-    const handlemoneyfrom = (event:React.ChangeEvent<HTMLInputElement>) =>{
-        setMoneyFrom(event.target.value)
-    }
-
-    const handletakeamount = (event:React.ChangeEvent<HTMLInputElement>) =>{
-        setTakeAmount(Number(event.target.value))
-    }
-
-    const handletakereason = (event:React.ChangeEvent<HTMLInputElement>) =>{
-        setTakeReason(event.target.value)
-    }
-
+const ToTake:React.FC<ToTakeProps>= ({setButtonCondition}) =>{
+    const {buttoncondition,setMoneyFrom,setTakeAmount,setTakeReason}= useMoney()
+    const handlemoneyfrom = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMoneyFrom(event.target.value);
+    };
+    setButtonCondition(buttoncondition)
+    const handletakeamount = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTakeAmount(Number(event.target.value));
+    };
+    
+    const handletakereason = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTakeReason(event.target.value);
+    };
+    
     return(
         <table>
         <thead>
@@ -54,7 +57,7 @@ const ToTake:React.FC = () =>{
                 </td>
             </tr>
         </tbody>
-    </table>
+        </table>
     )
 }
 export default ToTake;
