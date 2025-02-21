@@ -1,4 +1,5 @@
 import React from "react";
+import InputField from "../allrequire/InputField";
 
 const ToBuyField : React.FC = () =>{
     return(
@@ -26,6 +27,7 @@ const ToBuyField : React.FC = () =>{
                 </div>
 
             </div>
+            <InputField />
 
         </div>
     )
