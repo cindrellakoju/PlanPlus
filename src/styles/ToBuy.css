@@ -2,9 +2,39 @@
     width: 37%;
     border: 1px solid black;
     border-radius: 1rem;
-    max-height: 415px;  
+    max-height: 600px;  
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.buylistfieldcontainer{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.buylistfields{
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    background-color: antiquewhite;
+    border-radius: 1rem;
+    overflow-y: auto;
+    
+}
+
+.buylistfields .field{
+    margin-bottom: 0.3rem;
+    padding-left: 0.6rem;
+    padding-top: 0.3rem;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
+}
+.field input{
+    margin-right: 0.5rem;
+    align-self: flex-start;
 }

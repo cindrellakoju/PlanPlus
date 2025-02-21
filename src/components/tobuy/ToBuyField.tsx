@@ -4,7 +4,7 @@ import InputField from "../allrequire/InputField";
 const ToBuyField : React.FC = () =>{
     return(
         <div className="buylistfieldcontainer">
-            <div className="buylistfield">
+            <div className="buylistfields">
                 <div className="field">
                     <input type="checkbox" id="buylist1" name="buylist1" value="buylist" />
                     <label htmlFor="buylist">gaming pc</label>
