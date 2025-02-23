@@ -107,5 +107,12 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+  },
+  // "include" specifies the files or directories that should be compiled by TypeScript
+  // Here, it includes all TypeScript files in the "src" directory and its subdirectories.
+  "include": ["src/**/*.ts"],                           
+
+  // "exclude" specifies the files or directories that should not be included in the compilation
+  // Excluding "node_modules", "dist", and "tests" directories to prevent unnecessary files from being compiled
+  "exclude": ["node_modules", "dist", "tests"]
 }
