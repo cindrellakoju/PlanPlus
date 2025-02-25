@@ -15,14 +15,29 @@ export const getToDoListController = async(req:Request,res:Response) =>{
 }
 
 export const editToDoListController = async (req: Request, res: Response) => {
-    try {        
+    try {       
+        const id =  parseInt(req.params.id);
+        const { task, status, priority} = req.body;
+
+        if(isNaN(id)){
+            return status(400).json({ message : "ID must be number"})
+        }
+
+        if( task !== "string" || !task.trim()){
+            return status(400).json({ message: "Task must be a non-empty string "})
+        }
+        if( status !== "string" || !status.trim()){
+            return status(400).json({ message: "Status must be a non-empty string "})
+        }
+        if( priority !== "string" || !priority.trim()){
+            return status(400).json({ message: "Priority must be a non-empty string "})
+        }
         const updatedtodo = {
-            id: parseInt(req.params.id),
-            task: req.body.task,
-            status: req.body.status,
-            priority: req.body.priority
+            id,
+            task: task.trim(),
+            status: status.trim(),
+            priority: priority.trim()
         };
-        console.log("Updated Todo:", updatedtodo);
 
         const result = await editTodos(updatedtodo);
         res.status(200).json(result);
