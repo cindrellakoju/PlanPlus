@@ -36,3 +36,14 @@ export const deleteToDoList = (id:number,callback:Callback)=>{
         callback(null,{ message : "Successfully deleted"})
     })
 }
+
+export const insertIntoToDoList = (insertitem:inserttodo,callback:Callback) => {
+    const { task, due_date, status, priority} = insertitem;
+    const query = "INSERT INTO todolist(task, due_date, status, priority) VALUES( ? , ? , ? , ? )";
+    db.query(query,[task,due_date,status,priority],(error,results) => {
+        if(error){
+            return callback(error)
+        }
+        return callback(null,{ message : "Successfully added Todolist "})
+    })
+}
