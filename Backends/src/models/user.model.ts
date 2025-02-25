@@ -24,3 +24,15 @@ export const editToDoList=(obtainedtodo:todo,callback:Callback)=>{
         callback(null,{ message : "Succcessfully updated "})
     })
 }
+
+export const deleteToDoList = (id:number,callback:Callback)=>{
+    const deleteid = id;
+    const query = "DELETE FROM todolist WHERE todolist_id = ? "
+    db.query(query,[id],(error,results)=>{
+        if(error){
+            console.log("Error deleting todolst item",error)
+            return callback(error);
+        }
+        callback(null,{ message : "Successfully deleted"})
+    })
+}

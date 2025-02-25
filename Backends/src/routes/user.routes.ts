@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { editToDoListController, getAllUsers, getToDoListController } from "../controllers/user.controllers";
+import { deleteToDoController, editToDoListController, getAllUsers, getToDoListController } from "../controllers/user.controllers";
 import createToDoListTable from "../scripts/dbtable.scripts";
 import inserttodolist from "../scripts/dbinsert.scripts";
 
@@ -10,5 +10,6 @@ router.get("/createtables",createToDoListTable);
 router.get("/insert",inserttodolist);
 router.get("/todo",getToDoListController);
 router.put("/todo/:id",editToDoListController)
+router.delete("/todo/delete/:id",deleteToDoController)
 
 export default router
