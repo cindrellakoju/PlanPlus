@@ -17,20 +17,22 @@ export const getToDoListController = async(req:Request,res:Response) =>{
 export const editToDoListController = async (req: Request, res: Response) => {
     try {       
         const id =  parseInt(req.params.id);
-        const { task, status, priority, due_date} = req.body;
+        const { task,status, priority, due_date} = req.body;
+
+        console.log(req.body)
 
         if(isNaN(id)){
-            return status(400).json({ message : "ID must be number"})
+            res.status(400).json({ message : "ID must be number"})
         }
 
-        if( task !== "string" || !task.trim()){
-            return status(400).json({ message: "Task must be a non-empty string "})
+        if( typeof task !== "string" || !task.trim()){
+            res.status(400).json({ message: "Task must be a non-empty string "})
         }
-        if( status !== "string" || !status.trim()){
-            return status(400).json({ message: "Status must be a non-empty string "})
+        if( typeof status !== "string" || !status.trim()){
+            res.status(400).json({ message: "Status must be a non-empty string "})
         }
-        if( priority !== "string" || !priority.trim()){
-            return status(400).json({ message: "Priority must be a non-empty string "})
+        if( typeof priority !== "string" || !priority.trim()){
+            res.status(400).json({ message: "Priority must be a non-empty string "})
         }
         const updatedtodo = {
             id,
