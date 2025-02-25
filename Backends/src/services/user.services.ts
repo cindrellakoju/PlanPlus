@@ -1,4 +1,5 @@
-import getTodolist from "../models/user.model";
+import { getTodolist, editToDoList } from "../models/user.model";
+import { todo } from "../types/todo.type";
 
 export const fetchTodos = (): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -7,4 +8,13 @@ export const fetchTodos = (): Promise<any> => {
             resolve(results);
         });
     });
+}
+
+export const editTodos = (updatedtodos:todo): Promise<any> =>{
+    return new Promise((resolve,reject)=>{
+        editToDoList(updatedtodos,(err,results)=>{
+            if(err) reject(err);
+            resolve(results)
+        })
+    })
 }

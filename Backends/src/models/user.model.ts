@@ -1,8 +1,7 @@
 import db from "../config/db.config";
+import { Callback,todo } from "../types/todo.type";
 
-type Callback = (err: any, results?: any) => void;
-
-const getTodolist = (callback: Callback) => {
+export const getTodolist = (callback: Callback) => {
     const query = "SELECT * FROM todolist";
 
     db.query(query, (err, results) => {
@@ -14,4 +13,14 @@ const getTodolist = (callback: Callback) => {
     });
 };
 
-export default getTodolist;
+export const editToDoList=(obtainedtodo:todo,callback:Callback)=>{
+    const { id, task , status, priority} = obtainedtodo;
+    const query = "UPDATE todolist SET task = ?, status = ?, priority = ? WHERE todolist_id = ? "
+    db.query(query,[task,status,priority,id],(error,results)=>{
+        if(error){
+            console.log("Error Updating the data: ",error)
+            return callback(error);
+        }
+        callback(null,{ message : "Succcessfully updated "})
+    })
+}
