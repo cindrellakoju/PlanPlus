@@ -5,4 +5,12 @@ export interface todo {
     task: string,
     status? : string,
     priority?: string,
+    due_date ?: Date | string
+}
+export interface inserttodo {
+    id : number,
+    task: string,
+    status : string,
+    priority : string,
+    due_date : Date | string
 }

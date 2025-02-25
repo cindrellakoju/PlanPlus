@@ -17,7 +17,7 @@ export const getToDoListController = async(req:Request,res:Response) =>{
 export const editToDoListController = async (req: Request, res: Response) => {
     try {       
         const id =  parseInt(req.params.id);
-        const { task, status, priority} = req.body;
+        const { task, status, priority, due_date} = req.body;
 
         if(isNaN(id)){
             return status(400).json({ message : "ID must be number"})
@@ -36,7 +36,8 @@ export const editToDoListController = async (req: Request, res: Response) => {
             id,
             task: task.trim(),
             status: status.trim(),
-            priority: priority.trim()
+            priority: priority.trim(),
+            due_date
         };
 
         const result = await editTodos(updatedtodo);

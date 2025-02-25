@@ -9,7 +9,7 @@ router.get("/",getAllUsers);
 router.get("/createtables",createToDoListTable);
 router.get("/insert",inserttodolist);
 router.get("/todo",getToDoListController);
-router.put("/todo/:id",editToDoListController)
+router.put("/todo/edit/:id",editToDoListController)
 router.delete("/todo/delete/:id",deleteToDoController)
 
 export default router

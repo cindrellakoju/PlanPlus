@@ -1,5 +1,5 @@
 import db from "../config/db.config";
-import { Callback,todo } from "../types/todo.type";
+import { Callback,todo,inserttodo } from "../types/todo.type";
 
 export const getTodolist = (callback: Callback) => {
     const query = "SELECT * FROM todolist";
@@ -14,9 +14,9 @@ export const getTodolist = (callback: Callback) => {
 };
 
 export const editToDoList=(obtainedtodo:todo,callback:Callback)=>{
-    const { id, task , status, priority} = obtainedtodo;
-    const query = "UPDATE todolist SET task = ?, status = ?, priority = ? WHERE todolist_id = ? "
-    db.query(query,[task,status,priority,id],(error,results)=>{
+    const { id, task ,due_date, status, priority} = obtainedtodo;
+    const query = "UPDATE todolist SET task = ?, due_date = ?,status = ?, priority = ? WHERE todolist_id = ? "
+    db.query(query,[task,due_date,status,priority,id],(error,results)=>{
         if(error){
             console.log("Error Updating the data: ",error)
             return callback(error);
