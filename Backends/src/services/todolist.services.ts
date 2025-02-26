@@ -1,4 +1,4 @@
-import { getTodolist, editToDoList, deleteToDoList, insertIntoToDoList } from "../models/user.model";
+import { getTodolist, editToDoList, deleteToDoList, insertIntoToDoList } from "../models/todolist.model";
 import { inserttodo, todo } from "../types/todo.type";
 
 export const fetchTodos = (): Promise<any> => {

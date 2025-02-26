@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import { deleteTodos, editTodos, fetchTodos, insertTodos } from "../services/user.services";
+import { deleteTodos, editTodos, fetchTodos, insertTodos } from "../services/todolist.services";
 import { validation } from "../types/todo.type";
 
 export const getAllUsers = (req:Request,res:Response) =>{

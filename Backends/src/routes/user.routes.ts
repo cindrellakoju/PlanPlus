@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteToDoController, editToDoListController, getAllUsers, getToDoListController, insertToDoController } from "../controllers/user.controllers";
+import { deleteToDoController, editToDoListController, getAllUsers, getToDoListController, insertToDoController } from "../controllers/todolist.controllers";
 import createToDoListTable from "../scripts/dbtable.scripts";
 import inserttodolist from "../scripts/dbinsert.scripts";
 
