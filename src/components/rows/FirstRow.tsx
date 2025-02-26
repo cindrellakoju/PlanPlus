@@ -7,7 +7,6 @@ import Money from '../money/Money'
 import ToBuy from '../tobuy/ToBuy'
 
 
-
 export const FirstRow:React.FC =() =>{
   const style:React.CSSProperties = {
     display: "flex",
