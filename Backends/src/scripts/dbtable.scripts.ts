@@ -1,7 +1,7 @@
 import db from "../config/db.config";
 
 // SQL query to create the todolist table
-const createToDoListTable = () => {
+export const createToDoListTable = () => {
   const createToDoListQuery = `
     CREATE TABLE IF NOT EXISTS todolist (
       todolist_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -14,14 +14,52 @@ const createToDoListTable = () => {
     );
   `;
 
-  // Execute the query to create the table
-  db.query(createToDoListQuery, (err, results) => {
-    if (err) {
-      console.error('Error creating table:', err);
-      return;
-    }
-    console.log('Table created successfully:', results);
-  });
+  sendQuery(createToDoListQuery,"To Do List");
+
 };
 
-export default createToDoListTable;
+const createBucketListTable = () =>{
+  const createBucketListQuery = `
+    CREATE TABLE IF NOT EXISTS bucketlist (
+      bucketlist_id INT AUTO_INCREMENT PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      status ENUM('pending','completed') DEFAULT 'pending',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+  `;
+
+    sendQuery(createBucketListQuery,"Bucket List");
+}
+
+const createComponentTable = () =>{
+  const createComponentTableQuery = `
+    CREATE TABLE IF NOT EXISTS componentsposition(
+      component_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      order_index INT NOT NULL,
+      position_x FLOAT NOT NULL DEFAULT 0,
+      position_y FLOAT NOT NULL DEFAULT 0
+    )
+  `
+  sendQuery(createComponentTableQuery,'Component Table');
+}
+
+
+const sendQuery = (query:string,tablename:string) =>{
+  db.query(query,(err,results)=>{
+    if(err){
+      console.log(`Error creating table ${tablename}:`,err);
+      return;
+    }
+    console.log(`Successfully created table ${tablename}`,results)
+  })
+};
+
+const createAllTable = () =>{
+  createToDoListTable();
+  createBucketListTable();
+  createComponentTable();
+}
+
+export default createAllTable;
