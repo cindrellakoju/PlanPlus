@@ -1,11 +1,11 @@
 import Header from "./components/layoutcomponent/Header"
-import { FirstRow } from "./components/rows/FirstRow"
+import HomePage from "./pages/HomePage"
 
 function App() {
   return(
     <>
       <Header/>
-      <FirstRow/>
+      <HomePage />
     </>
 )
 }
