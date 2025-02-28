@@ -6,4 +6,12 @@ export interface Todo {
     status: 'pending' | 'completed' | 'overdue';  
     created_at: string;   
     updated_at: string;   
-  }
+}
+
+export interface ComponentType {
+  component_id : number;
+  name: string;
+  order_index : number;
+  position_x : number;
+  position_y : number;
+}
