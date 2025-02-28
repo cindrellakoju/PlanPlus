@@ -1,4 +1,4 @@
-import React, { Component, JSX, useContext } from "react"
+import React, { JSX, useContext } from "react"
 import { MyContext } from "../../context/selectedComponent"
 import TopPriority from "../toppriority/TopPriority"
 import ToDo from "../todo/ToDo"
@@ -24,7 +24,7 @@ const DisplayComponents:React.FC = () => {
 
     const selectedComponent = context?.selectedComponents
     return(
-        <div>
+        <div style={{ display: "flex" , flexDirection: "row", flexWrap: "wrap", gap: "20px"}}>
             {selectedComponent?.map((componentName, index) => {
                 const ComponentToRender = componentMap[componentName];
                 return ComponentToRender ? (

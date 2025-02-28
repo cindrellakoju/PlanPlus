@@ -1,7 +1,6 @@
 .bucketlistcontainer{
     border: 1px solid black;
-    width: 32%;
-    max-height: 300px;
+    width: 100%;
     margin-top: 1rem;
     border-radius: 1rem;
     display: flex;

@@ -1,34 +1,46 @@
-.HomePage{
-    display: flex;
-    flex-direction: row;
-    height:80vh;
-    width: 100%;
-}
+    .HomePage{
+        display: flex;
+        flex-direction: row;
+        height:80vh;
+        width: 100%;
+    }
 
-.HomePage .sidebar{
-    position: sticky;
-    /* background-color: aliceblue; */
-}
+    .HomePage .sidebar{
+        position: sticky;
+        /* background-color: aliceblue; */
+    }
 
-.HomePage .bodypart{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.bodypart .iconBar{
-    font-size: 2.6rem;
-}
-.body{
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-h1{
-    font-size: 4rem;
-    text-align: center;
-}
-p{
-    font-size: 2rem;
-}
+    .HomePage .bodypart{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .bodypart .iconBar{
+        font-size: 2.6rem;
+    }
+    .body{
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+    }
+    h1{
+        font-size: 4rem;
+        text-align: center;
+    }
+    p{
+        font-size: 2rem;
+    }
+
+    .body .displaycomponent{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }

@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="HomePage">
       {/* Sidebar Component */}
-      <div className={`sidebar ${displaySidebar ? 'open' : 'closed'}`}>
+      <div className={`sidebar ${displaySidebar ? 'open' : 'closed'}`} style={{ width: displaySidebar ? "30%" : "0%"}}>
         {displaySidebar && <SideBar />}
       </div>
 
@@ -32,7 +32,9 @@ const HomePage: React.FC = () => {
         </div>
         <div className="body">
           {context.selectedComponents.length > 0 ? (
-            <DisplayComponents />
+            <div className="displaycomponent">
+              <DisplayComponents />
+            </div>
           ) : (
             <>
               <h1>Welcome to PlanPlus Cinderella</h1>

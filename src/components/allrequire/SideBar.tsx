@@ -40,7 +40,6 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="Sidebar">
-      <h2>Components List</h2>
       {components.map((item, index) => (
         <div
           key={index}
@@ -50,16 +49,6 @@ const SideBar: React.FC = () => {
           {item.name}
         </div>
       ))}
-
-      {/* Uncomment this to show the selected components */}
-      <div>
-        <h2>Selected Components:</h2>
-        <ul>
-          {context.selectedComponents.map((component, index) => (
-            <li key={index}>{component}</li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };
