@@ -18,6 +18,9 @@ const HomePage: React.FC = () => {
     setSideBar((prevState) => !prevState);
   };
 
+  const displayeditmode = () => {
+    alert("Edit mode activated");
+  }
   return (
     <div className="HomePage">
       {/* Sidebar Component */}
@@ -27,8 +30,9 @@ const HomePage: React.FC = () => {
 
       {/* Main Content */}
       <div className="bodypart">
-        <div className="iconBar" onClick={toggleSidebar}>
-          <i className="bx bx-list-ul"></i>
+        <div className="iconBar" >
+          <i className="bx bx-list-ul" onClick={toggleSidebar}></i>
+          <button onClick={displayeditmode}>Edit</button>
         </div>
         <div className="body">
           {context.selectedComponents.length > 0 ? (

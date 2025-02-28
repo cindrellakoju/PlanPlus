@@ -44,9 +44,9 @@ const SideBar: React.FC = () => {
         <div
           key={index}
           onClick={() => handleSelectComponent(item.name)}
-          className="component-item" // Add a class for styling
+          className="component-item"
         >
-          {item.name}
+         <h2 style={{ fontSize: "1.7rem", fontWeight: "bold"}}>{item.name}</h2>
         </div>
       ))}
     </div>
