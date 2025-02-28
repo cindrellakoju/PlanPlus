@@ -1,12 +1,14 @@
-import SideBar from "./components/allrequire/SideBar"
 import Header from "./components/layoutcomponent/Header"
+import { MyProvider } from "./context/selectedComponent"
 import HomePage from "./pages/HomePage"
 
 function App() {
   return(
     <>
       <Header/>
-      <HomePage />
+      <MyProvider>
+        <HomePage />
+      </MyProvider>
       {/* <SideBar/> */}
     </>
 )
