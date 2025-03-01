@@ -1,32 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/ToDo.css";
-import InputField from "../allrequire/InputField";
 import { fetchToDoList } from "../../services/todolist.services";  
 import { Todo } from "../../types";
+import { MyContext } from "../../context/selectedComponent";
 
 const ToDoField: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]); 
+  const context = useContext(MyContext);
 
-  // Fetch to-do list when the component mounts
+  if(!context){
+    console.log("Wrap ToDoField inside MyProvider")
+  }
+
+  const [todos, setTodos] = useState<Todo[]>([]); 
+  const   [selectfield,setSelectField] = useState<string>("") 
+
+  const handlefieldchange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectField(event.target.value);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      const todoList = await fetchToDoList();  // Call the imported fetch function
-      setTodos(todoList);  // Update the state with the fetched data
+      const todoList = await fetchToDoList(); 
+      setTodos(todoList);
     };
 
-    fetchData();  // Trigger the fetch operation
-  }, []);  // Empty dependency array, so this runs only once when the component mounts
+    fetchData();
+  }, []); 
 
   return (
     <div className="todofield">
-      <div className="todolist">
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.todolist_id}>{todo.task}</li>
-          ))}
-        </ul>
+      <div className="chooseoption">
+        <label htmlFor="field">Choose Field:  </label>
+        <select id="field" onChange={handlefieldchange}>
+            <option value="add">Add</option>
+            <option value="edit">Edit</option>
+            <option value="delete">Delete</option>
+            <option value="completed">Mark as Completed</option>
+        </select>
       </div>
-      <InputField />
+      <div className="todolist">
+        {todos.map((todo) => (
+          <div key={todo.todolist_id} className="todo-item">
+            <input type="checkbox" id={String(todo.todolist_id)} name={String(todo.todolist_id)} />
+            <label htmlFor={String(todo.todolist_id)}>{todo.task}</label>
+          </div>
+        ))}
+      </div>
+      <button>Send</button>
     </div>
   );
 };

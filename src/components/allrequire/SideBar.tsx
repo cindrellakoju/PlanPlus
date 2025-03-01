@@ -1,12 +1,8 @@
 import axios from "axios";
 import "../../styles/SideBar.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import { MyContext } from "../../context/selectedComponent";
-
-// Define a type for the components
-interface Component {
-  name: string;
-}
+import { Component } from "../../types";
 
 const SideBar: React.FC = () => {
   const context = useContext(MyContext);
@@ -15,7 +11,7 @@ const SideBar: React.FC = () => {
     throw new Error("Context must be used within a MyProvider");
   }
 
-  const [components, setComponents] = useState<Component[]>([]);
+ 
 
   // Fetch components data from API when the component mounts
   useEffect(() => {
@@ -23,7 +19,7 @@ const SideBar: React.FC = () => {
       .get<Component[]>("http://localhost:5000/user/componentsposition") // Typing the response data
       .then((response) => {
         console.log("Successfully fetched components: ", response.data);
-        setComponents(response.data); // Set the components list
+        context.setComponents(response.data); // Set the components list
       })
       .catch((error) => {
         console.log("Error fetching the data: ", error);
@@ -40,7 +36,7 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="Sidebar">
-      {components.map((item, index) => (
+      {context.components.map((item, index) => (
         <div
           key={index}
           onClick={() => handleSelectComponent(item.name)}
