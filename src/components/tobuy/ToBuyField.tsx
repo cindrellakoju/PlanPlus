@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import InputField from "../allrequire/InputField";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 
 const ToBuyField : React.FC = () =>{
