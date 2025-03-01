@@ -17,16 +17,6 @@
     gap: 0.5rem;
 }
 
-.todofield .chooseoption{
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.chooseoption label{
-    margin-top: 4px;
-}
-
 .todofield .todolist {
     background-color: rgb(179, 158, 231);
     border-radius: 1rem;

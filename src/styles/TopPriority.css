@@ -1,11 +1,13 @@
 .prioritycontainer{
-    width: 100%;
     border: 1px solid black;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+.prioritycontainer h1{
+    font-size: 1.5rem;
 }
 
 /* displayfield */
@@ -18,7 +20,7 @@
 }
 .displayfieldcontainer .displayfields{
     width: 90%;
-    height: 175px;
+    /* height: 175px; */
     overflow-y: auto;
 }
 .field{

@@ -3,6 +3,7 @@ import "../../styles/ToDo.css";
 import { fetchToDoList } from "../../services/todolist.services";  
 import { Todo } from "../../types";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
+import { ChooseField } from "../allrequire/ChooseField";
 
 const ToDoField: React.FC = () => {
   const { inside_temp_height } = ComponentWidthHeight("ToDo");
@@ -25,15 +26,7 @@ const ToDoField: React.FC = () => {
 
   return (
     <div className="todofield">
-      <div className="chooseoption">
-        <label htmlFor="field">Choose Field:  </label>
-        <select id="field" onChange={handlefieldchange}>
-            <option value="add">Add</option>
-            <option value="edit">Edit</option>
-            <option value="delete">Delete</option>
-            <option value="completed">Mark as Completed</option>
-        </select>
-      </div>
+      <ChooseField/>
       <div className="todolist" style={{ height: inside_temp_height}}>
         {todos.map((todo) => (
           <div key={todo.todolist_id} className="todo-item">

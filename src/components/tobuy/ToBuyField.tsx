@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
+import { ChooseField } from "../allrequire/ChooseField";
 
 const ToBuyField : React.FC = () =>{
     const {inside_temp_height} = ComponentWidthHeight("ToBuy");
@@ -11,15 +12,7 @@ const ToBuyField : React.FC = () =>{
 
     return(
         <div className="buylistfieldcontainer" >
-            <div className="chooseoption">
-                <label htmlFor="field">Choose Field:  </label>
-                <select id="field" onChange={handlefieldchange}>
-                    <option value="add">Add</option>
-                    <option value="edit">Edit</option>
-                    <option value="delete">Delete</option>
-                    <option value="completed">Mark as Completed</option>
-                </select>
-            </div>
+            <ChooseField/>
             <div className="buylistfields" style={{ maxHeight: inside_temp_height}}>
                 <div className="field">
                     <input type="checkbox" id="buylist1" name="buylist1" value="buylist" />
