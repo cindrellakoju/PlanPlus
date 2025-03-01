@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "../../styles/ToDo.css";
 import { fetchToDoList } from "../../services/todolist.services";  
 import { Todo } from "../../types";
-import { MyContext } from "../../context/selectedComponent";
+import { MyContext } from "../../context/Component.context";
 
 const ToDoField: React.FC = () => {
   const context = useContext(MyContext);

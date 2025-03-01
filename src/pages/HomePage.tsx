@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "../styles/HomePage.css";
 import SideBar from "../components/allrequire/SideBar";
-import { MyContext } from "../context/selectedComponent";
+import { MyContext } from "../context/Component.context";
 import DisplayComponents from "../components/allrequire/DisplayComponents";
 
 const HomePage: React.FC = () => {

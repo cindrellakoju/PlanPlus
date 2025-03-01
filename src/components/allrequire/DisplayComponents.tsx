@@ -1,5 +1,5 @@
 import React, { JSX, useContext } from "react"
-import { MyContext } from "../../context/selectedComponent"
+import { MyContext } from "../../context/Component.context"
 import TopPriority from "../toppriority/TopPriority"
 import ToDo from "../todo/ToDo"
 import BucketList from "../bucketlist/BucketList"

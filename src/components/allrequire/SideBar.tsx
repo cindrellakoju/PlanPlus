@@ -1,7 +1,7 @@
 import axios from "axios";
 import "../../styles/SideBar.css";
 import { useContext, useEffect} from "react";
-import { MyContext } from "../../context/selectedComponent";
+import { MyContext } from "../../context/Component.context";
 import { Component } from "../../types";
 
 const SideBar: React.FC = () => {

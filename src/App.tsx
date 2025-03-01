@@ -1,5 +1,5 @@
 import Header from "./components/layoutcomponent/Header"
-import { MyProvider } from "./context/selectedComponent"
+import { MyProvider } from "./context/Component.context"
 import HomePage from "./pages/HomePage"
 
 function App() {
