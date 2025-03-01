@@ -1,12 +1,14 @@
 .tobuycontainer {
-    width: 100%;
     border: 1px solid black;
     border-radius: 1rem;
-    /* max-height: 600px;   */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.tobuycontainer h1{
+    font-size: 1.5rem;
 }
 
 .buylistfieldcontainer{
@@ -14,6 +16,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+}
+
+.buylistfieldcontainer .chooseoption{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.chooseoption label{
+    margin-top: 4px;
 }
 
 .buylistfields{
@@ -37,4 +49,12 @@
 .field input{
     margin-right: 0.5rem;
     align-self: flex-start;
+}
+
+.buylistfieldcontainer button{
+    height: 1.8rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: rgba(93, 93, 224, 0.627);
 }
