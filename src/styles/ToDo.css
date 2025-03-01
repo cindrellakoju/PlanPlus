@@ -1,8 +1,6 @@
 .todocontainer {
     border: 1px solid black;
     border-radius: 1rem;
-                max-height: 320px;
-                max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,7 +31,6 @@
     background-color: rgb(179, 158, 231);
     border-radius: 1rem;
     overflow-y: auto;   /* Enables vertical scrolling */
-                 height: 120px;      /* Set a fixed height for scrolling */
     padding: 10px;      /* Optional: Adds space inside the list */
     margin-bottom: 1rem;
 }

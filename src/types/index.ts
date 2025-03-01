@@ -15,7 +15,3 @@ export interface ComponentType {
   position_x : number;
   position_y : number;
 }
-
-export interface Component{
-  name: string
-}

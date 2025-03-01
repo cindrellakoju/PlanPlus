@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useState } from 'react';
-import { Component } from '../types';
+import { ComponentType } from '../types';
 
 interface ContextType {
   selectedComponents: string[];
   setSelectedComponents: (newValue: string[]) => void;
-  components: Component[];
-  setComponents : (newComponents: Component[]) => void;
+  components: ComponentType[];
+  setComponents : (newComponents: ComponentType[]) => void;
 }
 
 interface ProviderPropsType {
@@ -17,7 +17,7 @@ const MyContext = createContext<ContextType | undefined>(undefined);
 
 const MyProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
-  const [components, setComponents] = useState<Component[]>([]);
+  const [components, setComponents] = useState<ComponentType[]>([]);
 
 
   return (

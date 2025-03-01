@@ -11,6 +11,9 @@ const ToDoField: React.FC = () => {
     console.log("Wrap ToDoField inside MyProvider")
   }
 
+  const componentName = context?.components.find(component => component.name === "ToDo");
+  const max_height = componentName?.position_y !== undefined ? `${componentName.position_y - 200}px` : "320px";
+
   const [todos, setTodos] = useState<Todo[]>([]); 
   const   [selectfield,setSelectField] = useState<string>("") 
 
@@ -38,7 +41,7 @@ const ToDoField: React.FC = () => {
             <option value="completed">Mark as Completed</option>
         </select>
       </div>
-      <div className="todolist">
+      <div className="todolist" style={{ height: max_height}}>
         {todos.map((todo) => (
           <div key={todo.todolist_id} className="todo-item">
             <input type="checkbox" id={String(todo.todolist_id)} name={String(todo.todolist_id)} />

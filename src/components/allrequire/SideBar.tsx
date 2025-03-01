@@ -2,7 +2,7 @@ import axios from "axios";
 import "../../styles/SideBar.css";
 import { useContext, useEffect} from "react";
 import { MyContext } from "../../context/Component.context";
-import { Component } from "../../types";
+import { ComponentType } from "../../types";
 
 const SideBar: React.FC = () => {
   const context = useContext(MyContext);
@@ -16,7 +16,7 @@ const SideBar: React.FC = () => {
   // Fetch components data from API when the component mounts
   useEffect(() => {
     axios
-      .get<Component[]>("http://localhost:5000/user/componentsposition") // Typing the response data
+      .get<ComponentType[]>("http://localhost:5000/user/componentsposition") // Typing the response data
       .then((response) => {
         console.log("Successfully fetched components: ", response.data);
         context.setComponents(response.data); // Set the components list
