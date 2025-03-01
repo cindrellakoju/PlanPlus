@@ -1,10 +1,12 @@
 import React from "react";
 import BucketListField from "./BucketListField";
 import "../../styles/BucketList.css"
+import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 
 const BucketList:React.FC = () =>{
+    const {max_height,max_width} = ComponentWidthHeight('BucketList')
     return(
-        <div className="bucketlistcontainer">
+        <div className="bucketlistcontainer" style={{ maxHeight: max_height, width:max_width}}>
             <h1>Bucket List</h1>
             <BucketListField/>
         </div>

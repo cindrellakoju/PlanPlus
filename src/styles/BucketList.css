@@ -1,11 +1,14 @@
 .bucketlistcontainer{
     border: 1px solid black;
-    width: 100%;
     margin-top: 1rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.bucketlistcontainer h1{
+    font-size: 1.5rem;
 }
 
 .bucketlistfieldcontainer{
@@ -18,7 +21,6 @@
 .bucketlistfields{
     display: flex;
     flex-direction: column;
-    height: 180px;
     background-color: antiquewhite;
     border-radius: 1rem;
     overflow-y: auto;
