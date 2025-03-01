@@ -1,5 +1,4 @@
 import React from "react";
-import InputField from "../allrequire/InputField";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 import { ChooseField } from "../allrequire/ChooseField";
 import { Button } from "../allrequire/Button";

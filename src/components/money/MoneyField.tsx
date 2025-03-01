@@ -2,8 +2,10 @@ import ToTake from "./moneycomponent/ToTake";
 import ClzFee from "./moneycomponent/ClzFee";
 import ToGive from "./moneycomponent/ToGive";
 import useMoney from '../../hooks/useMoney';
+import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 
 const MoneyField: React.FC = () => {
+    const {inside_temp_height} = ComponentWidthHeight("Money")
     const   {transactionState, setTransactionState,buttoncondition,setButtonCondition } = useMoney();
 
     const handleTransactionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,7 +23,7 @@ const MoneyField: React.FC = () => {
                     <option value="clzfee">Clz Fee</option>
                 </select>
             </div>
-            <div className="tablefield">
+            <div className="tablefield" style={{ maxHeight: inside_temp_height}}>
                 {transactionState === "totake" ? (
                     <ToTake setButtonCondition = {setButtonCondition} />
                 ) : transactionState === "togive" ? (
