@@ -1,0 +1,18 @@
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+
+#send{
+    width: 50%;
+}
+.buttons button{
+    width: 50%;
+    height: 1.8rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: rgba(93, 93, 224, 0.627);
+}

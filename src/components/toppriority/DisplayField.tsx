@@ -1,6 +1,7 @@
 import React from "react";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 import { ChooseField } from "../allrequire/ChooseField";
+import { Button } from "../allrequire/Button";
 
 const DisplayField:React.FC = () =>{
     const {inside_temp_height}= ComponentWidthHeight("TopPriority")
@@ -38,10 +39,7 @@ const DisplayField:React.FC = () =>{
                 </div>
 
             </div>
-            <div className="buttons">
-                <button>Send</button>
-                <button>Add</button>
-            </div>
+            <Button/>
         </div>
     )
 }

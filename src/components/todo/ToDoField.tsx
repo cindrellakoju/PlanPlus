@@ -4,6 +4,7 @@ import { fetchToDoList } from "../../services/todolist.services";
 import { Todo } from "../../types";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 import { ChooseField } from "../allrequire/ChooseField";
+import { Button } from "../allrequire/Button";
 
 const ToDoField: React.FC = () => {
   const { inside_temp_height } = ComponentWidthHeight("ToDo");
@@ -35,7 +36,7 @@ const ToDoField: React.FC = () => {
           </div>
         ))}
       </div>
-      <button>Send</button>
+      <Button/>
     </div>
   );
 };

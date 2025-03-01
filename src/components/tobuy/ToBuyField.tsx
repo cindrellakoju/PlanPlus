@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 import { ChooseField } from "../allrequire/ChooseField";
+import { Button } from "../allrequire/Button";
 
 const ToBuyField : React.FC = () =>{
     const {inside_temp_height} = ComponentWidthHeight("ToBuy");
@@ -36,7 +37,7 @@ const ToBuyField : React.FC = () =>{
                 </div>
 
             </div>
-            <button>Send</button>
+            <Button/>
         </div>
     )
 }
