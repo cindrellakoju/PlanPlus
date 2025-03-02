@@ -3,7 +3,6 @@ import "../styles/HomePage.css";
 import SideBar from "../components/allrequire/SideBar";
 import { MyContext } from "../context/Component.context";
 import DisplayComponents from "../components/allrequire/DisplayComponents";
-import HomePageEdit from "./HomePageEdit";
 import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
