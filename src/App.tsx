@@ -1,15 +1,9 @@
-import Header from "./components/layoutcomponent/Header"
-import { MyProvider } from "./context/Component.context"
-import HomePage from "./pages/HomePage"
+import UserRoute from "./routes/user.routes"
 
 function App() {
   return(
     <>
-      <Header/>
-      <MyProvider>
-        <HomePage />
-      </MyProvider>
-      {/* <SideBar/> */}
+      <UserRoute/>
     </>
 )
 }

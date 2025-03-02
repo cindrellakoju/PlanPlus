@@ -2,7 +2,7 @@ import "../../styles/ChooseField.css"
 
 export const ChooseField = () => {
     return(
-        <div className="chooseoption">
+    <div className="chooseoption">
         <label htmlFor="field">Choose Field:  </label>
         <select id="field">
             <option value="edit">Edit</option>

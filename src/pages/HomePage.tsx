@@ -3,8 +3,12 @@ import "../styles/HomePage.css";
 import SideBar from "../components/allrequire/SideBar";
 import { MyContext } from "../context/Component.context";
 import DisplayComponents from "../components/allrequire/DisplayComponents";
+import HomePageEdit from "./HomePageEdit";
+import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
+
+  const navigate = useNavigate();
   const context = useContext(MyContext);
 
   if (!context) {
@@ -12,15 +16,23 @@ const HomePage: React.FC = () => {
   }
 
   const [displaySidebar, setSideBar] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false); // New state for edit mode
 
-  // Toggle the sidebar visibility
   const toggleSidebar = () => {
     setSideBar((prevState) => !prevState);
   };
 
-  const displayeditmode = () => {
-    alert("Edit mode activated");
+
+  const displayEditMode = () => {
+    setIsEditMode(true); // Activate edit mode
+  };
+
+  // If in edit mode, show the HomePageEdit component
+  if (isEditMode) {
+    navigate("/homepgedit")
+    // return <HomePageEdit />;
   }
+
   return (
     <div className="HomePage">
       {/* Sidebar Component */}
@@ -30,9 +42,9 @@ const HomePage: React.FC = () => {
 
       {/* Main Content */}
       <div className="bodypart">
-        <div className="iconBar" >
+        <div className="iconBar">
           <i className="bx bx-list-ul" onClick={toggleSidebar}></i>
-          <button onClick={displayeditmode}>Edit</button>
+          <button onClick={displayEditMode}>Edit</button> {/* On click, trigger edit mode */}
         </div>
         <div className="body">
           {context.selectedComponents.length > 0 ? (
