@@ -15,3 +15,8 @@ export interface ComponentType {
   position_x : number;
   position_y : number;
 }
+
+export interface selectedComponent {
+  component_id : number;
+  name: string
+}
