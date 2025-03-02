@@ -1,26 +1,20 @@
 import React from "react";
-import { BrowserRouter , createBrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
-import HomePageEdit from "../pages/HomePageEdit";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import AppPage from "../pages/AppPage";
+import FrontPageEdit from "../pages/FrontPageEdit";
+import { MyProvider } from "../context/Component.context";
 
 const routes = createBrowserRouter([
     { path: "/", element: <AppPage/> },
-    {  path: "/homepgedit", element: <HomePageEdit /> }
+    {  path: "/homepgedit", element: <FrontPageEdit /> }
 ]);
 
 const UserRoute: React.FC = () => {
     return (
-        <RouterProvider router={routes}/>
+        <MyProvider>
+            <RouterProvider router={routes}/>
+        </MyProvider>
     )
-    // return (
-    //     <BrowserRouter>
-    //         <Routes>
-    //             {routes.map((route, index) => (
-    //                 <Route key={index} path={route.path} element={route.element} />
-    //             ))}
-    //         </Routes>
-    //     </BrowserRouter>
-    // );
 };
 
 export default UserRoute;

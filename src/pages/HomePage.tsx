@@ -15,6 +15,7 @@ const HomePage: React.FC = () => {
     throw new Error("Homepage context must be within MyProvider");
   }
 
+  console.log(context.selectedComponents)
   const [displaySidebar, setSideBar] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // New state for edit mode
 

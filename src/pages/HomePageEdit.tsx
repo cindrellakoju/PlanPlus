@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MyContext } from "../context/Component.context";
 
 const HomePageEdit:React.FC = () => {
+    const context = useContext(MyContext);
+
+    if(!context){
+        console.log("Wrap the HomePageEdit by MyProvider")
+    }
+    console.log("Selected item",context?.selectedComponents, context?.components);
     return(
         <div>
-            <div className="choosefield">
-                <label htmlFor="field">Choose Field:  </label>
-                <select id="field">
-                    <option value="edit">Edit</option>
-                    <option value="delete">Delete</option>
-                    <option value="completed">Mark as Completed</option>
-                </select>
-            </div>
-            <h1>This is HomePage</h1>
+            <button>Save</button>
+            <div></div>
         </div>
     )
 }
