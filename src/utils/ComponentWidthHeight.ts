@@ -12,8 +12,9 @@ const ComponentWidthHeight= (funcName: string) => {
     const max_width = componentName?.position_x !== 0 ? `${componentName?.position_x}px`: "300px";
     const max_height = componentName?.position_y !== 0 ? `${componentName?.position_y}px`: "320px";
     const inside_temp_height = `${parseInt(max_height) - 200}px`;
+    const editHWMode = context?.edithwmode
 
-    return { max_width,max_height,inside_temp_height}
+    return { max_width,max_height,inside_temp_height, editHWMode}
 }
 
 export default ComponentWidthHeight;

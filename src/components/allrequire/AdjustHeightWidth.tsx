@@ -1,4 +1,4 @@
-import { JSX, useContext, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 import { MyContext } from "../../context/Component.context";
 import TopPriority from "../toppriority/TopPriority";
 import ToDo from "../todo/ToDo";
@@ -25,6 +25,9 @@ const AdjustHeightWidth = () => {
     return null;
   }
 
+  useEffect(()=>{
+    context.setEditHWMode(true)
+  },[])
   console.log("Selected Component", context?.selectedComponents);
 
   const handleResizeWidth = (id: number, newWidth: number) => {
