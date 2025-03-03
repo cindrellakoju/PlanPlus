@@ -35,7 +35,7 @@ const SideBar: React.FC = () => {
     if (!alreadySelected) {
       context.setSelectedComponents([
         ...context.selectedComponents,
-        { name: component.name, component_id: component.component_id }, // Add to selected components
+        { name: component.name, component_id: component.component_id, position_x: component.position_x,position_y: component.position_y, order_index:component.order_index }, // Add to selected components
       ]);
     }
   };
