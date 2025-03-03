@@ -56,7 +56,7 @@ const AdjustHeightWidth = () => {
       }}
     >
       {context.selectedComponents.map((component, index) => {
-        const [currentWidth, setCurrentWidth] = useState(component.position_x || 300); // Default width
+        const [currentWidth, setCurrentWidth] = useState(component.position_x || 700); // Default width
         const Component = componentMap[component.name]; // Get the component dynamically
 
         return (
