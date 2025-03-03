@@ -4,10 +4,9 @@ import ToBuyField from "./ToBuyField"
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight"
 
 const ToBuy:React.FC = () =>{
-    const {max_height,max_width} = ComponentWidthHeight("ToBuy");
-    console.log(max_height,max_width)
+    const {max_height,max_width, editHWMode} = ComponentWidthHeight("ToBuy");
     return(
-        <div style={{ maxHeight: max_height, width: max_width}} className="tobuycontainer">
+        <div style={editHWMode? {} :{ maxHeight: max_height, width: max_width}} className="tobuycontainer">
             <h1>To Buy List</h1>
             <ToBuyField/>
         </div>

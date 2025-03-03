@@ -4,9 +4,9 @@ import "../../styles/BucketList.css"
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 
 const BucketList:React.FC = () =>{
-    const {max_height,max_width} = ComponentWidthHeight('BucketList')
+    const {max_height,max_width, editHWMode} = ComponentWidthHeight('BucketList')
     return(
-        <div className="bucketlistcontainer" style={{ maxHeight: max_height, width:max_width}}>
+        <div className="bucketlistcontainer" style={editHWMode ? {} :{ maxHeight: max_height, width:max_width}}>
             <h1>Bucket List</h1>
             <BucketListField/>
         </div>

@@ -1,4 +1,4 @@
-import { JSX, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../context/Component.context";
 import TopPriority from "../toppriority/TopPriority";
 import ToDo from "../todo/ToDo";
