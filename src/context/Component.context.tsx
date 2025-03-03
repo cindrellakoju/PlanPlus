@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState } from 'react';
-import { ComponentType, selectedComponent } from '../types';
+import { ComponentType } from '../types';
 
 interface ContextType {
   selectedComponents: ComponentType[];

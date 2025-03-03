@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../components/layoutcomponent/Header";
 import HomePageEdit from "./HomePageEdit";
 import AdjustHeightWidth from "../components/allrequire/AdjustHeightWidth";
-import { FirstRow } from "../components/rows/demo";
 
 const FrontPageEdit: React.FC = () => {
     // State to manage the selected field
