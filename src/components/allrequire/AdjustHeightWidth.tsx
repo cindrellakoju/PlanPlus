@@ -149,14 +149,22 @@
 // export default AdjustHeightWidth;
 
 
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { MyContext } from "../../context/Component.context"
 import TopPriority from "../toppriority/TopPriority"
 import ToDo from "../todo/ToDo"
+import BucketList from "../bucketlist/BucketList";
+import Schedule from "../schedule/Schedule";
+import Money from "../money/Money";
+import ToBuy from "../tobuy/ToBuy";
 
-const componentMap : {[key:string]:React.ComponentType<{}>} = {
+const componentMap : {[key:string]:React.ComponentType<{height : number}>} = {
   TopPriority,
-  ToDo
+  ToDo,
+  BucketList,
+  Schedule,
+  Money,
+  ToBuy
 };
 
 const AdjustHeightWidth  : React.FC = () => {
@@ -165,19 +173,24 @@ const AdjustHeightWidth  : React.FC = () => {
     console.log("Wrap AdjustHeightWidth in MyProvide")
   }
 
+  context?.setEditHWMode(true)
   console.log("Selected Component:",context?.selectedComponents)
   return(
-    <div>
-      <h1>This is adjust height width</h1>
+    <div style={{ position : "relative"}}>
       {
         context?.selectedComponents.map((component, index) => {
           const Component = componentMap[component.name]
+          const [height,setHeight] = useState<number>(component.position_y || 320)
           return(
-            <div>
-            <h1>{component.name}</h1>
+            <div style={{ height: `${height}px`}}>
             {
-              Component ? <Component/> : <div>No Component Found</div>
+              Component ? <Component height={height}/> : <div>No Component Found</div>
             }
+            <div style={{
+              position: "absolute",
+            }}>
+
+            </div>
             </div>
         );
         })
