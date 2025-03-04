@@ -4,11 +4,11 @@ import { ChooseField } from "../allrequire/ChooseField";
 import { Button } from "../allrequire/Button";
 
 const BucketListField:React.FC = () =>{
-    const {inside_temp_height} = ComponentWidthHeight("BucketList")
+    const {inside_temp_height, editHWMode} = ComponentWidthHeight("BucketList")
     return(
         <div className="bucketlistfieldcontainer">
             <ChooseField/>
-            <div className="bucketlistfields" style={{ maxHeight: inside_temp_height}}>
+            <div className="bucketlistfields" style={editHWMode? {} :{ maxHeight: inside_temp_height}}>
                 <div className="field">
                     <input type="checkbox" id="bucketlist1" name="bucketlist1"  value="bucketlist" />
                     <label htmlFor="bucketlist1">To visit AnnapurnaBase Camp </label>                    
