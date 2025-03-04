@@ -181,6 +181,8 @@ const AdjustHeightWidth  : React.FC = () => {
         context?.selectedComponents.map((component, index) => {
           const Component = componentMap[component.name]
           const [height,setHeight] = useState<number>(component.position_y || 320)
+          const [width,setWidth] = useState<number>(component.position_y || 320)
+          
           return(
             <div style={{ height: `${height}px`}}>
             {
