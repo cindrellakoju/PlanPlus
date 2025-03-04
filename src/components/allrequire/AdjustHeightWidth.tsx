@@ -188,6 +188,7 @@ const AdjustHeightWidth  : React.FC = () => {
             }
             <div style={{
               position: "absolute",
+              backgroundColor: "pink"
             }}>
 
             </div>
