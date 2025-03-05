@@ -8,7 +8,7 @@ const BucketListField:React.FC = () =>{
     return(
         <div className="bucketlistfieldcontainer">
             <ChooseField/>
-            <div className="bucketlistfields" style={editHWMode? {} :{ maxHeight: inside_temp_height}}>
+            <div className="bucketlistfields" style={{ height: inside_temp_height}}>
                 <div className="field">
                     <input type="checkbox" id="bucketlist1" name="bucketlist1"  value="bucketlist" />
                     <label htmlFor="bucketlist1">To visit AnnapurnaBase Camp </label>                    

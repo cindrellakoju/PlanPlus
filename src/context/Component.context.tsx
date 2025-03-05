@@ -7,7 +7,9 @@ interface ContextType {
   components: ComponentType[];
   setComponents: (newComponents: ComponentType[]) => void;
   edithwmode: boolean;
-  setEditHWMode: (newMode: boolean) => void; // <-- Corrected this line
+  setEditHWMode: (newMode: boolean) => void; 
+  editHeightWidth : ComponentType[];
+  setEditHeightWidth : (newHeight : ComponentType[] )=> void;
 }
 
 interface ProviderPropsType {
@@ -20,9 +22,10 @@ const MyProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [selectedComponents, setSelectedComponents] = useState<ComponentType[]>([]);
   const [components, setComponents] = useState<ComponentType[]>([]);
   const [edithwmode, setEditHWMode] = useState<boolean>(false);
+  const [ editHeightWidth,setEditHeightWidth] = useState<ComponentType[]>([]);
 
   return (
-    <MyContext.Provider value={{ selectedComponents, setSelectedComponents, components, setComponents, edithwmode, setEditHWMode }}>
+    <MyContext.Provider value={{ selectedComponents, setSelectedComponents, components, setComponents, edithwmode, setEditHWMode,editHeightWidth, setEditHeightWidth }}>
       {children}
     </MyContext.Provider>
   );
