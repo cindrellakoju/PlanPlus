@@ -5,6 +5,7 @@ import { MyContext } from "../../context/Component.context";
 import { ComponentType } from "../../types";
 
 const SideBar: React.FC = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
   // Use context
   const context = useContext(MyContext);
 
@@ -16,7 +17,7 @@ const SideBar: React.FC = () => {
   // Fetch components data from the API on mount
   useEffect(() => {
     axios
-      .get<ComponentType[]>("http://localhost:5000/user/componentsposition") // API endpoint for components
+      .get<ComponentType[]>(`${backend_url}/user/componentsposition`) // API endpoint for components
       .then((response) => {
         console.log("Successfully fetched components: ", response.data);
         context.setComponents(response.data); // Set the fetched components to context
@@ -24,7 +25,7 @@ const SideBar: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching the data: ", error); // Handle any errors
       });
-  }, []); // Only re-run the effect when context changes (if needed)
+  }, []);
 
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {
@@ -35,7 +36,11 @@ const SideBar: React.FC = () => {
     if (!alreadySelected) {
       context.setSelectedComponents([
         ...context.selectedComponents,
-        { name: component.name, component_id: component.component_id, position_x: component.position_x,position_y: component.position_y, order_index:component.order_index }, // Add to selected components
+        { name: component.name,
+          component_id: component.component_id, 
+          position_x: component.position_x,
+          position_y: component.position_y, 
+          order_index:component.order_index }, // Add to selected components
       ]);
     }
   };

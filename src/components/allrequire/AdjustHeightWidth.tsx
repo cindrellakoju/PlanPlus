@@ -8,80 +8,115 @@ const componentMap: { [key:string]: React.ComponentType<{}>} = {
 }
 const AdjustHeightWidth: React.FC = () => {
   const context = useContext(MyContext)
+  const [upheight,setUpHeight] = useState<number>(120)
+  // whole field ko leftcorner dekhi component ko left corner sama ko distance
+  const [distwidth,setDistWidth] = useState<number>(1)
 
-  if(!context){
-    console.log("Wrap AdjustHeightWidth within MyProvider")
-  }
-
-  useEffect(()=> {
-    context?.setEditHeightWidth(context.selectedComponents)
+  useEffect(() => {
     context?.setEditHWMode(true)
+    context?.setEditHeightWidth(context.selectedComponents)
   }, [])
 
-  const needtoeditComponent = context?.editHeightWidth || []
-  console.log(needtoeditComponent)
 
-  const handlechangeheight = (id:number, upatedheight : number) => {
-    const upheight = needtoeditComponent?.map((comp) => {
-      if(comp.component_id === id){
-        return{...comp,position_y : upatedheight}
+  const handleDrag = (e: React.MouseEvent<HTMLDivElement>, id: number,upheight: number ) => {
+    const mousedrag = e.clientY - upheight;
+    console.log("Mouse Drag: ", mousedrag, "Actual Drag: ", e.clientY);
+  
+    context?.editHeightWidth.map((comp) => {
+      if (comp.component_id === id) {
+        context.setEditHeightWidth(
+          context.editHeightWidth.map((item) =>
+            item.component_id === id
+              ? { ...item, position_y: mousedrag } 
+              : item 
+          )
+        );
       }
-      return comp
-    })
-    console.log("Updated component: ", upheight)
-    console.log("Updated Height: ", upatedheight)
-    context?.setEditHeightWidth(upheight)
+    });
+  };
+  
+
+  const handleDragEnd = (e : React.MouseEvent<HTMLDivElement>) => {
+    console.log("DragEnd: ",e.clientY)
   }
- return (
-    <div style={{ display: "flex" , flexDirection: "row", flexWrap: "wrap", gap: "20px"}}>
+
+  const handleWidthDrag = (e:React.MouseEvent<HTMLDivElement>, id: number , distwidth : number) => {
+    const updatedwidth =e.clientX - distwidth
+    console.log("Mouse Drag: ", updatedwidth, "Actual Drag: ", e.clientY);
+    context?.editHeightWidth.map((comp) => {
+      if(comp.component_id === id){
+        context.setEditHeightWidth(
+          context.editHeightWidth.map((item) => 
+            item.component_id === id
+              ? {...item, position_x : updatedwidth }
+              : item
+          )
+        )
+      }
+    })
+  }
+  return(
+    <div style={{
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: "20px"
+    }}>
         {
-          needtoeditComponent?.map((component,index) => {
-            const [height, setHeight] = useState(component.position_y);
-            const [width, setWidth] =useState(component.position_x)
-            const Component = componentMap[component.name];
-            console.log("Height:  ",height);
+          context?.editHeightWidth.map((comp)=> {
+            const Component = componentMap[comp.name]
+            const height = comp.position_y
+            const width = comp.position_x
+
             return(
-              <div key={index} style={{ position: "relative" }}>
-                <div>
-                  {Component ? <Component/> : <div>Component Not found</div>}
-                </div>  
+              <div style={{ position: "relative"}}>
+                <div >
+                  {Component? <Component/> : <p>Component not found</p>}
+                </div>
                 <div
                   style={{
-                    position: "absolute",
-                    backgroundColor: "pink",
-                    width: `${width}px`,
-                    height: "10px",
-                    bottom: "2px",
-                    cursor: "ns-resize"
+                      position: "absolute",
+                      left: "3px",
+                      backgroundColor: "pink",
+                      width: "98%",
+                      height: "10px",
+                      bottom: "2px",
+                      cursor: "ns-resize",
+                      borderBottomLeftRadius: "18px",
+                      borderBottomRightRadius: "18px"
+                  }}
+
+                  onMouseDown={(e:React.MouseEvent<HTMLDivElement>) =>{
+                    setUpHeight(e.clientY - height)
+                  }}
+                  onDrag={(e) => handleDrag(e,comp.component_id,upheight )}
+                  onDragEnd={handleDragEnd}
+                />
+                <div
+                  style={{
+                      position: "absolute",
+                      right: "1.5px",
+                      bottom: "3px",
+                      backgroundColor: "red",
+                      height : "99%",
+                      width: "10px",
+                      cursor: "ew-resize",
+                      borderTopRightRadius: "18px",
+                      borderBottomRightRadius: "18px"
                   }}
 
                   onMouseDown={(e) => {
-                    e.preventDefault();
-
-                    const initialHeight = height;
-                    const initialY = e.clientY
-
-                    const onMouseMove = (mousemove: MouseEvent) => {
-                        const updatedheight = initialHeight + (mousemove.clientY - initialY)
-                        setHeight(updatedheight)
-                    } 
-
-                    const onMouseUp = () => {
-                      window.removeEventListener('mousemove',onMouseMove);
-                      window.removeEventListener('mouseup',onMouseUp);
-                      handlechangeheight(component.component_id,height);
-                    }
-
-                    window.addEventListener('mousemove',onMouseMove);
-                    window.addEventListener('mouseup',onMouseUp)
+                    setDistWidth(e.clientX-width)
                   }}
+
+                  onDrag={(e) => handleWidthDrag(e, comp.position_x,distwidth)}
                 />
-              </div>  
+              </div>
             )
           })
         }
     </div>
- )
+  )
 }
 
 export default AdjustHeightWidth
