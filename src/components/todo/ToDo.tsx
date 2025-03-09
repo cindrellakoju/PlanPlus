@@ -4,10 +4,10 @@ import ToDoField from "./ToDoField";
 import ComponentWidthHeight from "../../utils/ComponentWidthHeight";
 
 const ToDo:React.FC = () =>{
-    const { max_width, max_height,editHWMode } = ComponentWidthHeight("ToDo");
+    const { max_width, max_height,editHWMode, edit_height, edit_width } = ComponentWidthHeight("ToDo");
 
     return(
-        <div style={editHWMode? {} : { maxHeight: max_height, maxWidth: max_width }} className="todocontainer">
+        <div style={editHWMode? {height: edit_height, width: edit_width} : { maxHeight: max_height, maxWidth: max_width }} className="todocontainer">
             <h1>To Do List</h1>
             <ToDoField/>
         </div>
