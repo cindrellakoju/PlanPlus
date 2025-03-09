@@ -6,6 +6,7 @@ import { ComponentType } from "../../types";
 
 const SideBar: React.FC = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   // Use context
   const context = useContext(MyContext);
 

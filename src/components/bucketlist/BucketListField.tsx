@@ -4,7 +4,7 @@ import { ChooseField } from "../allrequire/ChooseField";
 import { Button } from "../allrequire/Button";
 
 const BucketListField:React.FC = () =>{
-    const {inside_temp_height, editHWMode} = ComponentWidthHeight("BucketList")
+    const {inside_temp_height} = ComponentWidthHeight("BucketList")
     return(
         <div className="bucketlistfieldcontainer">
             <ChooseField/>
