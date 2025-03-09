@@ -109,37 +109,39 @@ const AdjustHeightWidth: React.FC = () => {
         const width = comp.position_x;
         const comp_id = comp.component_id;
         return (
-          <div style={{ position: "relative" }} key={comp.component_id}>
-            <div key={comp.component_id}>
-              {Component ? <Component /> : <p>Component not found</p>}
-            <div
-              style={{
-                position: "absolute",
-                left: "3px",
-                backgroundColor: "pink",
-                width: `${width}px`,
-                height: "10px",
-                bottom: "2px",
-                cursor: "ns-resize",
-                borderBottomLeftRadius: "18px",
-                borderBottomRightRadius: "18px",
-              }}
-              onMouseDown={(e) => handleMouseDownHeight(e, comp_id, height)}
-            />
-            <div
-              style={{
-                position: "absolute",
-                right: "1.5px",
-                bottom: "3px",
-                backgroundColor: "red",
-                height: `${height}px`,
-                width: "10px",
-                cursor: "ew-resize",
-                borderTopRightRadius: "18px",
-                borderBottomRightRadius: "18px",
-              }}
-              onMouseDown={(e) => handleMouseDownWidth(e, comp_id, width)}
-            />
+          <div  key={comp.component_id}>
+            <div style={{ position: "relative" }}>
+              <div key={comp.component_id}>
+                {Component ? <Component /> : <p>Component not found</p>}
+              <div
+                style={{
+                  position: "absolute",
+                  left: "3px",
+                  backgroundColor: "pink",
+                  width: `${width}px`,
+                  height: "10px",
+                  bottom: "2px",
+                  cursor: "ns-resize",
+                  borderBottomLeftRadius: "18px",
+                  borderBottomRightRadius: "18px",
+                }}
+                onMouseDown={(e) => handleMouseDownHeight(e, comp_id, height)}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  right: "1.5px",
+                  bottom: "3px",
+                  backgroundColor: "red",
+                  height: `${height}px`,
+                  width: "10px",
+                  cursor: "ew-resize",
+                  borderTopRightRadius: "18px",
+                  borderBottomRightRadius: "18px",
+                }}
+                onMouseDown={(e) => handleMouseDownWidth(e, comp_id, width)}
+              />
+              </div>
             </div>
           </div>
         );
