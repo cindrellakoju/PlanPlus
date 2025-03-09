@@ -1,15 +1,23 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { MyContext } from "../../context/Component.context";
 import TopPriority from "../toppriority/TopPriority";
+import ToDo from "../todo/ToDo";
+import ToBuy from "../tobuy/ToBuy";
+import Schedule from "../schedule/Schedule";
+import BucketList from "../bucketlist/BucketList";
+import Money from "../money/Money";
 
 const componentMap: { [key: string]: React.ComponentType<{}> } = {
   TopPriority,
+  ToDo,
+  ToBuy,
+  Schedule,
+  BucketList, 
+  Money
 };
 
 const AdjustHeightWidth: React.FC = () => {
   const context = useContext(MyContext);
-  const [upheight, setUpHeight] = useState<number>(120);
-  const [distwidth, setDistWidth] = useState<number>(0); // Initialize with 0
 
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingWidth, setIsResizingWidth] = useState(false);
