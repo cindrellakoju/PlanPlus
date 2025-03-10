@@ -1,4 +1,3 @@
-import { error } from "console";
 import db from "../config/db.config";
 import { Callback, components } from "../types/todo.type";
 

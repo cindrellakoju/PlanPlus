@@ -29,3 +29,11 @@ export interface components{
     position_x : number,
     position_y : number
 }
+
+export interface user{
+    user_id : number,
+    first_name: string,
+    last_name: string,
+    email : string,
+    password: string
+}
