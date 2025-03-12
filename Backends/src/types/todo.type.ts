@@ -32,8 +32,8 @@ export interface components{
 
 export interface user{
     // user_id?: number,
-    first_name: string,
-    last_name: string,
+    first_name ?: string,
+    last_name ?: string,
     email : string,
     password: string
 }

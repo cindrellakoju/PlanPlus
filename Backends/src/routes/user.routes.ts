@@ -3,11 +3,12 @@ import { deleteToDoController, editToDoListController, getAllUsers, getToDoListC
 import createAllTable from "../scripts/dbtable.scripts";
 import insertAllDatas from "../scripts/dbinsert.scripts";
 import { getComponentsController, updateComponentsController } from "../controllers/componentsposition.controller";
-import { signup } from "../controllers/signup.controller";
+import { login, signup } from "../controllers/signup.controller";
 
 const router = Router()
 
 router.get("/",getAllUsers);
+router.post("/login",login);
 router.get("/createtables",createAllTable);
 router.get("/insert",insertAllDatas);
 router.get("/todo",getToDoListController);

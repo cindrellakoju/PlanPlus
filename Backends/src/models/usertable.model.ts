@@ -33,3 +33,17 @@ export const findByEmail = (email: string, callback: Callback) => {
         callback(null, { foundEmail });
     });
 }
+
+export const fetchLoginInfo = (email: string, callback: Callback) => {
+    const query = "SELECT * FROM user WHERE email = ?";
+    // console.log(query)
+
+    db.query(query, [email], (error, results) => {
+        if (error) {
+            console.log("Error fetching user info:", error);
+            return callback(error);
+        }
+        // console.log(results)
+        callback(null, results);
+    });
+}
