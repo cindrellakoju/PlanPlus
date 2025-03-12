@@ -3,6 +3,7 @@ import { deleteToDoController, editToDoListController, getAllUsers, getToDoListC
 import createAllTable from "../scripts/dbtable.scripts";
 import insertAllDatas from "../scripts/dbinsert.scripts";
 import { getComponentsController, updateComponentsController } from "../controllers/componentsposition.controller";
+import { signup } from "../controllers/signup.controller";
 
 const router = Router()
 
@@ -13,6 +14,7 @@ router.get("/todo",getToDoListController);
 router.put("/todo/edit/:id",editToDoListController)
 router.delete("/todo/delete/:id",deleteToDoController)
 router.post("/todo/insert",insertToDoController);
+router.post("/signup",signup);
 router.get("/componentsposition",getComponentsController);
 router.put("/componentsposition/edit/:id",updateComponentsController);
 
