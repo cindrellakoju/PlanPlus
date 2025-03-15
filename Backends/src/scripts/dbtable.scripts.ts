@@ -61,7 +61,6 @@ const createUserTable = () => {
   sendQuery(createUserTableQuery,"User Table")
 }
 
-
 const sendQuery = (query:string,tablename:string) =>{
   db.query(query,(err,results)=>{
     if(err){
@@ -71,6 +70,8 @@ const sendQuery = (query:string,tablename:string) =>{
     console.log(`Successfully created table ${tablename}`,results)
   })
 };
+
+
 
 const createAllTable = () =>{
   // createToDoListTable();

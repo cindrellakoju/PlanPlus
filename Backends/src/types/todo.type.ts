@@ -37,3 +37,9 @@ export interface user{
     email : string,
     password: string
 }
+export interface userinputfortable {
+    name: string;         // Name of the table
+    colname: string[];    // Array of column names
+    coltype: string[];    // Array of column types
+    unique: boolean[];    // Array of uniqueness constraints (true/false for each column)
+}

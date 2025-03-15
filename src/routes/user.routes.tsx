@@ -5,12 +5,14 @@ import FrontPageEdit from "../pages/FrontPageEdit";
 import { MyProvider } from "../context/Component.context";
 import LoginPage from "../components/notLogin/LoginPage";
 import SignUpPage from "../components/notLogin/SignUpPage";
+import CreateTable from "../components/allrequire/CreateTable";
 
 const routes = createBrowserRouter([
     { path: "/", element: <AppPage/> },
     {  path: "/homepgedit", element: <FrontPageEdit /> },
     { path:"/login", element: <LoginPage/> },
-    { path:"/signup", element:<SignUpPage/> }
+    { path:"/signup", element:<SignUpPage/> },
+    { path:"/createtable", element: <CreateTable/> }
 ]);
 
 const UserRoute: React.FC = () => {

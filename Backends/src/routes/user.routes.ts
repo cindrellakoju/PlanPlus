@@ -4,6 +4,7 @@ import createAllTable from "../scripts/dbtable.scripts";
 import insertAllDatas from "../scripts/dbinsert.scripts";
 import { getComponentsController, updateComponentsController } from "../controllers/componentsposition.controller";
 import { login, signup } from "../controllers/signup.controller";
+import CreateTableByUserController from "../controllers/db.createtable.controller";
 
 const router = Router()
 
@@ -18,6 +19,8 @@ router.post("/todo/insert",insertToDoController);
 router.post("/signup",signup);
 router.get("/componentsposition",getComponentsController);
 router.put("/componentsposition/edit/:id",updateComponentsController);
+
+router.post("/usercreatetable", CreateTableByUserController);
 
 
 export default router
