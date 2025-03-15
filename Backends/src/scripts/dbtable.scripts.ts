@@ -10,7 +10,8 @@ export const createToDoListTable = () => {
       priority ENUM('low', 'medium', 'high') DEFAULT 'medium',
       status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
     );
   `;
 
@@ -25,7 +26,9 @@ const createBucketListTable = () =>{
       title VARCHAR(255) NOT NULL,
       status ENUM('pending','completed') DEFAULT 'pending',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      user_id INT,
+      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
     );
   `;
 
@@ -39,7 +42,8 @@ const createComponentTable = () =>{
       name VARCHAR(255) NOT NULL,
       order_index INT NOT NULL,
       position_x FLOAT NOT NULL DEFAULT 0,
-      position_y FLOAT NOT NULL DEFAULT 0
+      position_y FLOAT NOT NULL DEFAULT 0,
+      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
     )
   `
   sendQuery(createComponentTableQuery,'Component Table');
@@ -74,10 +78,10 @@ const sendQuery = (query:string,tablename:string) =>{
 
 
 const createAllTable = () =>{
-  // createToDoListTable();
-  // createBucketListTable();
-  // createComponentTable();
   createUserTable();
+  createToDoListTable();
+  createBucketListTable();
+  createComponentTable();
 }
 
 export default createAllTable;
