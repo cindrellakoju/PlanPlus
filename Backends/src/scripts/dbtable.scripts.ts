@@ -110,7 +110,7 @@ const createUserTableColumns = () => {
   sendQuery(createUserTableColumnsQuery,"User Table Columns")
 }
 
-const createUserTableData =  () => {
+const createUserTableData = () => {
   const createUserTableDataQuery = `
     CREATE TABLE IF NOT EXISTS user_table_data (
       data_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -118,10 +118,12 @@ const createUserTableData =  () => {
       column_data JSON NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_table_id) REFERENCES user_tables(user_table_id) ON DELETE CASCADE,
+      FOREIGN KEY (user_table_id) REFERENCES user_tables(user_table_id) ON DELETE CASCADE
     );
-  `
-}
+  `;
+  sendQuery(createUserTableDataQuery, "User Table Data");
+};
+
 const sendQuery = (query:string,tablename:string) =>{
   db.query(query,(err,results)=>{
     if(err){
