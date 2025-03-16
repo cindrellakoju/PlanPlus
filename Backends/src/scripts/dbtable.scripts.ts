@@ -1,57 +1,57 @@
 import db from "../config/db.config";
 
 // SQL query to create the todolist table
-export const createToDoListTable = () => {
-  const createToDoListQuery = `
-    CREATE TABLE IF NOT EXISTS todolist (
-      todolist_id INT AUTO_INCREMENT PRIMARY KEY,
-      task VARCHAR(255) NOT NULL,
-      due_date DATETIME,
-      priority ENUM('low', 'medium', 'high') DEFAULT 'medium',
-      status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
-    );
-  `;
+// export const createToDoListTable = () => {
+//   const createToDoListQuery = `
+//     CREATE TABLE IF NOT EXISTS todolist (
+//       todolist_id INT AUTO_INCREMENT PRIMARY KEY,
+//       task VARCHAR(255) NOT NULL,
+//       due_date DATETIME,
+//       priority ENUM('low', 'medium', 'high') DEFAULT 'medium',
+//       status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+//       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+//     );
+//   `;
 
-  sendQuery(createToDoListQuery,"To Do List");
+//   sendQuery(createToDoListQuery,"To Do List");
 
-};
+// };
 
-const createBucketListTable = () =>{
-  const createBucketListQuery = `
-    CREATE TABLE IF NOT EXISTS bucketlist (
-      bucketlist_id INT AUTO_INCREMENT PRIMARY KEY,
-      title VARCHAR(255) NOT NULL,
-      status ENUM('pending','completed') DEFAULT 'pending',
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      user_id INT,
-      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
-    );
-  `;
+// const createBucketListTable = () =>{
+//   const createBucketListQuery = `
+//     CREATE TABLE IF NOT EXISTS bucketlist (
+//       bucketlist_id INT AUTO_INCREMENT PRIMARY KEY,
+//       title VARCHAR(255) NOT NULL,
+//       status ENUM('pending','completed') DEFAULT 'pending',
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+//       user_id INT,
+//       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+//     );
+//   `;
 
-    sendQuery(createBucketListQuery,"Bucket List");
-}
+//     sendQuery(createBucketListQuery,"Bucket List");
+// }
 
-const createComponentTable = () =>{
-  const createComponentTableQuery = `
-    CREATE TABLE IF NOT EXISTS componentsposition(
-      component_id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      order_index INT NOT NULL,
-      position_x FLOAT NOT NULL DEFAULT 0,
-      position_y FLOAT NOT NULL DEFAULT 0,
-      FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
-    )
-  `
-  sendQuery(createComponentTableQuery,'Component Table');
-}
+// const createComponentTable = () =>{
+//   const createComponentTableQuery = `
+//     CREATE TABLE IF NOT EXISTS componentsposition(
+//       component_id INT AUTO_INCREMENT PRIMARY KEY,
+//       name VARCHAR(255) NOT NULL,
+//       order_index INT NOT NULL,
+//       position_x FLOAT NOT NULL DEFAULT 0,
+//       position_y FLOAT NOT NULL DEFAULT 0,
+//       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+//     )
+//   `
+//   sendQuery(createComponentTableQuery,'Component Table');
+// }
 
-const createUserTable = () => {
-  const createUserTableQuery = `
-    CREATE TABLE IF NOT EXISTS user(
+const createUsers = () => {
+  const createUsersQuery = `
+    CREATE TABLE IF NOT EXISTS users(
       user_id INT AUTO_INCREMENT PRIMARY KEY,
       first_name VARCHAR(255) NOT NULL,
       last_name VARCHAR(255) NOT NULL,
@@ -62,9 +62,66 @@ const createUserTable = () => {
     )
   `
 
-  sendQuery(createUserTableQuery,"User Table")
+  sendQuery(createUsersQuery,"users")
 }
 
+const createThemeTable = () =>{
+  const createThemeTableQuery = `
+    CREATE TABLE IF NOT EXISTS table_themes (
+      theme_id INT AUTO_INCREMENT PRIMARY KEY,
+      theme_name VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+  `
+  sendQuery(createThemeTableQuery,"Theme Table")
+}
+
+const createUserTable = () => {
+  const createUserTableQuery =  `
+    CREATE TABLE IF NOT EXISTS user_tables (
+      user_table_id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      table_name VARCHAR(255) NOT NULL,
+      theme_id INT NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+      FOREIGN KEY (theme_id) REFERENCES table_themes(theme_id) ON DELETE CASCADE
+    );
+  `
+  sendQuery(createUserTableQuery,"User Table")
+} 
+
+const createUserTableColumns = () => {
+  const createUserTableColumnsQuery =  `
+    CREATE TABLE IF NOT EXISTS user_table_columns (
+      column_meta_id INT AUTO_INCREMENT PRIMARY KEY,
+      user_table_id INT NOT NULL,
+      column_name VARCHAR(255) NOT NULL,
+      column_type VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      theme_id INT NOT NULL,
+      FOREIGN KEY (user_table_id) REFERENCES user_tables(user_table_id) ON DELETE CASCADE,
+      FOREIGN KEY (theme_id) REFERENCES table_themes(theme_id) ON DELETE CASCADE
+    );
+  `
+  sendQuery(createUserTableColumnsQuery,"User Table Columns")
+}
+
+const createUserTableData =  () => {
+  const createUserTableDataQuery = `
+    CREATE TABLE IF NOT EXISTS user_table_data (
+      data_id INT AUTO_INCREMENT PRIMARY KEY,
+      user_table_id INT NOT NULL,
+      column_data JSON NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_table_id) REFERENCES user_tables(user_table_id) ON DELETE CASCADE,
+    );
+  `
+}
 const sendQuery = (query:string,tablename:string) =>{
   db.query(query,(err,results)=>{
     if(err){
@@ -78,10 +135,14 @@ const sendQuery = (query:string,tablename:string) =>{
 
 
 const createAllTable = () =>{
+  // createToDoListTable();
+  // createBucketListTable();
+  // createComponentTable();
+  createUsers();
+  createThemeTable();
   createUserTable();
-  createToDoListTable();
-  createBucketListTable();
-  createComponentTable();
+  createUserTableColumns();
+  createUserTableData();
 }
 
 export default createAllTable;
