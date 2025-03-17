@@ -1,6 +1,9 @@
 import { insertUser, findByEmail, fetchLoginInfo } from "../models/usertable.model";
 import bcrypt from "bcryptjs";
 import { user } from "../types/todo.type";
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET_KEY = 'C1039S'
 
 export const registerUser = (insertUserData: user): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -54,7 +57,12 @@ export const loginUser = (logininfo: user): Promise<any> => {
                 console.log("Password match:", isPasswordValid);  // Log the result of the comparison
 
                 if (isPasswordValid) {
-                    resolve(results[0]);  // Successful login
+
+                    const token = jwt.sign(
+                        { user_id : results[0].user_id, email: results[0].email},
+                        JWT_SECRET_KEY
+                    )
+                    resolve({ user: results[0], token }); // Send user info and the token
                 } else {
                     reject(new Error("Invalid credentials"));
                 }
