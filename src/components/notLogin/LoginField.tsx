@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { MyContext } from '../../context/Component.context';
 
 interface LoginInfo {
   email: string;
@@ -17,6 +18,10 @@ const LoginField: React.FC = () => {
   
   const navigate = useNavigate(); // Navigation hook from react-router-dom
 
+  const context = useContext(MyContext);
+  if(!context){
+    console.log("Wrap LoginField by my provider")
+  }
   const handleLogin = () => {
     if (!email || !password) {
       console.log('Email and Password are required.');
@@ -33,7 +38,8 @@ const LoginField: React.FC = () => {
     axios
       .post(`${backend_url}/user/login`, logInfo) // Send login request to the server
       .then((response) => {
-        console.log('Login successful:', response.data);
+        console.log('Login successful:', response.data.user);
+        context?.setUserDetail(response.data.user)
 
         // Store the JWT token in localStorage or sessionStorage
         if (rememberme) {

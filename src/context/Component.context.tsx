@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState } from 'react';
-import { ComponentType } from '../types';
+import { ComponentType, userinfo } from '../types';
 
 interface ContextType {
   selectedComponents: ComponentType[];
@@ -10,6 +10,8 @@ interface ContextType {
   setEditHWMode: (newMode: boolean) => void; 
   editHeightWidth : ComponentType[];
   setEditHeightWidth : (newHeight : ComponentType[] )=> void;
+  userdetail : userinfo | null;
+  setUserDetail: (user : userinfo | null) => void
 }
 
 interface ProviderPropsType {
@@ -23,9 +25,10 @@ const MyProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [components, setComponents] = useState<ComponentType[]>([]);
   const [edithwmode, setEditHWMode] = useState<boolean>(false);
   const [ editHeightWidth,setEditHeightWidth] = useState<ComponentType[]>([]);
+  const [userdetail, setUserDetail] = useState<userinfo | null>(null);
 
   return (
-    <MyContext.Provider value={{ selectedComponents, setSelectedComponents, components, setComponents, edithwmode, setEditHWMode,editHeightWidth, setEditHeightWidth }}>
+    <MyContext.Provider value={{ selectedComponents, setSelectedComponents, components, setComponents, edithwmode, setEditHWMode,editHeightWidth, setEditHeightWidth, userdetail,setUserDetail }}>
       {children}
     </MyContext.Provider>
   );

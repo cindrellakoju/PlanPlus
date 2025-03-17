@@ -20,3 +20,9 @@ export interface selectedComponent {
   component_id : number;
   name: string
 }
+
+export interface userinfo{
+  first_name : string,
+  last_name : string,
+  user_id : number
+}

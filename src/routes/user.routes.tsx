@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, Route, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import AppPage from "../pages/AppPage";
 import FrontPageEdit from "../pages/FrontPageEdit";
 import { MyProvider } from "../context/Component.context";
