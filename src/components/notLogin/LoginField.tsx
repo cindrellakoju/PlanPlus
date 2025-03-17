@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for programmatic navigation
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
 
 interface LoginInfo {
   email: string;
@@ -15,11 +15,9 @@ const LoginField: React.FC = () => {
   const [rememberme, setRememberMe] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(false);
   
-  // Use navigate from react-router-dom for navigation
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigation hook from react-router-dom
 
   const handleLogin = () => {
-    // Basic form validation before sending request
     if (!email || !password) {
       console.log('Email and Password are required.');
       return;
@@ -33,11 +31,11 @@ const LoginField: React.FC = () => {
     setLoginInfo(logInfo); // Optional: keep track of the login data
 
     axios
-      .post(`${backend_url}/user/login`, logInfo)
+      .post(`${backend_url}/user/login`, logInfo) // Send login request to the server
       .then((response) => {
         console.log('Login successful:', response.data);
 
-        // Store the session token in localStorage or sessionStorage
+        // Store the JWT token in localStorage or sessionStorage
         if (rememberme) {
           localStorage.setItem('sessionToken', response.data.token); // Store in localStorage if "Remember Me" is checked
         } else {
@@ -46,26 +44,28 @@ const LoginField: React.FC = () => {
 
         // Optionally clear the password after a successful login for security purposes
         setPassword('');
+
+        // Set the login state to true to conditionally render content
         setLogin(true);
 
-        // Navigate to the root route ("/") after successful login
-        navigate('/');  // This will route to "/"
+        // Redirect to the root route ("/") after successful login
+        navigate('/');  // Navigate to the root route or dashboard page
       })
       .catch((err) => {
-        console.error('Error login:', err);
+        console.error('Error logging in:', err);
       });
   };
 
   return (
     login ? (
-      // You can render a redirect component or whatever you want when logged in
-      <div>Logged in successfully!</div> // This will be replaced with actual content after login
+      // After login, show success message or redirect to the protected page
+      <div>Logged in successfully!</div>
     ) : (
       <div className="loginfield">
         <input
           type="text"
           id="user"
-          placeholder="Enter your username"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
