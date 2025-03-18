@@ -6,6 +6,7 @@ import { getComponentsController, updateComponentsController } from "../controll
 import { login, signup } from "../controllers/signup.controller";
 import CreateTableByUserController from "../controllers/db.createtable.controller";
 import { fetchtableinfo } from "../controllers/tableinfo.controllers";
+import { fetchtablename } from "../controllers/extractusertable.controller";
 
 const router = Router()
 
@@ -24,5 +25,6 @@ router.put("/componentsposition/edit/:id",updateComponentsController);
 router.post("/usercreatetable", CreateTableByUserController);
 
 router.get("/tableinfo",fetchtableinfo);
+router.get("/tablename",fetchtablename)
 
 export default router
