@@ -25,6 +25,7 @@ router.put("/componentsposition/edit/:id",updateComponentsController);
 router.post("/usercreatetable", CreateTableByUserController);
 
 router.get("/tableinfo",fetchtableinfo);
-router.get("/tablename",fetchtablename)
+router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a URL parameter
+
 
 export default router
