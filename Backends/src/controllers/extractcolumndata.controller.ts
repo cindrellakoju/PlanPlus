@@ -11,7 +11,6 @@ export const fetchcolumndata = async(req:Request, res:Response) => {
     }
     console.log(data)
     try{
-        console.log("heheheheh")
         const result = await getColumnData(data);
         res.status(200).json(result);
     }catch(err){

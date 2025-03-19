@@ -8,8 +8,6 @@ export const getColumnName = (data: Datas): Promise<any> => {
             user_id: data.user_id,
             tablename: tablename
         };
-        
-        console.log(udata)
         // Assuming tablecolumnname is a function that queries the database
         tablecolumnname(udata, (err, results) => {
             if (err) {
