@@ -43,3 +43,8 @@ export interface userinputfortable {
     coltype: string[];    // Array of column types
     unique: boolean[];    // Array of uniqueness constraints (true/false for each column)
 }
+
+export interface Datas {
+    user_id: number;
+    tablename: string;
+}

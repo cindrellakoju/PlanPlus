@@ -1,7 +1,7 @@
-import { tablecolumnname } from "../models/extractusertablecolumn.model"
+import { columndata } from "../models/extractcolumndata.model";
 import { Datas } from "../types/todo.type";
 
-export const getColumnName = (data: Datas): Promise<any> => {
+export const getColumnData = (data:Datas): Promise<any> => {
     return new Promise((resolve, reject) => {  // Changed rejects to reject
         const tablename = convertToSnakeCase(data.tablename)
         const udata = {
@@ -11,7 +11,7 @@ export const getColumnName = (data: Datas): Promise<any> => {
         
         console.log(udata)
         // Assuming tablecolumnname is a function that queries the database
-        tablecolumnname(udata, (err, results) => {
+        columndata(udata, (err, results) => {
             if (err) {
                 console.log("Error in services:", err);  // More specific log message
                 reject(err);  // Rejecting the promise on error

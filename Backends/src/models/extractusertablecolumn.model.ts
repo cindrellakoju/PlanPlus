@@ -1,10 +1,6 @@
 import db from "../config/db.config";
-import { Callback } from "../types/todo.type";
+import { Callback, Datas } from "../types/todo.type";
 
-interface Datas {
-  user_id: number;
-  tablename: string;
-}
 
 export const tablecolumnname = (udata: Datas, callback: Callback): void => {
   const query = `

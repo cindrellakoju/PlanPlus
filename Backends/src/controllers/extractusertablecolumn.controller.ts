@@ -11,7 +11,6 @@ export const fetchtablecolumn = async(req:Request, res:Response) => {
     }
     console.log(data)
     try{
-        console.log("heheheheh")
         const result = await getColumnName(data);
         res.status(200).json(result);
     }catch(err){

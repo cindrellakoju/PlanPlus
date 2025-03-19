@@ -8,6 +8,7 @@ import CreateTableByUserController from "../controllers/db.createtable.controlle
 import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 import { fetchtablename } from "../controllers/extractusertable.controller";
 import { fetchtablecolumn } from "../controllers/extractusertablecolumn.controller";
+import { fetchcolumndata } from "../controllers/extractcolumndata.controller";
 
 const router = Router()
 
@@ -27,6 +28,7 @@ router.post("/usercreatetable", CreateTableByUserController);
 
 router.get("/tableinfo",fetchtableinfo);
 router.get("/tablecolumn/:user_id",fetchtablecolumn);
+router.get("/columndata/:user_id",fetchcolumndata);
 router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a URL parameter
 
 
