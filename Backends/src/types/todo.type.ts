@@ -48,3 +48,13 @@ export interface Datas {
     user_id: number;
     tablename: string;
 }
+
+interface task {
+  [key: string]: string;  // Task can have any number of string key-value pairs
+}
+  
+export interface insertinfo {
+  user_id: number;
+  tablename: string;
+  value: task;  // `value` is a `task` object
+}

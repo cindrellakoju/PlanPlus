@@ -9,6 +9,7 @@ import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 import { fetchtablename } from "../controllers/extractusertable.controller";
 import { fetchtablecolumn } from "../controllers/extractusertablecolumn.controller";
 import { fetchcolumndata } from "../controllers/extractcolumndata.controller";
+import { insertTabelData } from "../controllers/crudondata.controller";
 
 const router = Router()
 
@@ -30,6 +31,8 @@ router.get("/tableinfo",fetchtableinfo);
 router.get("/tablecolumn/:user_id",fetchtablecolumn);
 router.get("/columndata/:user_id",fetchcolumndata);
 router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a URL parameter
+
+router.post("/insertintotable/:user_id",insertTabelData)
 
 
 export default router
