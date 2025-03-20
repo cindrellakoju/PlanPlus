@@ -58,3 +58,10 @@ export interface insertinfo {
   tablename: string;
   value: task;  // `value` is a `task` object
 }
+
+export interface updateinfo {
+    user_id : number,
+    tablename : string,
+    data_id : number,
+    value : task
+}

@@ -1,6 +1,8 @@
-import { InsertData } from "../models/crudondata.model";
-import { insertinfo } from "../types/todo.type";
+import { resolve } from "path";
+import { InsertData, UpdateData } from "../models/crudondata.model";
+import { insertinfo, updateinfo } from "../types/todo.type";
 import { convertTable } from "../utils/converttable.utils";
+import { rejects } from "assert";
 
 export const insertintotable = (insertdata : insertinfo):Promise<any> => {
     return new Promise((resolve,rejects) => {
@@ -9,7 +11,6 @@ export const insertintotable = (insertdata : insertinfo):Promise<any> => {
             ...insertdata,
             tablename: table_name
         }
-        console.log("Updated table:",update_tablename)
         InsertData(update_tablename,(err,results) => {
             if(err) rejects(err);
             resolve(results)

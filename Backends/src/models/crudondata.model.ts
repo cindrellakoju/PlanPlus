@@ -1,5 +1,5 @@
 import db from "../config/db.config";
-import { Callback, insertinfo } from "../types/todo.type";
+import { Callback, insertinfo, updateinfo } from "../types/todo.type";
 
 export const InsertData = (insertdata: insertinfo, callback: Callback) => {
   // Destructuring `value` from `insertdata`
@@ -33,5 +33,50 @@ export const InsertData = (insertdata: insertinfo, callback: Callback) => {
     } else {
       callback(null, { message: `Successfully added to ${insertdata.tablename}` });  // Success message
     }
+  });
+};
+
+export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
+  let keyval = '';
+  let queryValues = [];
+
+  console.log(updatedata)
+  // Loop through the keys in updatedata.value and create JSON_SET arguments
+  for (const [key, val] of Object.entries(updatedata.value)) {
+    keyval += `'$."${key}"', ?, `;  // Dynamically update each key
+    queryValues.push(val); // Add the value to the query values array
+  }
+
+  // Remove trailing comma and space
+  keyval = keyval.slice(0, -2); // Remove last comma
+  // SQL query construction
+  const query = `
+    UPDATE user_table_data
+    SET column_data = JSON_SET(column_data, 
+      ${keyval} 
+    )
+    WHERE user_table_id = (
+      SELECT ut.user_table_id
+      FROM user_tables ut
+      JOIN user_table_columns utc ON ut.user_table_id = utc.user_table_id
+      WHERE ut.user_id = ?   
+        AND ut.table_name = ? 
+      LIMIT 1
+    )
+    AND data_id = ?; 
+
+  `;
+
+  console.log(query)
+  // Add user_id, table_name, and data_id to the query values
+  queryValues.push(updatedata.user_id, updatedata.tablename, updatedata.data_id);
+  console.log(queryValues)
+  // Execute the query
+  db.query(query, queryValues, (err, results) => {
+    if (err) {
+      console.log("Error updating Data");
+      return callback(err);
+    }
+    callback(null, results);
   });
 };
