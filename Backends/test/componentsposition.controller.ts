@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { fetchComponents, updateComponents } from "../services/componentsposition.services";
-import { components } from "../types/todo.type";
+import { fetchComponents, updateComponents } from "./componentsposition.services";
+import { components } from "../src/types/todo.type";
 
 export const getComponentsController = async(req:Request,res:Response) =>{
     try{

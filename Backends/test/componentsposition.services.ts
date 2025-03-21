@@ -1,6 +1,5 @@
-import { error } from "console";
-import { editComponents, getComponents } from "../models/componentsposition.model"
-import { components } from "../types/todo.type";
+import { editComponents, getComponents } from "./componentsposition.model"
+import { components } from "../src/types/todo.type";
 
 export const fetchComponents = ():Promise<any> =>{
     return new Promise((resolve,rejects)=>{

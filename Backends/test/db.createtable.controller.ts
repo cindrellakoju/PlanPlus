@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateTableByUserServices } from "../services/db.createtable.services";
+import { CreateTableByUserServices } from "./db.createtable.services";
 
 const CreateTableByUserController = async (req: Request, res: Response): Promise<any> => {
     try {

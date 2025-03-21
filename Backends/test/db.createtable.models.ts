@@ -1,5 +1,5 @@
-import db from "../config/db.config";
-import { userinputfortable, Callback } from "../types/todo.type";
+import db from "../src/config/db.config";
+import { userinputfortable, Callback } from "../src/types/todo.type";
 
 export const CreateTableByUserModel = (userinputfortable: userinputfortable, callback: Callback) => {
     const tablename: string = userinputfortable.name;

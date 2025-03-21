@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { deleteToDoController, editToDoListController, getAllUsers, getToDoListController, insertToDoController } from "../controllers/todolist.controllers";
+import { deleteToDoController, editToDoListController, getAllUsers, getToDoListController, insertToDoController } from "..//../test/todolist.controllers";
 import createAllTable from "../scripts/dbtable.scripts";
 import insertAllDatas from "../scripts/dbinsert.scripts";
-import { getComponentsController, updateComponentsController } from "../controllers/componentsposition.controller";
 import { login, signup } from "../controllers/signup.controller";
-import CreateTableByUserController from "../controllers/db.createtable.controller";
-import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 import { fetchtablename } from "../controllers/extractusertable.controller";
 import { fetchtablecolumn } from "../controllers/extractusertablecolumn.controller";
 import { fetchcolumndata } from "../controllers/extractcolumndata.controller";
 import { insertTabelData, UpdateDataOfTable } from "../controllers/crudondata.controller";
+import CreateTableByUserController from "../../test/db.createtable.controller";
+import { getComponentsController, updateComponentsController } from "../../test/componentsposition.controller";
+import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 
 const router = Router()
 

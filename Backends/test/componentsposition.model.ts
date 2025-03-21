@@ -1,5 +1,5 @@
-import db from "../config/db.config";
-import { Callback, components } from "../types/todo.type";
+import db from "../src/config/db.config";
+import { Callback, components } from "../src/types/todo.type";
 
 export const getComponents = (callback:Callback) =>{
     const query = 'SELECT * from componentsposition ORDER BY order_index ASC';

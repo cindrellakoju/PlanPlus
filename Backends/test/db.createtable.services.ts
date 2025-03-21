@@ -1,6 +1,6 @@
-import db from "../config/db.config";
-import { CreateTableByUserModel } from "../models/db.createtable.models";
-import { userinputfortable } from "../types/todo.type";
+import db from "../src/config/db.config";
+import { CreateTableByUserModel } from "./db.createtable.models";
+import { userinputfortable } from "../src/types/todo.type";
 
 
 export const CreateTableByUserServices = (userinputfortable: userinputfortable): Promise<any> => {
