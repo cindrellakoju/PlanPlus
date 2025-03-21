@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { insertintotable, updatedataoftable } from "../services/crudondata.services";
+import { DeleteDataService, insertintotable, updatedataoftable } from "../services/crudondata.services";
 
 export const insertTabelData = async(req:Request, res: Response) => {
     const user_id = Number(req.params.user_id);
@@ -37,5 +37,17 @@ export const UpdateDataOfTable = async(req:Request, res:Response) => {
         res.status(200).json(result);
     }catch(err) {
         res.status(500).json({ message : "Error updating "})
+    }
+}
+
+export const DeleteDataController = async(req :Request, res:Response) => {
+    const user_id = Number(req.params.user_id)
+    const { data_id } = req.body
+
+    try{
+        const result = DeleteDataService(user_id,data_id)
+        res.status(200).json(result)
+    }catch(err){
+        res.status(500).json(err)
     }
 }

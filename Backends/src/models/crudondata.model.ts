@@ -80,3 +80,21 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
     callback(null, results);
   });
 };
+
+export const DeleteData = (user_id:number,data_id:number,callback:Callback) => {
+  const query = `
+    DELETE utd 
+    FROM user_table_data utd
+    JOIN user_tables ut ON utd.user_table_id = ut.user_table_id
+    WHERE utd.data_id = ? AND ut.user_id = ?
+  `
+  db.query(query,[data_id,user_id],(err,results) => {
+    if(err){
+      console.log("Error deleting data of id :",data_id)
+      callback(err,null)
+    }
+    console.log("Successfully deleted data :",data_id)
+    console.log(results)
+    callback(null,results)
+  })
+}

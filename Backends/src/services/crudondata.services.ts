@@ -1,4 +1,4 @@
-import { InsertData, UpdateData } from "../models/crudondata.model";
+import { DeleteData, InsertData, UpdateData } from "../models/crudondata.model";
 import { insertinfo, updateinfo } from "../types/todo.type";
 import { convertTable } from "../utils/converttable.utils";
 
@@ -26,6 +26,15 @@ export const updatedataoftable = (updatedate : updateinfo):Promise<any> => {
         UpdateData(updated_datainfo,(err,results) => {
             if(err) rejects(err);
             resolve(results)
+        })
+    })
+}
+
+export const DeleteDataService = (user_id:number,data_id:number):Promise<any> => {
+    return new Promise((resolve,reject) => {
+        DeleteData(user_id,data_id,(err,results) => {
+            if(err) reject(err)
+                resolve(results)
         })
     })
 }

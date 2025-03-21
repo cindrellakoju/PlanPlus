@@ -6,7 +6,7 @@ import { login, signup } from "../controllers/signup.controller";
 import { fetchtablename } from "../controllers/extractusertable.controller";
 import { fetchtablecolumn } from "../controllers/extractusertablecolumn.controller";
 import { fetchcolumndata } from "../controllers/extractcolumndata.controller";
-import { insertTabelData, UpdateDataOfTable } from "../controllers/crudondata.controller";
+import { DeleteDataController, insertTabelData, UpdateDataOfTable } from "../controllers/crudondata.controller";
 import CreateTableByUserController from "../../test/db.createtable.controller";
 import { getComponentsController, updateComponentsController } from "../../test/componentsposition.controller";
 import { fetchtableinfo } from "../controllers/tableinfo.controllers";
@@ -35,6 +35,7 @@ router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a
 
 router.post("/insertintotable/:user_id",insertTabelData)
 router.put("/updateintotable/:user_id",UpdateDataOfTable)
+router.post("/deletedataoftable/:user_id",DeleteDataController)
 
 router.post("/inserttablename/:user_id",insertTableNameController)
 export default router
