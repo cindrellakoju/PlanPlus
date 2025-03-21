@@ -65,3 +65,11 @@ export interface updateinfo {
     data_id : number,
     value : task
 }
+
+export interface tableinfo {
+    user_id: number;
+    table_name: string;
+    theme_id: number;
+    width: number;
+    height: number;
+}

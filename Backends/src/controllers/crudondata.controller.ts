@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { insertintotable, updatedataoftable } from "../services/crudondata.services";
-import { tablename } from "../models/extractusertable.model";
 
 export const insertTabelData = async(req:Request, res: Response) => {
     const user_id = Number(req.params.user_id);

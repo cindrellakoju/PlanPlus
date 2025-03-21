@@ -1,5 +1,6 @@
-import db from "../config/db.config";
-import { Callback,todo,inserttodo } from "../types/todo.type";
+
+import db from "../src/config/db.config";
+import { Callback,todo,inserttodo } from "../src/types/todo.type";
 
 export const getTodolist = (callback: Callback) => {
     const query = "SELECT * FROM todolist";

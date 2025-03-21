@@ -10,6 +10,7 @@ import { insertTabelData, UpdateDataOfTable } from "../controllers/crudondata.co
 import CreateTableByUserController from "../../test/db.createtable.controller";
 import { getComponentsController, updateComponentsController } from "../../test/componentsposition.controller";
 import { fetchtableinfo } from "../controllers/tableinfo.controllers";
+import { insertTableNameController } from "../controllers/inserttablename.controller";
 
 const router = Router()
 
@@ -35,4 +36,5 @@ router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a
 router.post("/insertintotable/:user_id",insertTabelData)
 router.put("/updateintotable/:user_id",UpdateDataOfTable)
 
+router.post("/inserttablename/:user_id",insertTableNameController)
 export default router
