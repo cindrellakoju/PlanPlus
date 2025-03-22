@@ -14,6 +14,13 @@ export interface ComponentType {
   order_index : number;
   position_x : number;
   position_y : number;
+  user_table_id : number;
+  user_id :number;
+  table_name : string
+  theme_id : number;
+  orderindex : number;
+  height : number;
+  width : number
 }
 
 export interface selectedComponent {
