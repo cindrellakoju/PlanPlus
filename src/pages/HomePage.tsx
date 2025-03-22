@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../styles/HomePage.css";
 import SideBar from "../components/allrequire/SideBar";
 import { MyContext } from "../context/Component.context";
@@ -7,33 +7,41 @@ import { useNavigate } from "react-router-dom";
 import Logout from "../components/notLogin/Logout";
 
 const HomePage: React.FC = () => {
-
   const navigate = useNavigate();
   const context = useContext(MyContext);
-
+  
   if (!context) {
     throw new Error("Homepage context must be within MyProvider");
   }
-  const userdetail = context.userdetail;
 
-  console.log(context.selectedComponents)
   const [displaySidebar, setSideBar] = useState<boolean>(false);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false); // New state for edit mode
-
+  const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode state
+  
   const toggleSidebar = () => {
     setSideBar((prevState) => !prevState);
   };
 
-
   const displayEditMode = () => {
-    setIsEditMode(true); // Activate edit mode
+    setIsEditMode(true); // Set edit mode to true
   };
 
-  // If in edit mode, show the HomePageEdit component
-  if (isEditMode) {
-    navigate("/homepgedit")
-    // return <HomePageEdit />;
-  }
+  // If in edit mode, navigate to the edit page
+  useEffect(() => {
+    if (isEditMode) {
+      navigate("/homepgedit");
+    }
+  }, [isEditMode, navigate]); // Ensure navigation is triggered when `isEditMode` changes
+
+  // Retrieve and parse user detail from localStorage
+  const storedUser = localStorage.getItem('userdetail');
+  const [userInfo, setUserInfo] = useState<{ first_name: string; last_name: string } | null>(null);
+
+  useEffect(() => {
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserInfo(parsedUser); // Store parsed user info in state
+    }
+  }, [storedUser]);
 
   return (
     <div className="HomePage">
@@ -55,11 +63,11 @@ const HomePage: React.FC = () => {
             </div>
           ) : (
             <>
-              <h1>Welcome to PlanPlus {userdetail ? `${userdetail.first_name} ${userdetail.last_name}` : ""}</h1>
+              <h1>Welcome to PlanPlus {userInfo ? `${userInfo.first_name} ${userInfo.last_name}` : "Guest"}</h1>
               <p>
                 Click <i className="bx bx-list-ul"></i> to add the required fields.
               </p>
-              <Logout/>
+              <Logout />
             </>
           )}
         </div>

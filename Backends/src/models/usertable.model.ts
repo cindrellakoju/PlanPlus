@@ -35,7 +35,7 @@ export const findByEmail = (email: string, callback: Callback) => {
 }
 
 export const fetchLoginInfo = (email: string, callback: Callback) => {
-    const query = "SELECT * FROM user WHERE email = ?";
+    const query = "SELECT * FROM users WHERE email = ?";
     // console.log(query)
 
     db.query(query, [email], (error, results) => {

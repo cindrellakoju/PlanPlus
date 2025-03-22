@@ -16,17 +16,17 @@ const SideBar: React.FC = () => {
   }
 
   // Fetch components data from the API on mount
-  useEffect(() => {
-    axios
-      .get<ComponentType[]>(`${backend_url}/user/componentsposition`) // API endpoint for components
-      .then((response) => {
-        console.log("Successfully fetched components: ", response.data);
-        context.setComponents(response.data); // Set the fetched components to context
-      })
-      .catch((error) => {
-        console.error("Error fetching the data: ", error); // Handle any errors
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get<ComponentType[]>(`${backend_url}/user/componentsposition`) // API endpoint for components
+  //     .then((response) => {
+  //       console.log("Successfully fetched components: ", response.data);
+  //       context.setComponents(response.data); // Set the fetched components to context
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching the data: ", error); // Handle any errors
+  //     });
+  // }, []);
 
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {

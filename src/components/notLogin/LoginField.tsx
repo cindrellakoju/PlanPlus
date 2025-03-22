@@ -48,6 +48,9 @@ const LoginField: React.FC = () => {
           sessionStorage.setItem('sessionToken', response.data.token); // Store in sessionStorage otherwise
         }
 
+        // Store user data in localStorage to persist it across page reloads
+        localStorage.setItem('userdetail', JSON.stringify(response.data.user));
+        
         // Optionally clear the password after a successful login for security purposes
         setPassword('');
 
