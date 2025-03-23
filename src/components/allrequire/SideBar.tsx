@@ -46,27 +46,22 @@ const SideBar: React.FC = () => {
 
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {
+    console.log("S Comp", context.selectedComponents)
     const alreadySelected = context.selectedComponents.some(
-      (comp) => comp.name === component.name && comp.component_id === component.component_id
+      (comp) => {comp.table_name === component.table_name && comp.user_table_id === component.user_table_id }
     );
+    console.log("Component", component)
+    console.log("Already exist",alreadySelected )
 
-    if (!alreadySelected) {
-      // context.setSelectedComponents([
-      //   ...context.selectedComponents,
-      //   { name: component.name,
-      //     component_id: component.component_id, 
-      //     position_x: component.position_x,
-      //     position_y: component.position_y, 
-      //     order_index:component.order_index }, // Add to selected components
-      // ]);
-      context.setSelectedComponents([
-        ...context.selectedComponents,
-        
-      ])
-      console.log("Selected component",context.selectedComponents)
+    if(!alreadySelected){
+      context.setSelectedComponents([...context.selectedComponents, component])
     }
   };
 
+  useEffect(() => {
+    console.log("Selected Component updated:", context.selectedComponents);
+  }, [context.selectedComponents]);
+  
 
   
   console.log("Context component:", context.components)
