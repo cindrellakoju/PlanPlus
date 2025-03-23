@@ -7,13 +7,15 @@ const ComponentWidthHeight= (funcName: string) => {
         console.log(`Wrap Component ${funcName} by MyProvider`);
     };
 
-    const componentName = context?.components.find(component => component.name === `${funcName}`);
-    const editComponent = context?.editHeightWidth.find(component => component.name === `${funcName}`)
-    const max_width = componentName?.position_x !== 0 ? `${componentName?.position_x}px`: "300px";
-    const max_height = componentName?.position_y !== 0 ? `${componentName?.position_y}px`: "320px";
+    console.log("SDSD", context?.components)
+    const componentName = context?.components.find(component => component.table_name === `${funcName}`);
+    console.log("FRom i=utile:", componentName)
+    const editComponent = context?.editHeightWidth.find(component => component.table_name === `${funcName}`)
+    const max_width = componentName?.width !== 0 ? `${componentName?.width}px`: "300px";
+    const max_height = componentName?.height !== 0 ? `${componentName?.height}px`: "320px";
     const editHWMode = context?.edithwmode;
-    const edit_width = editComponent?.position_x !== 0 ? `${editComponent?.position_x}px`: "300px";
-    const edit_height = editComponent?.position_y !== 0 ? `${editComponent?.position_y}px`: "500px";
+    const edit_width = editComponent?.width !== 0 ? `${editComponent?.width}px`: "300px";
+    const edit_height = editComponent?.height !== 0 ? `${editComponent?.height}px`: "500px";
     const inside_temp_height = editHWMode ? `${parseInt(edit_height) - 200}px`: `${parseInt(max_height) - 200}px`
 
     return { max_width,max_height,inside_temp_height, editHWMode, edit_width, edit_height}

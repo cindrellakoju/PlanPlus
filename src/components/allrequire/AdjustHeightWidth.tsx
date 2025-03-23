@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { JSX, useContext, useEffect, useState } from "react";
 import { MyContext } from "../../context/Component.context";
 import TopPriority from "../toppriority/TopPriority";
 import ToDo from "../todo/ToDo";
@@ -7,13 +7,22 @@ import Schedule from "../schedule/Schedule";
 import BucketList from "../bucketlist/BucketList";
 import Money from "../money/Money";
 
-const componentMap: { [key: string]: React.ComponentType<{}> } = {
-  TopPriority,
-  ToDo,
-  ToBuy,
-  Schedule,
-  BucketList, 
-  Money
+// const componentMap: { [key: string]: React.ComponentType<{}> } = {
+//   TopPriority,
+//   ToDo,
+//   ToBuy,
+//   Schedule,
+//   BucketList, 
+//   Money
+// };
+
+const componentMap: { [key: string]: JSX.Element } = {
+  TopPriority: <TopPriority />,
+  ToDoList: <ToDo />,
+  BucketList: <BucketList />,
+  Schedule: <Schedule />,
+  MoneyTransaction: <Money />,
+  ToBuy: <ToBuy />,
 };
 
 const AdjustHeightWidth: React.FC = () => {
@@ -30,15 +39,16 @@ const AdjustHeightWidth: React.FC = () => {
     context?.setEditHeightWidth(context.selectedComponents);
   }, []);
 
-  console.log("state:",isDragging)
+  console.log("state of width:",isResizingWidth)
   useEffect(() => {
     if ( isDragging || isResizingWidth){
+      console.log("Working here")
       const handleMouseMove = (e: MouseEvent) => {
         if (isDragging) {
           const mousedrag = e.clientY - upheight;
           const updatedHeight= context?.editHeightWidth.map((comp) => {
-            if (comp.component_id === id) {
-              return {...comp,position_y:mousedrag}
+            if (comp.user_table_id === id) {
+              return {...comp,height:mousedrag}
             }
             return comp
           });
@@ -51,18 +61,18 @@ const AdjustHeightWidth: React.FC = () => {
         if(isResizingWidth){
           const dragwidth = e.clientX - distwidth;
           const updatedwidth = context?.editHeightWidth.map((comp)=> {
-              if(comp.component_id === id) {
-                return { ...comp, position_x: dragwidth}
+              if(comp.user_table_id === id) {
+                return { ...comp, width: dragwidth}
               }
               return comp
           });
+          console.log(updatedwidth)
           if(updatedwidth){
             context?.setEditHeightWidth(updatedwidth)
           }
         }
       }
-      
-
+      console.log("Update:",context?.setEditHeightWidth)
       const handleMouseUp =  () => {
         setIsDragging(false)
         setIsResizingWidth(false)
@@ -78,6 +88,7 @@ const AdjustHeightWidth: React.FC = () => {
       }
     }
   }, [isDragging,isResizingWidth])
+
 
   const handleMouseDownWidth = (e:React.MouseEvent<HTMLDivElement>,c_id:number , width:number) => {
       console.log("Width MAnagemet");
@@ -104,15 +115,17 @@ const AdjustHeightWidth: React.FC = () => {
       }}
     >
       {context?.editHeightWidth.map((comp) => {
-        const Component = componentMap[comp.name];
-        const height = comp.position_y;
-        const width = comp.position_x;
-        const comp_id = comp.component_id;
+        const Component = removeSpaces(comp.table_name);
+        const ComponentRender = componentMap[Component]
+        const height = comp.height;
+        const width = comp.width;
+        const comp_id = comp.user_table_id;
+        
         return (
-          <div  key={comp.component_id}>
+          <div  key={comp.user_table_id}>
             <div style={{ position: "relative" }}>
-              <div key={comp.component_id}>
-                {Component ? <Component /> : <p>Component not found</p>}
+              <div key={comp.user_table_id}>
+                {ComponentRender}
               <div
                 style={{
                   position: "absolute",
@@ -149,5 +162,9 @@ const AdjustHeightWidth: React.FC = () => {
     </div>
   );
 };
+
+function removeSpaces(str:string) {
+  return str.replace(/\s+/g, ''); // Removes all spaces
+}
 
 export default AdjustHeightWidth;
