@@ -10,10 +10,10 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const componentMap: { [key: string]: JSX.Element } = {
   TopPriority: <TopPriority />,
-  ToDo: <ToDo />,
+  ToDoList: <ToDo />,
   BucketList: <BucketList />,
   Schedule: <Schedule />,
-  Money: <Money />,
+  MoneyTransaction: <Money />,
   ToBuy: <ToBuy />,
 };
 
@@ -27,6 +27,7 @@ const EditDisplayComponents: React.FC = () => {
 
   const selectedComponents = context.selectedComponents;
 
+  console.log("Selected Component", selectedComponents)
   // Handle the drag-and-drop operation
   const handleDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -47,52 +48,107 @@ const EditDisplayComponents: React.FC = () => {
   };
 
   return (
+    // <h1>Draggable droppable</h1>
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="componentId" direction="horizontal">
-        {(provided) => (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "20px",
-            }}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {selectedComponents?.map((component, index) => {
-              const componentName = component.name; // Access the 'name' property
-              const ComponentToRender = componentMap[componentName];
+      <Droppable droppableId="ComponentId" direction="horizontal">
+        {
+          (provided) => (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap:"wrap",
+                gap: "20px"
+              }}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {
+                selectedComponents?.map((component, index) => {
+                  const componentName = removeSpaces(component.table_name);
+                  console.log("Component Name without space", componentName)
+                  const ComponentToRender = componentMap[componentName];
 
-              return (
-                <Draggable
-                  draggableId={component.component_id.toString()}
-                  key={component.component_id.toString()}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={{
-                        ...provided.draggableProps.style,
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
+                  return(
+                    <Draggable
+                      draggableId={component.user_table_id.toString()}
+                      key={component.user_table_id.toString()}
+                      index={index}
                     >
-                      {ComponentToRender}
-                    </div>
-                  )}
-                </Draggable>
-              );
-            })}
-            {provided.placeholder}
-          </div>
-        )}
+                      {
+                        (provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              display: "flex",
+                              flexDirection:"column"
+                            }}
+                          >
+                            {ComponentToRender}
+                          </div>
+                        )
+                      }
+                    </Draggable>
+                  )
+                })
+              }
+            </div>
+          )
+        }
       </Droppable>
     </DragDropContext>
   );
 };
 
+function removeSpaces(str:string) {
+  return str.replace(/\s+/g, ''); // Removes all spaces
+}
 export default EditDisplayComponents;
+   // <DragDropContext onDragEnd={handleDragEnd}>
+    //   <Droppable droppableId="componentId" direction="horizontal">
+    //     {(provided) => (
+    //       <div
+    //         style={{
+    //           display: "flex",
+    //           flexDirection: "row",
+    //           flexWrap: "wrap",
+    //           gap: "20px",
+    //         }}
+    //         {...provided.droppableProps}
+    //         ref={provided.innerRef}
+    //       >
+    //         {selectedComponents?.map((component, index) => {
+    //           const componentName = component.table_name; // Access the 'name' property
+    //           const ComponentToRender = componentMap[componentName];
+
+    //           return (
+    //             <Draggable
+    //               draggableId={component.component_id.toString()}
+    //               key={component.component_id.toString()}
+    //               index={index}
+    //             >
+        //               {(provided) => (
+    //                 <div
+    //                   ref={provided.innerRef}
+    //                   {...provided.draggableProps}
+    //                   {...provided.dragHandleProps}
+    //                   style={{
+    //                     ...provided.draggableProps.style,
+    //                     display: "flex",
+    //                     flexDirection: "column",
+    //                   }}
+    //                 >
+    //                   {ComponentToRender}
+    //                 </div>
+    //               )}
+    //             </Draggable>
+    //           );
+    //         })}
+    //         {provided.placeholder}
+    //       </div>
+    //     )}
+    //   </Droppable>
+    // </DragDropContext>
