@@ -9,10 +9,10 @@ import ToBuy from "../tobuy/ToBuy";
 
 const componentMap: { [key: string]: JSX.Element } = {
   TopPriority: <TopPriority />,
-  ToDo: <ToDo />,
+  ToDoList: <ToDo />,
   BucketList: <BucketList />,
   Schedule: <Schedule />,
-  Money: <Money />,
+  MoneyTransaction: <Money />,
   ToBuy: <ToBuy />,
 };
 
@@ -36,7 +36,7 @@ const DisplayComponents: React.FC = () => {
       }}
     >
       {selectedComponents?.map((component, index) => {
-        const componentName = component.name;  // Access the 'name' property of each selected component
+        const componentName = removeSpaces(component.table_name);  // Access the 'name' property of each selected component
         const ComponentToRender = componentMap[componentName];
 
         return ComponentToRender ? (
@@ -47,4 +47,7 @@ const DisplayComponents: React.FC = () => {
   );
 };
 
+function removeSpaces(str:string) {
+  return str.replace(/\s+/g, ''); // Removes all spaces
+}
 export default DisplayComponents;
