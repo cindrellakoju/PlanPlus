@@ -52,7 +52,6 @@ const SideBar: React.FC = () => {
       localStoragedata = JSON.parse(localStoragedataString)
     }
 
-    console.log("Local storage data:", localStoragedata)
     const alreadySelected = localStoragedata.some(
       (comp) => 
           comp.table_name === component.table_name && comp.user_table_id === component.user_table_id 

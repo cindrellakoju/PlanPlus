@@ -1,18 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/HomePage.css";
 import SideBar from "../components/allrequire/SideBar";
-import { MyContext } from "../context/Component.context";
 import DisplayComponents from "../components/allrequire/DisplayComponents";
 import { useNavigate } from "react-router-dom";
 import Logout from "../components/notLogin/Logout";
+import { useLocalStorageData } from "../hooks/useLocalStorageData";
 
 const HomePage: React.FC = () => {
+  const localStoragedata = useLocalStorageData();
   const navigate = useNavigate();
-  const context = useContext(MyContext);
-  
-  if (!context) {
-    throw new Error("Homepage context must be within MyProvider");
-  }
 
   const [displaySidebar, setSideBar] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode state
@@ -57,7 +53,7 @@ const HomePage: React.FC = () => {
           <button onClick={displayEditMode}>Edit</button> {/* On click, trigger edit mode */}
         </div>
         <div className="body">
-          {context.selectedComponents.length > 0 ? (
+          {localStoragedata.length > 0 ? (
             <div className="displaycomponent">
               <DisplayComponents />
             </div>

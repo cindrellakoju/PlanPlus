@@ -6,6 +6,7 @@ import BucketList from "../bucketlist/BucketList";
 import Schedule from "../schedule/Schedule";
 import Money from "../money/Money";
 import ToBuy from "../tobuy/ToBuy";
+import { useLocalStorageData } from "../../hooks/useLocalStorageData";
 
 const componentMap: { [key: string]: JSX.Element } = {
   TopPriority: <TopPriority />,
@@ -17,14 +18,7 @@ const componentMap: { [key: string]: JSX.Element } = {
 };
 
 const DisplayComponents: React.FC = () => {
-  const context = useContext(MyContext);
-
-  if (!context) {
-    console.log("DisplayComponents should be wrapped within MyProvider");
-    return null;
-  }
-
-  const selectedComponents = context?.selectedComponents;
+  const localStoragedata = useLocalStorageData()
 
   return (
     <div
@@ -35,7 +29,8 @@ const DisplayComponents: React.FC = () => {
         gap: "20px",
       }}
     >
-      {selectedComponents?.map((component, index) => {
+      {localStoragedata.map((component, index) => {
+        {console.log("Component:",component)}
         const componentName = removeSpaces(component.table_name);  // Access the 'name' property of each selected component
         const ComponentToRender = componentMap[componentName];
 
