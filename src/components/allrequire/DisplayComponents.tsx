@@ -18,6 +18,7 @@ const componentMap: { [key: string]: JSX.Element } = {
 
 const DisplayComponents: React.FC = () => {
   const localStoragedata = useLocalStorageData()
+  
 
   return (
     <div

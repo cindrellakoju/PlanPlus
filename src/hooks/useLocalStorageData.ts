@@ -7,5 +7,8 @@ export const useLocalStorageData = () => {
         localStoragedata = JSON.parse(localStoragedataString)
     }
 
+    localStoragedata.sort((a, b) => a.orderindex - b.orderindex);
+
+    console.log("LocalStorage",localStoragedata)
     return localStoragedata;
 }

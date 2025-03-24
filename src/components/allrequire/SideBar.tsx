@@ -46,31 +46,49 @@ const SideBar: React.FC = () => {
 
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {
+    console.log("REceived Component,",component)
     const localStoragedataString = localStorage.getItem("selecteditem")
     let localStoragedata:ComponentType[] = []
     if(localStoragedataString){
       localStoragedata = JSON.parse(localStoragedataString)
     }
 
-    const alreadySelected = localStoragedata.some(
-      (comp) => 
-          comp.table_name === component.table_name && comp.user_table_id === component.user_table_id 
-    );
-    // console.log("Already exist",alreadySelected)
+    const alreadySelected = localStoragedata.some((comp) => {
+      console.log("Component Name:",comp.table_name,comp.orderindex, component.orderindex);
+      return (
+        comp.table_name === component.table_name &&
+        comp.user_table_id === component.user_table_id &&
+        comp.orderindex === component.orderindex &&
+        comp.height === component.height &&
+        comp.width === component.width
+      );
+    });    
+
+    console.log("Aleade:",alreadySelected)
+
     if(!alreadySelected){
-      const selecteddata = ([...localStoragedata,component])
-      // console.log("SE:",selecteddata)
-      localStorage.setItem("selecteditem",JSON.stringify(selecteddata))
-      context.setSelectedComponents([...context.selectedComponents, component])
+      const sameTableName = localStoragedata.some(
+        (comp) => comp.table_name === component.table_name && comp.user_table_id === component.user_table_id
+      );
+  
+      // If a component with the same table_name exists, we remove it and add the new component
+      if (sameTableName) {
+        const updatedData = localStoragedata.filter(
+          (comp) =>
+            !(comp.table_name === component.table_name && comp.user_table_id === component.user_table_id)
+        );
+        updatedData.push(component);
+
+        updatedData.sort((a, b) => a.orderindex - b.orderindex); // Numeric sort for order_index
+        localStorage.setItem("selecteditem", JSON.stringify(updatedData));
+      }
+      else{
+        const selectedData = [...localStoragedata, component];
+        selectedData.sort((a, b) => a.order_index - b.order_index); // Numeric sort for order_index
+        localStorage.setItem("selecteditem", JSON.stringify(selectedData));
+      }
     }
   };
-
-  // useEffect(() => {
-  //   console.log("Selected Component updated:", context.selectedComponents);
-    
-  // }, [context.selectedComponents]);
-  
-
   
   console.log("Context component:", context.components)
   return (
