@@ -46,21 +46,30 @@ const SideBar: React.FC = () => {
 
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {
-    console.log("S Comp", context.selectedComponents)
-    const alreadySelected = context.selectedComponents.some(
-      (comp) => {comp.table_name === component.table_name && comp.user_table_id === component.user_table_id }
-    );
-    console.log("Component", component)
-    console.log("Already exist",alreadySelected )
+    const localStoragedataString = localStorage.getItem("selecteditem")
+    let localStoragedata:ComponentType[] = []
+    if(localStoragedataString){
+      localStoragedata = JSON.parse(localStoragedataString)
+    }
 
+    console.log("Local storage data:", localStoragedata)
+    const alreadySelected = localStoragedata.some(
+      (comp) => 
+          comp.table_name === component.table_name && comp.user_table_id === component.user_table_id 
+    );
+    // console.log("Already exist",alreadySelected)
     if(!alreadySelected){
+      const selecteddata = ([...localStoragedata,component])
+      // console.log("SE:",selecteddata)
+      localStorage.setItem("selecteditem",JSON.stringify(selecteddata))
       context.setSelectedComponents([...context.selectedComponents, component])
     }
   };
 
-  useEffect(() => {
-    console.log("Selected Component updated:", context.selectedComponents);
-  }, [context.selectedComponents]);
+  // useEffect(() => {
+  //   console.log("Selected Component updated:", context.selectedComponents);
+    
+  // }, [context.selectedComponents]);
   
 
   
