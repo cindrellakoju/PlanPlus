@@ -1,5 +1,4 @@
-import React, { JSX, useContext } from "react";
-import { MyContext } from "../../context/Component.context";
+import React, { JSX,useState } from "react";
 import TopPriority from "../toppriority/TopPriority";
 import ToDo from "../todo/ToDo";
 import BucketList from "../bucketlist/BucketList";
@@ -7,7 +6,9 @@ import Schedule from "../schedule/Schedule";
 import Money from "../money/Money";
 import ToBuy from "../tobuy/ToBuy";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useLocalStorageData } from "../../hooks/useLocalStorageData";
 
+// Mapping of component names to actual JSX elements
 const componentMap: { [key: string]: JSX.Element } = {
   TopPriority: <TopPriority />,
   ToDoList: <ToDo />,
@@ -18,16 +19,10 @@ const componentMap: { [key: string]: JSX.Element } = {
 };
 
 const EditDisplayComponents: React.FC = () => {
-  const context = useContext(MyContext);
+  const localStorageData = useLocalStorageData(); // Fetch data from localStorage
 
-  if (!context) {
-    console.log("EditDisplayComponents should be wrapped within MyProvider");
-    return null;
-  }
+  const [dummyData, setDummyData] = useState(localStorageData); // Local state for managing the temporary data
 
-  const selectedComponents = context.selectedComponents;
-
-  console.log("Selected Component", selectedComponents)
   // Handle the drag-and-drop operation
   const handleDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -38,72 +33,81 @@ const EditDisplayComponents: React.FC = () => {
     // If the item is dropped in the same place, do nothing
     if (destination.index === source.index) return;
 
-    // Reorder the components array
-    const reorderedComponents = Array.from(selectedComponents);
-    const [removed] = reorderedComponents.splice(source.index, 1);
-    reorderedComponents.splice(destination.index, 0, removed);
+    // Reorder the components array in the dummy state (temporary data)
+    const reorderedComponents = Array.from(dummyData); // Copy the array
+    const [removed] = reorderedComponents.splice(source.index, 1); // Remove the item
+    reorderedComponents.splice(destination.index, 0, removed); // Insert at the new position
 
-    // Update the context with the reordered components (you might need to add the setter function)
-    context.setSelectedComponents(reorderedComponents);
+    setDummyData(reorderedComponents); // Update the dummy state with the reordered components
+  };
+
+  // Optional: Save the changes to localStorage when done (for example, on a button click or at some point in time)
+  const saveChangesToLocalStorage = () => {
+    // localStorage.setItem("selecteditem", JSON.stringify(dummyData)); // Save the modified data to localStorage
+    console.log("Saved changes to localStorage");
   };
 
   return (
-    // <h1>Draggable droppable</h1>
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="ComponentId" direction="horizontal">
-        {
-          (provided) => (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap:"wrap",
-                gap: "20px"
-              }}
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {
-                selectedComponents?.map((component, index) => {
-                  const componentName = removeSpaces(component.table_name);
-                  console.log("Component Name without space", componentName)
-                  const ComponentToRender = componentMap[componentName];
+    <div>
+      {/* Button to save changes to localStorage */}
+      <button onClick={saveChangesToLocalStorage}>Save Changes</button>
 
-                  return(
-                    <Draggable
-                      draggableId={component.user_table_id.toString()}
-                      key={component.user_table_id.toString()}
-                      index={index}
-                    >
-                      {
-                        (provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={{
-                              ...provided.draggableProps.style,
-                              display: "flex",
-                              flexDirection:"column"
-                            }}
-                          >
-                            {ComponentToRender}
-                          </div>
-                        )
-                      }
-                    </Draggable>
-                  )
-                })
-              }
-            </div>
-          )
-        }
-      </Droppable>
-    </DragDropContext>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="ComponentId" direction="horizontal">
+          {
+            (provided) => (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  gap: "20px"
+                }}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {
+                  dummyData.map((component, index) => {
+                    const componentName = removeSpaces(component.table_name);
+                    const ComponentToRender = componentMap[componentName];
+
+                    return (
+                      <Draggable
+                        draggableId={component.user_table_id.toString()}
+                        key={component.user_table_id.toString()}
+                        index={index}
+                      >
+                        {
+                          (provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                                display: "flex",
+                                flexDirection: "column"
+                              }}
+                            >
+                              {ComponentToRender}
+                            </div>
+                          )
+                        }
+                      </Draggable>
+                    );
+                  })
+                }
+              </div>
+            )
+          }
+        </Droppable>
+      </DragDropContext>
+    </div>
   );
 };
 
-function removeSpaces(str:string) {
+function removeSpaces(str: string) {
   return str.replace(/\s+/g, ''); // Removes all spaces
 }
+
 export default EditDisplayComponents;
