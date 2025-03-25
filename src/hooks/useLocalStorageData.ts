@@ -18,9 +18,5 @@ export const useLocalStorageData = () => {
         setLocalStoragedata(localStoragedata); // Update state
     }, []);
 
-    // Logging within the hook to get the updated state
-    console.log("LocalStorage from custom hook", localStoragedata);
-
-    console.log("2")
     return localStoragedata;
 };
