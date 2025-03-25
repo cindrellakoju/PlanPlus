@@ -9,11 +9,11 @@ export interface Todo {
 }
 
 export interface ComponentType {
-  component_id : number;
-  name: string;
-  order_index : number;
-  position_x : number;
-  position_y : number;
+  // component_id : number;
+  // name: string;
+  // order_index : number;
+  // position_x : number;
+  // position_y : number;
   user_table_id : number;
   user_id :number;
   table_name : string

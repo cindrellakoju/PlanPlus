@@ -2,6 +2,7 @@ import "../../styles/SideBar.css";
 import { useContext} from "react";
 import { MyContext } from "../../context/Component.context";
 import { ComponentType } from "../../types";
+import { compareLocalStorageData } from "../../utils/compareLocalStorageData";
 
 const SideBar: React.FC = () => {
   // Use context
@@ -15,47 +16,7 @@ const SideBar: React.FC = () => {
   // Handle component selection
   const handleSelectComponent = (component: ComponentType) => {
     console.log("REceived Component,",component)
-    const localStoragedataString = localStorage.getItem("selecteditem")
-    let localStoragedata:ComponentType[] = []
-    if(localStoragedataString){
-      localStoragedata = JSON.parse(localStoragedataString)
-    }
-
-    const alreadySelected = localStoragedata.some((comp) => {
-      console.log("Component Name:",comp.table_name,comp.orderindex, component.orderindex);
-      return (
-        comp.table_name === component.table_name &&
-        comp.user_table_id === component.user_table_id &&
-        comp.orderindex === component.orderindex &&
-        comp.height === component.height &&
-        comp.width === component.width
-      );
-    });    
-
-    console.log("Aleade:",alreadySelected)
-
-    if(!alreadySelected){
-      const sameTableName = localStoragedata.some(
-        (comp) => comp.table_name === component.table_name && comp.user_table_id === component.user_table_id
-      );
-  
-      // If a component with the same table_name exists, we remove it and add the new component
-      if (sameTableName) {
-        const updatedData = localStoragedata.filter(
-          (comp) =>
-            !(comp.table_name === component.table_name && comp.user_table_id === component.user_table_id)
-        );
-        updatedData.push(component);
-
-        updatedData.sort((a, b) => a.orderindex - b.orderindex); // Numeric sort for order_index
-        localStorage.setItem("selecteditem", JSON.stringify(updatedData));
-      }
-      else{
-        const selectedData = [...localStoragedata, component];
-        selectedData.sort((a, b) => a.order_index - b.order_index); // Numeric sort for order_index
-        localStorage.setItem("selecteditem", JSON.stringify(selectedData));
-      }
-    }
+    compareLocalStorageData(component)
   };
   
   console.log("Context component:", context.components)
@@ -63,7 +24,7 @@ const SideBar: React.FC = () => {
     <div className="Sidebar">
       {context.components.map((component) => (
         <div
-          key={component.component_id} // Use component_id as key for uniqueness
+          key={component.user_table_id} // Use component_id as key for uniqueness
           onClick={() => handleSelectComponent(component)} // Pass whole component object
           className="component-item"
         >

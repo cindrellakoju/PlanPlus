@@ -18,7 +18,6 @@ const componentMap: { [key: string]: JSX.Element } = {
 
 const DisplayComponents: React.FC = () => {
   const localStoragedata = useLocalStorageData()
-  
 
   return (
     <div
@@ -30,7 +29,6 @@ const DisplayComponents: React.FC = () => {
       }}
     >
       {localStoragedata.map((component, index) => {
-        {console.log("Component:",component)}
         const componentName = removeSpaces(component.table_name);  // Access the 'name' property of each selected component
         const ComponentToRender = componentMap[componentName];
 
@@ -42,7 +40,9 @@ const DisplayComponents: React.FC = () => {
   );
 };
 
-function removeSpaces(str:string) {
+function removeSpaces(str: string | undefined | null): string {
+  if (!str) return ''; // If the string is null or undefined, return an empty string
   return str.replace(/\s+/g, ''); // Removes all spaces
 }
+
 export default DisplayComponents;

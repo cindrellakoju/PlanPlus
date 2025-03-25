@@ -1,14 +1,26 @@
-import { ComponentType } from "../types"
+import { useEffect, useState } from "react";
+import { ComponentType } from "../types";
 
 export const useLocalStorageData = () => {
-    const localStoragedataString = localStorage.getItem("selecteditem")
-    let localStoragedata:ComponentType[] = []
-    if(localStoragedataString){
-        localStoragedata = JSON.parse(localStoragedataString)
-    }
+    const [localStoragedata, setLocalStoragedata] = useState<ComponentType[]>([]);
 
-    localStoragedata.sort((a, b) => a.orderindex - b.orderindex);
+    useEffect(() => {
+        const localStoragedataString = localStorage.getItem("selecteditem");
+        let localStoragedata: ComponentType[] = [];
+        
+        if (localStoragedataString) {
+            localStoragedata = JSON.parse(localStoragedataString);
+        }
+        
+        // Sort the data before setting it to state
+        localStoragedata.sort((a, b) => a.orderindex - b.orderindex);
+        
+        setLocalStoragedata(localStoragedata); // Update state
+    }, []);
 
-    console.log("LocalStorage",localStoragedata)
+    // Logging within the hook to get the updated state
+    console.log("LocalStorage from custom hook", localStoragedata);
+
+    console.log("2")
     return localStoragedata;
-}
+};

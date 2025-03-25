@@ -7,9 +7,9 @@ const ComponentWidthHeight= (funcName: string) => {
         console.log(`Wrap Component ${funcName} by MyProvider`);
     };
 
-    console.log("SDSD", context?.components)
+    // console.log("SDSD", context?.components)
     const componentName = context?.components.find(component => component.table_name === `${funcName}`);
-    console.log("FRom i=utile:", componentName)
+    // console.log("FRom i=utile:", componentName)
     const editComponent = context?.editHeightWidth.find(component => component.table_name === `${funcName}`)
     const max_width = componentName?.width !== 0 ? `${componentName?.width}px`: "300px";
     const max_height = componentName?.height !== 0 ? `${componentName?.height}px`: "320px";
