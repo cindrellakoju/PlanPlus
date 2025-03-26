@@ -37,8 +37,6 @@ const EditDisplayComponents: React.FC = () => {
   const localStorageData = useLocalStorageData(); // Fetch data from localStorage
 
   const [dummyData, setDummyData] = useState(localStorageData); // Local state for managing the temporary data
-  const [tableNames, setTableNames] = useState<string[]>([]); // Store table names
-  const [orderindex, setOrderIndex] = useState<number[]>([]); // Store index values
 
   useEffect(() => {
     setDummyData(localStorageData);
@@ -70,9 +68,6 @@ const EditDisplayComponents: React.FC = () => {
     console.log("Updated Data after Reorder:", updatedData);
   };
   
-  console.log("Dummy data",dummyData)
-
-  console.log("Tablename:",tableNames,"Order Index:",orderindex)
   // Optional: Save the changes to localStorage when done (for example, on a button click or at some point in time)
   const saveChangesToLocalStorage = () => {
     dummyData.map((comp) => {
