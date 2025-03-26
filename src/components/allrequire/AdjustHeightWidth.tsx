@@ -7,6 +7,7 @@ import Schedule from "../schedule/Schedule";
 import BucketList from "../bucketlist/BucketList";
 import Money from "../money/Money";
 import { useLocalStorageData } from "../../hooks/useLocalStorageData";
+import axios from "axios";
 
 // const componentMap: { [key: string]: React.ComponentType<{}> } = {
 //   TopPriority,
@@ -27,7 +28,19 @@ const componentMap: { [key: string]: JSX.Element } = {
 };
 
 const AdjustHeightWidth: React.FC = () => {
-  const localStorage = useLocalStorageData()
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+    const storedUser = localStorage.getItem('userdetail');
+    const [userid, setUserId]  = useState<{ user_id:string} | null>(null);
+  
+    useEffect(() => {
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUserId(parsedUser); // Store parsed user info in state
+      }
+    }, [storedUser]);
+  
+    const userId = userid?.user_id
+  const localStorageData = useLocalStorageData()
   const context = useContext(MyContext);
   const [id,setId] = useState(0)
   const [isDragging, setIsDragging] = useState(false);
@@ -38,7 +51,7 @@ const AdjustHeightWidth: React.FC = () => {
 
   useEffect(() => {
     context?.setEditHWMode(true);
-    context?.setEditHeightWidth(localStorage);
+    context?.setEditHeightWidth(localStorageData);
   }, [localStorage]);
 
   console.log("SetEditHeightWidth:",context?.editHeightWidth)
@@ -108,7 +121,24 @@ const AdjustHeightWidth: React.FC = () => {
       setId(c_id)
       setIsDragging(true);
   }
+
+  const saveChange = () => {
+    context?.editHeightWidth.map((comp)=> {
+      axios
+        .put(`${backend_url}/user/updatetable/${userId}`,comp)
+        .then((response) => {
+          console.log("Successfull Updating Data:",response.data)
+          alert("Updated Successfully")
+        })
+        .catch((err)=> {
+          console.log("Error Updating data:",err)
+        })
+    })
+    // console.log("Edit height width to save",context?.editHeightWidth)
+  }
   return (
+    <div>
+      <button onClick={saveChange}>Save Change</button>
     <div
       style={{
         display: "flex",
@@ -162,6 +192,7 @@ const AdjustHeightWidth: React.FC = () => {
           </div>
         );
       })}
+    </div>
     </div>
   );
 };
