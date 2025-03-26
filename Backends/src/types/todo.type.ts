@@ -73,3 +73,12 @@ export interface tableinfo {
     width: number;
     height: number;
 }
+
+export interface tableinfowithorderindex extends tableinfo{
+    orderindex : number
+}
+
+export interface idinfo{
+    user_id : number,
+    user_table_id : number
+}

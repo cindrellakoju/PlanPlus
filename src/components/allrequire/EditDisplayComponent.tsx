@@ -1,4 +1,4 @@
-import React, { ComponentType, JSX,useEffect,useState } from "react";
+import React, { JSX,useEffect,useState } from "react";
 import TopPriority from "../toppriority/TopPriority";
 import ToDo from "../todo/ToDo";
 import BucketList from "../bucketlist/BucketList";
@@ -8,6 +8,7 @@ import ToBuy from "../tobuy/ToBuy";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useLocalStorageData } from "../../hooks/useLocalStorageData";
 import { compareLocalStorageData } from "../../utils/compareLocalStorageData";
+import axios from "axios";
 
 // Mapping of component names to actual JSX elements
 const componentMap: { [key: string]: JSX.Element } = {
@@ -20,6 +21,19 @@ const componentMap: { [key: string]: JSX.Element } = {
 };
 
 const EditDisplayComponents: React.FC = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const storedUser = localStorage.getItem('userdetail');
+  const [userid, setUserId]  = useState<{ user_id:string} | null>(null);
+
+  useEffect(() => {
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserId(parsedUser); // Store parsed user info in state
+    }
+  }, [storedUser]);
+
+  const userId = userid?.user_id
+
   const localStorageData = useLocalStorageData(); // Fetch data from localStorage
 
   const [dummyData, setDummyData] = useState(localStorageData); // Local state for managing the temporary data
@@ -44,33 +58,16 @@ const EditDisplayComponents: React.FC = () => {
     const [removed] = reorderedComponents.splice(source.index, 1); // Remove the item
     reorderedComponents.splice(destination.index, 0, removed); // Insert at the new position
   
-    setDummyData(reorderedComponents); // Update the dummy state with the reordered components
+    // Update the orderindex to reflect the new order of components
+    const updatedData = reorderedComponents.map((comp, index) => ({
+      ...comp,
+      orderindex: index + 1, // Update orderindex based on the new position
+    }));
   
-    // Map the updated table names and their current order
-    const updatedTableNames = reorderedComponents.map((component) => component.table_name); 
-    const updatedIndexes = reorderedComponents.map((comp) => comp.orderindex);
+    setDummyData(updatedData); // Update the dummy state with the reordered components
   
-    // Sort the indexes
-    const sortedIndexes = updatedIndexes.sort((a, b) => a - b);
-    
-    console.log("Updated Table Names:", updatedTableNames);
-    console.log("Sorted Indexes:", sortedIndexes);
-  
-    // Correctly map the sorted indexes to each component based on table_name
-    const updatedData = reorderedComponents.map((comp) => {
-      // Find the index of the current table_name in updatedTableNames
-      const tableIndex = updatedTableNames.indexOf(comp.table_name);
-  
-      // Update the orderindex with the correct sorted index
-      if (tableIndex !== -1) {
-        // Create a new component with the updated orderindex
-        return { ...comp, orderindex: sortedIndexes[tableIndex] };
-      }
-      return comp; // If no match found, return the component as is
-    });
-  
-    // Set the updated data
-    setDummyData(updatedData);
+    // Optional: Log the updated data
+    console.log("Updated Data after Reorder:", updatedData);
   };
   
   console.log("Dummy data",dummyData)
@@ -79,6 +76,15 @@ const EditDisplayComponents: React.FC = () => {
   // Optional: Save the changes to localStorage when done (for example, on a button click or at some point in time)
   const saveChangesToLocalStorage = () => {
     dummyData.map((comp) => {
+      console.log("Comp",comp)
+      axios
+        .put(`${backend_url}/user/updatetable/${userId}`,comp)
+        .then((response) => {
+          console.log("Successfully updated the table of userid ", comp.user_table_id, "Respondse",response.data)
+        })
+        .catch((error) => {
+          console.error("Error fetching the data:",error)
+        })
       compareLocalStorageData(comp)
     })
     console.log("Saved changes to localStorage");
@@ -109,28 +115,27 @@ const EditDisplayComponents: React.FC = () => {
                     const ComponentToRender = componentMap[componentName];
 
                     return (
-                      <Draggable
-                        draggableId={component.user_table_id.toString()}
-                        key={component.user_table_id.toString()}
-                        index={index}
-                      >
-                        {
-                          (provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={{
-                                ...provided.draggableProps.style,
-                                display: "flex",
-                                flexDirection: "column"
-                              }}
-                            >
-                              {ComponentToRender}
-                            </div>
-                          )
-                        }
-                      </Draggable>
+                    <Draggable
+                      draggableId={component.user_table_id ? component.user_table_id.toString() : `fallback-id-${index}`} // Fallback if user_table_id is missing
+                      key={component.user_table_id ? component.user_table_id.toString() : `fallback-id-${index}`}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{
+                            ...provided.draggableProps.style,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          {ComponentToRender}
+                        </div>
+                      )}
+                    </Draggable>
+
                     );
                   })
                 }
@@ -143,8 +148,10 @@ const EditDisplayComponents: React.FC = () => {
   );
 };
 
-function removeSpaces(str: string) {
+function removeSpaces(str: string | undefined | null): string {
+  if (!str) return ''; // If the string is null or undefined, return an empty string
   return str.replace(/\s+/g, ''); // Removes all spaces
 }
+
 
 export default EditDisplayComponents;
