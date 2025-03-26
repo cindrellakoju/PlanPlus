@@ -11,7 +11,7 @@ const MoneyField: React.FC = () => {
     const handleTransactionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setTransactionState(event.target.value);
     };
-    console.log("Transction State", transactionState)
+    // console.log("Transction State", transactionState)
 
     return (
         <div className="moneyfieldcontainer">

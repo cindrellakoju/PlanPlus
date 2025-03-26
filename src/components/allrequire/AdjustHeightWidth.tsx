@@ -6,6 +6,7 @@ import ToBuy from "../tobuy/ToBuy";
 import Schedule from "../schedule/Schedule";
 import BucketList from "../bucketlist/BucketList";
 import Money from "../money/Money";
+import { useLocalStorageData } from "../../hooks/useLocalStorageData";
 
 // const componentMap: { [key: string]: React.ComponentType<{}> } = {
 //   TopPriority,
@@ -26,6 +27,7 @@ const componentMap: { [key: string]: JSX.Element } = {
 };
 
 const AdjustHeightWidth: React.FC = () => {
+  const localStorage = useLocalStorageData()
   const context = useContext(MyContext);
   const [id,setId] = useState(0)
   const [isDragging, setIsDragging] = useState(false);
@@ -36,9 +38,10 @@ const AdjustHeightWidth: React.FC = () => {
 
   useEffect(() => {
     context?.setEditHWMode(true);
-    context?.setEditHeightWidth(context.selectedComponents);
-  }, []);
+    context?.setEditHeightWidth(localStorage);
+  }, [localStorage]);
 
+  console.log("SetEditHeightWidth:",context?.editHeightWidth)
   console.log("state of width:",isResizingWidth)
   useEffect(() => {
     if ( isDragging || isResizingWidth){
