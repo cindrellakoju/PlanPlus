@@ -39,24 +39,24 @@ const TodoApp: React.FC<TodoAppProps> = ({ themename, urlname }) => {
 
   console.log('Obtained Data:', obtaineddata);
 
-  // // Handle input change (event type is ChangeEvent<HTMLInputElement>)
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInput(e.target.value);
-  // };
+  // Handle input change (event type is ChangeEvent<HTMLInputElement>)
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
 
-  // // Add todo to the list
-  // const handleAddTodo = () => {
-  //   if (input.trim() !== '') {
-  //     setTodos([...todos, input]);
-  //     setInput(''); // Clear input field after adding
-  //   }
-  // };
+  // Add todo to the list
+  const handleAddTodo = () => {
+    if (input.trim() !== '') {
+      setTodos([...todos, input]);
+      setInput(''); // Clear input field after adding
+    }
+  };
 
-  // // Handle deleting a todo
-  // const handleDeleteTodo = (index: number) => {
-  //   const updatedTodos = todos.filter((_, i) => i !== index);
-  //   setTodos(updatedTodos);
-  // };
+  // Handle deleting a todo
+  const handleDeleteTodo = (index: number) => {
+    const updatedTodos = todos.filter((_, i) => i !== index);
+    setTodos(updatedTodos);
+  };
 
   console.log('Url Name:', urlname);
 
