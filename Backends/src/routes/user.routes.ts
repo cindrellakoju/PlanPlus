@@ -31,7 +31,7 @@ router.post("/usercreatetable", CreateTableByUserController);
 
 router.get("/tableinfo",fetchtableinfo);
 router.get("/tablecolumn/:user_id",fetchtablecolumn);
-router.get("/columndata/:user_id",fetchcolumndata);
+router.post("/columndata/:user_id",fetchcolumndata);
 router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a URL parameter
 
 router.post("/insertintotable/:user_id",insertTabelData)

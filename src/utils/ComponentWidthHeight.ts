@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { MyContext } from "../context/Component.context"
+import { useLocalStorageData } from "../hooks/useLocalStorageData";
 
 const ComponentWidthHeight= (funcName: string) => {
     const context = useContext(MyContext)
@@ -7,9 +8,10 @@ const ComponentWidthHeight= (funcName: string) => {
         console.log(`Wrap Component ${funcName} by MyProvider`);
     };
 
+    const localStorageData = useLocalStorageData()
     // console.log("SDSD", context?.components)
-    const componentName = context?.components.find(component => component.table_name === `${funcName}`);
-    // console.log("FRom i=utile:", componentName)
+    const componentName = localStorageData.find(component => component.table_name === `${funcName}`);
+    // console.log("FRom i=utile:", componentName?.width)
     const editComponent = context?.editHeightWidth.find(component => component.table_name === `${funcName}`)
     const max_width = componentName?.width !== 0 ? `${componentName?.width}px`: "300px";
     const max_height = componentName?.height !== 0 ? `${componentName?.height}px`: "320px";

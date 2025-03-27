@@ -3,7 +3,7 @@ import { getColumnData } from "../services/extractcolumndata.sevices";
 
 export const fetchcolumndata = async(req:Request, res:Response) => {
     const user_id = Number(req.params.user_id)
-    const tablename = "To Do List"
+    const {tablename} = req.body
 
     const data={
         user_id,

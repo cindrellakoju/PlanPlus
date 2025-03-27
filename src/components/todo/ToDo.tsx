@@ -7,7 +7,7 @@ const ToDo:React.FC = () =>{
     const { max_width, max_height,editHWMode, edit_height, edit_width } = ComponentWidthHeight("To Do List");
 
     return(
-        <div style={editHWMode? {height: edit_height, width: edit_width} : { maxHeight: max_height, maxWidth: max_width }} className="todocontainer">
+        <div style={editHWMode? {height: edit_height, width: edit_width} : { height: max_height, width : max_width }} className="todocontainer">
             <h1>To Do List</h1>
             <ToDoField/>
         </div>

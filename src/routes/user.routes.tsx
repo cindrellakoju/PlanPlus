@@ -6,6 +6,7 @@ import { MyProvider } from "../context/Component.context";
 import LoginPage from "../components/notLogin/LoginPage";
 import SignUpPage from "../components/notLogin/SignUpPage";
 import CreateTable from "../components/allrequire/CreateTable";
+import Selecttheme from "../test/Selecttheme";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -35,6 +36,10 @@ const routes = createBrowserRouter([
   {
     path: "/createtable",
     element: <PrivateRoute element={<CreateTable />} /> // Protect create table page
+  },
+  {
+    path: "/test",
+    element: <PrivateRoute element={<Selecttheme/>}/>
   }
 ]);
 
