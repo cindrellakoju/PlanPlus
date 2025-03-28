@@ -26,7 +26,7 @@ const Selecttheme = () => {
                         break;
                     case 2:
                         return(
-                            <Schedule table_name = {comp.table_name}/>
+                            <Schedule table_name = {comp.table_name} urlname = {convertToUnderscoreCase(comp.table_name)}/>
                         )
                         break;
                     case 3:
