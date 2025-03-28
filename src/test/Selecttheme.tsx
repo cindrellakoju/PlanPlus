@@ -1,3 +1,4 @@
+import Schedule from "../components/schedule/Schedule"
 import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
 import TodoApp from "./Themeone"
@@ -22,10 +23,11 @@ const Selecttheme = () => {
 
                             // <TodoApp themename= {comp.table_name} urlname={convertToUnderscoreCase(comp.table_name)}/>
                         )
-                        console.log("Theme 1",comp.table_name)
                         break;
                     case 2:
-                        console.log("Theme 2",comp.table_name)
+                        return(
+                            <Schedule table_name = {comp.table_name}/>
+                        )
                         break;
                     case 3:
                         console.log("Theme 3", comp.table_name)
