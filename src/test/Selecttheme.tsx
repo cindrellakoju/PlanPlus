@@ -1,3 +1,4 @@
+import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
 import TodoApp from "./Themeone"
 
@@ -15,8 +16,11 @@ const Selecttheme = () => {
         
                 switch(comp.theme_id){
                     case 1:
+                        // <ToDo/>
                         return(
-                            <TodoApp themename= {comp.table_name} urlname={convertToUnderscoreCase(comp.table_name)}/>
+                            <ToDo table_name={comp.table_name} urlname = {convertToUnderscoreCase(comp.table_name)}/>
+
+                            // <TodoApp themename= {comp.table_name} urlname={convertToUnderscoreCase(comp.table_name)}/>
                         )
                         console.log("Theme 1",comp.table_name)
                         break;
