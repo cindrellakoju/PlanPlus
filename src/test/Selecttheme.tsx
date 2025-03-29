@@ -1,4 +1,5 @@
 import Schedule from "../components/schedule/Schedule"
+import ThemeThree from "../components/themethree/ThemeThree"
 import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
 import TodoApp from "./Themeone"
@@ -11,6 +12,7 @@ const Selecttheme = () => {
     // console.log("local Data:",locaStorageData)
     return (
         <>
+        <ThemeThree/>
         {
             locaStorageData.map((comp) => {
                 console.log("Table Name:",comp.table_name,"Theme ID:",comp.theme_id)
