@@ -1,7 +1,9 @@
 const ThemeThree = () => {
     return (
         <div>
-            This is div one
+            <div>
+                <h2>Note for self</h2>
+            </div>
         </div>
     )
 }
