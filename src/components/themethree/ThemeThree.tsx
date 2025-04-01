@@ -12,7 +12,19 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   console.log('table_name:', table_name);
   console.log('urlname:', urlname);
 
-  const [note, setnote] = useState<string>('dcsd  fsfksf sfsbfs fsfds fs fsjbsfsd fdfjsf sfs f dsj');
+  const [note, setnote] = useState<string>('dcsd  fsfksf sfsbfs fsf f fffgb cfbgh v vhnfgzd fds fs fsjbsfsd fdfjsf sfs f dsj');
+  
+  return(
+    <div className='note-container'>
+        <div className='header'>
+            {table_name}
+        </div>
+        <div className='buttons'></div>
+        <div className='notes-lines'>
+            <div className='note-display'><p>{note  || "No note added yet"}</p></div>
+        </div>
+    </div>
+)
 //   // State to store the textarea content
 //   const [note, setNote] = useState<string>('');
 
@@ -29,17 +41,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
 //     setIsEditing(!isEditing);
 //   };
 
-    return(
-        <div className='note-container'>
-            <div className='header'>
-                {table_name}
-            </div>
-            <div className='buttons'></div>
-            <div className='notes-lines'>
-                <div className='note-display'>{note  || "No note added yet"}</div>
-            </div>
-        </div>
-    )
 //   return (
 //     <div className="note-container">
 //       <div className="note-header">
