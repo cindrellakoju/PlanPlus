@@ -12,7 +12,7 @@ const Selecttheme = () => {
     // console.log("local Data:",locaStorageData)
     return (
         <>
-        <ThemeThree/>
+        <ThemeThree table_name = {"Note for Self"} urlname = {"note_for_self"}/>
         {
             locaStorageData.map((comp) => {
                 console.log("Table Name:",comp.table_name,"Theme ID:",comp.theme_id)
