@@ -21,6 +21,13 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         </div>
         <div className='buttons'>
             <i className='bx bx-dots-horizontal-rounded' onClick={() => alert("Button Clicked")}></i>
+            <div className="dropdown">
+                <ul>
+                <li>Add</li>
+                <li>Edit</li>
+                <li>Delete</li>
+                </ul>
+            </div>
         </div>
         <div className='notes-lines'>
             <div className='note-display'><p>{note  || "No note added yet"}</p></div>

@@ -28,7 +28,7 @@
     color: #333; /* Darker text color for readability */
   }
 
-  .buttons{
+  .buttons {
     margin-top: 20px;
     margin-right: 40px;
     height: 20px;
@@ -37,11 +37,44 @@
     text-align: right;
     display: flex;
     justify-content: flex-end;
+    position: relative; /* Ensures the dropdown can be positioned correctly */
   }
-
-  /* .buttons i{
+  
+  .buttons .dropdown {
+    display: none;
+    height: 140px;
+    width: 100px;
+    background-color: rgb(185, 216, 190);
+    list-style: none;
+    position: absolute;
+    top: 30px;
+    right: -80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
+  }
+  
+  .dropdown ul {
+    list-style: none;
     font-size: 1rem;
-  } */
+    text-align: center;
+    padding-top: 5px;
+  }
+  
+  .dropdown ul li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .buttons:hover .dropdown {
+    display: block;
+  }
+  
+  /* Hover effect for dropdown items */
+  .dropdown ul li:hover {
+    background-color: #7fb4c3; /* Light gray background on hover */
+    margin: 4px;
+  }
+    
   
   .notes-lines {
     width: 100%;
@@ -68,3 +101,5 @@
     margin: 0; /* Remove default margin to align text properly */
     color: #333; /* Darker text color for readability */
   }
+
+  
