@@ -145,3 +145,35 @@
     transform: scale(1.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
   }
+
+ /* Styling for the task list container */
+.task-container {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+/* Each task-item will be a flex container to align task and priority */
+.task-item {
+  /* white-space: pre-wrap; */
+  display: flex;
+  justify-content: space-between;  /* Space between task and priority */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #353434;  /* Light border for task-item */
+  gap: 13px
+}
+
+/* Task style - left aligned */
+.task {
+  font-size: 1.2rem;
+  color: #333;
+  flex: 1;  /* Ensures task text takes up available space */
+}
+
+/* Priority style - right aligned */
+.priority {
+  font-size: 1.2rem;
+  color: #777;
+  text-align: right;
+}

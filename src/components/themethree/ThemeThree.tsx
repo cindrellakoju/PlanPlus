@@ -8,7 +8,18 @@ interface ThemeThreeProps {
 }
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
-  const col_name:string | string[] = ["notes"];
+  const col_name:string | string[] = ["task","priority"];
+  const data = [    
+    {
+      "task": "To complete this dfndf g dm gdg kd gd gkfd  dsfs fskfs fskf sf ksd fs fdks fs fs fskfsjf  g",
+      "priority": "high"
+    },
+    {
+      "task": "To sleep",
+      "priority": "low"
+    }
+  ];
+  
   console.log('urlname:', urlname);
   const [isEditing,setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -46,19 +57,37 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
                 </ul>
             </div>
         </div>
-        <div className='notes-lines'>
-            {
-                isEditing ? (
-                    <textarea
-                        ref={textareaRef}
-                        value={note}
-                        onChange={(e) => setnote(e.target.value)}
-                        className='note-textarea'
-                    />
-                ) :
-            <div className='note-display'><p>{note  || "No note added yet"}</p></div>
-            }
-        </div>
+        {
+            col_name.length === 1 && (
+                <div className='notes-lines'>
+                {
+                    isEditing ? (
+                        <textarea
+                            ref={textareaRef}
+                            value={note}
+                            onChange={(e) => setnote(e.target.value)}
+                            className='note-textarea'
+                        />
+                    ) :
+                    <div className='note-display'><p>{note  || "No note added yet"}</p></div>
+                }
+            </div>
+            )
+        }
+        
+        {
+            col_name.length == 2 && (
+                <div className="task-container">
+                {data.map((item, index) => (
+                  <div className="task-item" key={index}>
+                    <div className="task">{item.task}</div>
+                    <div className="priority">{item.priority}</div>
+                    <hr className="divider" />
+                  </div>
+                ))}
+              </div>
+            )
+        }
         <div className='savebutton'>
             <button onClick={handleSave}>Save</button>
         </div>
