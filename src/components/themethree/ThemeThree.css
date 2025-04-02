@@ -2,7 +2,7 @@
 .note-container {
     margin: 30px;
     margin-top: 50px;
-    width: 800px; /* Adjust width as needed */
+    width: 1000px; /* Adjust width as needed */
     height: 400px;
     background-color: #e0f2e9; /* Light green background */
     border-radius: 15px;
@@ -148,70 +148,32 @@
 
  /* Styling for the task list container */
 .task-container {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   padding-top: 20px;
+  overflow-y: auto;
 }
 
 .colname{
-  width: 80%;
+  width: 90%;
   display: flex;
-  justify-content: space-between;
   padding: 10px 0;
-  gap: 10px; /* Reduced gap for a more compact look */
+  gap: 15px;
+  padding-right: 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-.colname-item.task {
-  flex: 3; /* Task column takes up more space */
-  text-align: left; /* Left-align the task header */
-}
-
-.colname-item.priority {
-  flex: 1; /* Priority column takes up less space */
-  text-align: left; /* Changed to left-align */
-}
-
-.colname-item.status {
-  flex: 1; /* Status column takes up less space */
-  text-align: left; /* Changed to left-align */
-}
-/* Each task-item will be a flex container to align task and priority */
 .task-item {
-  /* white-space: pre-wrap; */
   display: flex;
-  justify-content: space-between;  /* Space between task and priority */
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #353434;  /* Light border for task-item */
-  gap: 13px
+  gap: 13px;
+  font-size: 1rem;
 }
 
-/* Task style - left aligned */
-.task {
-  font-size: 1.2rem;
-  color: #333;
-  flex: 3; /* Task takes up more space */
-  text-align: left; /* Already left-aligned */
-  white-space: normal; /* Allow text to wrap */
-  padding-right: 10px;
-  /* background-color: #63bfd8; */
-}
 
-/* Priority style - left aligned */
-.priority {
-  font-size: 1.2rem;
-  color: #777;
-  flex: 1; /* Priority takes up less space */
-  text-align: left; /* Changed to left-align */
-  /* background-color: #e0f2e9; */
+.left-align {
+  text-align: left;
 }
-
-/* Status style - left aligned */
-.status {
-  font-size: 1.2rem;
-  /* background-color: azure; */
-  color: #777;
-  flex: 1; /* Status takes up less space */
-  text-align: left; /* Changed to left-align */
-}
-
