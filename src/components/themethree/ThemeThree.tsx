@@ -8,15 +8,19 @@ interface ThemeThreeProps {
 }
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
-  const col_name:string | string[] = ["task","priority"];
+  const col_name:string | string[] = ["task","priority","status"];
+  const [displacolname,setDisplayColname] = useState<boolean>(true)
+  const [addcheckbox,setAddCheckBox] = useState<boolean>(false)
   const data = [    
     {
       "task": "To complete this dfndf g dm gdg kd gd gkfd  dsfs fskfs fskf sf ksd fs fdks fs fs fskfsjf  g",
-      "priority": "high"
+      "priority": "high",
+      "status" : "iscompleted",
     },
     {
       "task": "To sleep",
-      "priority": "low"
+      "priority": "low",
+      "status" : "iscompleted",
     }
   ];
   
@@ -51,12 +55,22 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             <i className='bx bx-dots-horizontal-rounded'></i>
             <div className="dropdown">
                 <ul>
+                {
+                    addcheckbox ? (
+                        col_name.includes("status") && (
+                        <>
+                        <li>Completed</li>
+                        <li>Delete</li>
+                        </>
+                    )
+                ) : null
+            }
                 <li>Add</li>
                 <li onClick={handleEdit}>Edit</li>
-                <li>Delete</li>
                 </ul>
             </div>
         </div>
+
         {
             col_name.length === 1 && (
                 <div className='notes-lines'>
@@ -75,19 +89,32 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             )
         }
         
+        <div className='colname'>
+            {
+                col_name.map((name, index) => {
+                    return <div key={index} className={`colname-item ${name}`}>{name}</div>;
+                })
+            }
+        </div>
         {
-            col_name.length == 2 && (
+            col_name.length >= 2 && (
                 <div className="task-container">
                 {data.map((item, index) => (
-                  <div className="task-item" key={index}>
+                    <div className="task-item" key={index}>
+                    { addcheckbox ? ( col_name.includes('status') && (
+                        <input type="checkbox" className="task-checklist" />
+                    )) : null}
+                    
                     <div className="task">{item.task}</div>
                     <div className="priority">{item.priority}</div>
+                    <div className="status">{item.status}</div>
                     <hr className="divider" />
-                  </div>
+                    </div>
                 ))}
-              </div>
+                </div>
             )
         }
+
         <div className='savebutton'>
             <button onClick={handleSave}>Save</button>
         </div>

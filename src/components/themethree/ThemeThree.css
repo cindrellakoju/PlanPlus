@@ -2,7 +2,7 @@
 .note-container {
     margin: 30px;
     margin-top: 50px;
-    width: 400px; /* Adjust width as needed */
+    width: 800px; /* Adjust width as needed */
     height: 400px;
     background-color: #e0f2e9; /* Light green background */
     border-radius: 15px;
@@ -42,7 +42,7 @@
   
   .buttons .dropdown {
     display: none;
-    height: 140px;
+    height: auto;
     width: 100px;
     background-color: rgb(185, 216, 190);
     list-style: none;
@@ -153,6 +153,28 @@
   padding-top: 20px;
 }
 
+.colname{
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  gap: 10px; /* Reduced gap for a more compact look */
+}
+
+.colname-item.task {
+  flex: 3; /* Task column takes up more space */
+  text-align: left; /* Left-align the task header */
+}
+
+.colname-item.priority {
+  flex: 1; /* Priority column takes up less space */
+  text-align: left; /* Changed to left-align */
+}
+
+.colname-item.status {
+  flex: 1; /* Status column takes up less space */
+  text-align: left; /* Changed to left-align */
+}
 /* Each task-item will be a flex container to align task and priority */
 .task-item {
   /* white-space: pre-wrap; */
@@ -168,12 +190,28 @@
 .task {
   font-size: 1.2rem;
   color: #333;
-  flex: 1;  /* Ensures task text takes up available space */
+  flex: 3; /* Task takes up more space */
+  text-align: left; /* Already left-aligned */
+  white-space: normal; /* Allow text to wrap */
+  padding-right: 10px;
+  /* background-color: #63bfd8; */
 }
 
-/* Priority style - right aligned */
+/* Priority style - left aligned */
 .priority {
   font-size: 1.2rem;
   color: #777;
-  text-align: right;
+  flex: 1; /* Priority takes up less space */
+  text-align: left; /* Changed to left-align */
+  /* background-color: #e0f2e9; */
 }
+
+/* Status style - left aligned */
+.status {
+  font-size: 1.2rem;
+  /* background-color: azure; */
+  color: #777;
+  flex: 1; /* Status takes up less space */
+  text-align: left; /* Changed to left-align */
+}
+
