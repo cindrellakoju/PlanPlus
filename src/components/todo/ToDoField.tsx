@@ -38,7 +38,7 @@ const ToDoField: React.FC<ToDoFieldProps> = ({ urlname }) => {
     axios
       .post(`${backend_url}/user/columndata/2`, data)
       .then((response) => {
-        console.log('Response', response.data);
+        // console.log('Response', response.data);
         setObtainedData(response.data); // Store the raw data
       })
       .catch((err) => {

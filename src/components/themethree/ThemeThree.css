@@ -84,6 +84,27 @@
     box-sizing: border-box;
   }
   
+  .note-textarea{
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+    white-space: pre-wrap;
+    background-image: linear-gradient(to bottom, transparent 49px, #000 49px, #000 50px, transparent 50px);
+    background-size: 90% 50px; /* Cover 90% width and repeat the line every 50px */
+    background-repeat: repeat-y; /* Repeat the background vertically */
+    background-position: center top; /* Center the lines horizontally and start from the top */
+    font-size: 1.2rem;
+    resize: none;
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px; 
+    box-sizing: border-box;
+  }
+
+  .note-textarea:focus{
+    border: none;
+    outline: none;
+  }
   .note-display {
     height: 100%;
     line-height: 50px; /* Increase the line spacing to match the background lines */
@@ -101,5 +122,26 @@
     margin: 0; /* Remove default margin to align text properly */
     color: #333; /* Darker text color for readability */
   }
-
   
+
+  .savebutton{
+    margin-top: 10px;
+    height: 50px;
+    width: 85%;
+  }
+  
+  .savebutton button{
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background-color: #7fb4c3;
+    font-size: 1rem;
+    color: #000;
+  }
+
+  .savebutton button:hover{
+    background-color: #63bfd8;
+    transform: scale(1.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
