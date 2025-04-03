@@ -1,42 +1,47 @@
 import React from 'react';
 
-// TaskItem interface to define the structure of the data
-interface TaskItem {
-  task: string;
-  priority: string;
-  status: string;
-  description: string;
-  deadline: string;
-}
-
 // MoreThanOneColProps interface for the props
 interface MoreThanOneColProps {
-  data: TaskItem[];
+  data: Record<string, any>[]; // Generic data structure: array of objects with string keys and any type of values
   addcheckbox: boolean;
   displacolname: boolean;
-  col_name: string | string[];
-  table : boolean,
-  bgforhead : boolean
+  col_name: string | string[]; // Column names
+  table: boolean;
+  bgforhead: boolean;
 }
 
-// Functional component definition
-const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({ data, addcheckbox, displacolname, col_name, table, bgforhead}) => {
+const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
+  data,
+  addcheckbox,
+  displacolname,
+  col_name,
+  table,
+  bgforhead,
+}) => {
   const colNamesArray = Array.isArray(col_name) ? col_name : [col_name];
-
-  // Helpe
 
   return (
     <>
-      <div className='tables'>
+      <div className="tables">
         <table>
           <thead>
             <tr>
               {displacolname && (
-                <th style={{ border: table ? '1px solid black' : 'none', backgroundColor: bgforhead ? '#9ec4a8' : "transparent" }}></th>
-
+                <th
+                  style={{
+                    border: table ? '1px solid black' : 'none',
+                    backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
+                  }}
+                ></th>
               )}
               {colNamesArray.map((name, index) => (
-                <th key={index} style={{ border: table ? '1px solid black' : 'none', backgroundColor: bgforhead ? '#9ec4a8' : "transparent" }}>
+                <th
+                  key={index}
+                  style={{
+                    border: table ? '1px solid black' : 'none',
+                    backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
+                  }}
+                >
                   {name.charAt(0).toUpperCase() + name.slice(1)} {/* Capitalize first letter */}
                 </th>
               ))}
@@ -52,10 +57,9 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({ data, addcheckbox, disp
                   </td>
                 )}
                 {colNamesArray.map((colName, idx) => {
-                  const typedKey = colName as keyof TaskItem;
                   return (
                     <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
-                      {item[typedKey]}
+                      {item[colName]}
                     </td>
                   );
                 })}

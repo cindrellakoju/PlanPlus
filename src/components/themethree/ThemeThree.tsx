@@ -11,14 +11,6 @@ interface ThemeThreeProps {
   urlname?: string;
 }
 
-// Interface for data items
-interface TaskItem {
-    task: string;
-    priority: string;
-    status: string;
-    description: string; // Add a description field
-    deadline: string;    // Add a deadline field
-}
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   const col_name: string | string[] = ["task","priority",'status','description','deadline'];
@@ -26,10 +18,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
   const [table, setTable] = useState<boolean>(false);
   const [bgforhead,setBgForHead] = useState<boolean>(true)
-  const flex_value = [5,2,1,3,1]
 
-  // Typed data array
-  const data: TaskItem[] = [
+  const data:  Record<string, any>[] = [
     {
       task: "Complete this task",
       priority: "high",
