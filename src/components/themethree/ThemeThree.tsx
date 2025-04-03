@@ -1,6 +1,9 @@
 // ThemeThree.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import './ThemeThree.css';
+import OneColName from './onecolname';
+import Colname from './Colname';
+import MoreThanOneCol from './morethanonecol';
 
 // Props interface
 interface ThemeThreeProps {
@@ -15,14 +18,15 @@ interface TaskItem {
     status: string;
     description: string; // Add a description field
     deadline: string;    // Add a deadline field
-  }
+}
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
-  const col_name: string | string[] = ["task"];
-  const [displacolname, setDisplayColname] = useState<boolean>(false);
+  const col_name: string | string[] = ["task","priority",'status','description','deadline'];
+  const [displacolname, setDisplayColname] = useState<boolean>(true);
   const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
   const [table, setTable] = useState<boolean>(false);
-  const flex_value = [3,2,1,3,1]
+  const [bgforhead,setBgForHead] = useState<boolean>(true)
+  const flex_value = [5,2,1,3,1]
 
   // Typed data array
   const data: TaskItem[] = [
@@ -111,67 +115,24 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
           </ul>
         </div>
       </div>
-
-      {col_name.length === 1 && (
-        <div className="notes-lines">
-          {isEditing ? (
-            <textarea
-              ref={textareaRef}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              className="note-textarea"
+      <div className='body'>
+        {
+          col_name.length === 1 && (
+            <OneColName 
+                isEditing={isEditing} 
+                textareaRef={textareaRef} 
+                note={note} 
+                setNote={setNote} 
             />
-          ) : (
-            <div className="note-display">
-              <input type='checkbox' className='checkboxtype'/>
-              <p>{note || "No note added yet"}</p>
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="colname">
-      {displacolname ? (
-  col_name.map((name, index) => {
-    return (
-      <div key={index} className={`colname-item ${name} left-align`} style={{ flex: `${flex_value[index]}` }}>
-        {name.charAt(0).toUpperCase() + name.slice(1)} 
-      </div>
-    );
-  })
-) : null}
-
-
+          )
+        }
+        {
+          col_name.length >= 2 && (
+            <MoreThanOneCol data={data} addcheckbox={addcheckbox} displacolname={displacolname} col_name={col_name} table={table} bgforhead={bgforhead} />
+          )
+        }
       </div>
 
-      {col_name.length >= 2 && (
-        <div className="task-container">
-{data.map((item, index) => (
-  <div className="task-item" key={index}>
-    {addcheckbox ? (
-      col_name.includes('status') && (
-        <input type="checkbox" className="task-checklist" />
-      )
-    ) : null}
-
-    {/* Dynamically display only the values of the item */}
-    {Object.keys(item).map((key, idx) => {
-      // Type assertion: Tell TypeScript that 'key' is one of the keys of 'TaskItem'
-      const typedKey = key as keyof TaskItem;
-
-      return (
-        <div className={typedKey} key={key} style={{ flex: `${flex_value[idx]}` }}>
-          {item[typedKey]} {/* Access value using the typed key */}
-        </div>
-      );
-    })}
-
-    <hr className="divider" />
-  </div>
-))}
-
-        </div>
-      )}
 
       <div className="savebutton">
         <button onClick={handleSave}>Save</button>
