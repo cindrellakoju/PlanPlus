@@ -21,6 +21,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
 
   const data:  Record<string, any>[] = [
     {
+      id: 10,
       task: "Complete this task",
       priority: "high",
       status: "iscompleted",
@@ -28,6 +29,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-05",
     },
     {
+      id: 2,
       task: "Go to sleep",
       priority: "low",
       status: "iscompleted",
@@ -35,6 +37,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-03",
     },
     {
+      id: 3,
       task: "Attend a meeting",
       priority: "medium",
       status: "iscompleted",
@@ -42,6 +45,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-04",
     },
     {
+      id:4,
       task: "Write an email",
       priority: "low",
       status: "iscompleted",
@@ -49,6 +53,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-02",
     },
     {
+      id:5,
       task: "Exercise",
       priority: "medium",
       status: "iscompleted",
@@ -56,6 +61,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-03",
     },
     {
+      id : 6,
       task: "Cook dinner",
       priority: "high",
       status: "iscompleted",

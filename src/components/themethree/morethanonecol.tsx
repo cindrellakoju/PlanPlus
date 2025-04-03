@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // MoreThanOneColProps interface for the props
 interface MoreThanOneColProps {
@@ -18,7 +18,24 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   table,
   bgforhead,
 }) => {
+  // State to store the checked task ids (instead of indices)
+  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+
   const colNamesArray = Array.isArray(col_name) ? col_name : [col_name];
+
+  // Handle checkbox change and store the task id
+  const handleCheckChange = (taskId: string) => {
+    setCheckedItems((prevCheckedItems) => {
+      const updatedCheckedItems = new Set(prevCheckedItems);
+      console.log("Updated checked",updatedCheckedItems)
+      if (updatedCheckedItems.has(taskId)) {
+        updatedCheckedItems.delete(taskId); // Uncheck
+      } else {
+        updatedCheckedItems.add(taskId); // Check
+      }
+      return updatedCheckedItems;
+    });
+  };
 
   return (
     <>
@@ -49,24 +66,35 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           </thead>
 
           <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
+            {data.map((item) => (
+              <tr key={item.id}>
                 {addcheckbox && (
                   <td style={{ border: table ? '1px solid black' : 'none' }}>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      checked={checkedItems.has(item.id)} // Check if the current id is in the checked items
+                      onChange={() => handleCheckChange(item.id)} // Pass the task id to handleCheckChange
+                    />
                   </td>
                 )}
-                {colNamesArray.map((colName, idx) => {
-                  return (
-                    <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
-                      {item[colName]}
-                    </td>
-                  );
-                })}
+                {colNamesArray.map((colName, idx) => (
+                  <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
+                    {item[colName]}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Display checked task ids */}
+      <div>
+        <h4>Checked Task IDs:</h4>
+        <ul>
+          {Array.from(checkedItems).map((taskId) => (
+            <li key={taskId}>{taskId}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
