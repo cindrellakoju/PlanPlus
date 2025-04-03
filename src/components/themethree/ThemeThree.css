@@ -2,7 +2,7 @@
 .note-container {
     margin: 30px;
     margin-top: 50px;
-    width: 1000px; /* Adjust width as needed */
+    width: 400px; /* Adjust width as needed */
     height: 400px;
     background-color: #e0f2e9; /* Light green background */
     border-radius: 15px;
@@ -115,12 +115,19 @@
     background-position: center top; /* Center the lines horizontally and start from the top */
     padding: 10px 20px; /* Padding to avoid overlap with the lines */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
   }
   
+  .note-display .checkboxtype{
+    margin-top: 19px;
+  }
   .note-display p {
     font-size: 1.2rem;
     margin: 0; /* Remove default margin to align text properly */
     color: #333; /* Darker text color for readability */
+    padding-left: 3%;
   }
   
 

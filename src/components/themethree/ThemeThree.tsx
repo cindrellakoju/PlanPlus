@@ -18,9 +18,9 @@ interface TaskItem {
   }
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
-  const col_name: string | string[] = ["task", "priority", "status","description","deadline"];
-  const [displacolname, setDisplayColname] = useState<boolean>(true);
-  const [addcheckbox, setAddCheckBox] = useState<boolean>(false);
+  const col_name: string | string[] = ["task"];
+  const [displacolname, setDisplayColname] = useState<boolean>(false);
+  const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
   const [table, setTable] = useState<boolean>(false);
   const flex_value = [3,2,1,3,1]
 
@@ -123,6 +123,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             />
           ) : (
             <div className="note-display">
+              <input type='checkbox' className='checkboxtype'/>
               <p>{note || "No note added yet"}</p>
             </div>
           )}
