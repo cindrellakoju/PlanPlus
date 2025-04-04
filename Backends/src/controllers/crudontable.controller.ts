@@ -10,8 +10,8 @@ export const updateTableInfoController = async(req:Request , res:Response) => {
         user_table_id : user_table_id
     }
 
-    console.log("Id :",id)
-    console.log("other data:",restBody)
+    // console.log("Id :",id)
+    // console.log("other data:",restBody)
     try{
         const result = await updateTableInfoServices(id,restBody);
         res.status(200).json(result);

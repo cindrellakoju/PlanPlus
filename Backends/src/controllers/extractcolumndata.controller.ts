@@ -9,7 +9,7 @@ export const fetchcolumndata = async(req:Request, res:Response) => {
         user_id,
         tablename
     }
-    console.log(data)
+    // console.log(data)
     try{
         const result = await getColumnData(data);
         res.status(200).json(result);

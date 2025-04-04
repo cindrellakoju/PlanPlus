@@ -11,7 +11,7 @@ export const insertTabelData = async(req:Request, res: Response) => {
         value : value
     }
 
-    console.log(insertdata)
+    // console.log(insertdata)
     try{
         const result = await insertintotable(insertdata);
         res.status(200).json(result);

@@ -19,10 +19,10 @@ router.get("/",getAllUsers);
 router.post("/login",login);
 router.get("/createtables",createAllTable);
 router.get("/insert",insertAllDatas);
-router.get("/todo",getToDoListController);
-router.put("/todo/edit/:id",editToDoListController)
-router.delete("/todo/delete/:id",deleteToDoController)
-router.post("/todo/insert",insertToDoController);
+// router.get("/todo",getToDoListController);
+// router.put("/todo/edit/:id",editToDoListController)
+// router.delete("/todo/delete/:id",deleteToDoController)
+// router.post("/todo/insert",insertToDoController);
 router.post("/signup",signup);
 router.get("/componentsposition",getComponentsController);
 router.put("/componentsposition/edit/:id",updateComponentsController);

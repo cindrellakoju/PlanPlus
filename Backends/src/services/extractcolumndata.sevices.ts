@@ -10,7 +10,7 @@ export const getColumnData = (data:Datas): Promise<any> => {
             tablename: tablename
         };
         
-        console.log(udata)
+        // console.log(udata)
         // Assuming tablecolumnname is a function that queries the database
         columndata(udata, (err, results) => {
             if (err) {

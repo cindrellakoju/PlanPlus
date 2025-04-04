@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 // MoreThanOneColProps interface for the props
 interface MoreThanOneColProps {
-  data: Record<string, any>[]; // Generic data structure: array of objects with string keys and any type of values
+  data: Record<string, any>[]; // Array of objects
   addcheckbox: boolean;
   displacolname: boolean;
-  col_name: string | string[]; // Column names
+  col_name: string | string[]; // Column names (single or array of strings)
   table: boolean;
   bgforhead: boolean;
 }
@@ -21,13 +21,15 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   // State to store the checked task ids (instead of indices)
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
+  // If col_name is a single string, make it an array for uniform handling
   const colNamesArray = Array.isArray(col_name) ? col_name : [col_name];
+
+  console.log("Received data", data); // Check the data structure
 
   // Handle checkbox change and store the task id
   const handleCheckChange = (taskId: string) => {
     setCheckedItems((prevCheckedItems) => {
       const updatedCheckedItems = new Set(prevCheckedItems);
-      console.log("Updated checked",updatedCheckedItems)
       if (updatedCheckedItems.has(taskId)) {
         updatedCheckedItems.delete(taskId); // Uncheck
       } else {
@@ -49,7 +51,9 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                     border: table ? '1px solid black' : 'none',
                     backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
                   }}
-                ></th>
+                >
+                  {/* Column for checkbox */}
+                </th>
               )}
               {colNamesArray.map((name, index) => (
                 <th
@@ -66,20 +70,20 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           </thead>
 
           <tbody>
-            {data.map((item) => (
-              <tr key={item.id}>
+            {data.map((item, idx) => (
+              <tr key={item.task + idx}> {/* Use task + index as a unique key */}
                 {addcheckbox && (
                   <td style={{ border: table ? '1px solid black' : 'none' }}>
                     <input
                       type="checkbox"
-                      checked={checkedItems.has(item.id)} // Check if the current id is in the checked items
-                      onChange={() => handleCheckChange(item.id)} // Pass the task id to handleCheckChange
+                      checked={checkedItems.has(item.task)} // Use task as unique identifier for checkbox
+                      onChange={() => handleCheckChange(item.task)} // Pass task as ID to handleCheckChange
                     />
                   </td>
                 )}
                 {colNamesArray.map((colName, idx) => (
                   <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
-                    {item[colName]}
+                    {item[colName] || 'N/A'} {/* Display 'N/A' if data is missing */}
                   </td>
                 ))}
               </tr>
@@ -87,6 +91,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           </tbody>
         </table>
       </div>
+
       {/* Display checked task ids */}
       <div>
         <h4>Checked Task IDs:</h4>

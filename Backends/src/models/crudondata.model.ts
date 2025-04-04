@@ -40,7 +40,7 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
   let keyval = '';
   let queryValues = [];
 
-  console.log(updatedata)
+  // console.log(updatedata)
   // Loop through the keys in updatedata.value and create JSON_SET arguments
   for (const [key, val] of Object.entries(updatedata.value)) {
     keyval += `'$."${key}"', ?, `;  // Dynamically update each key

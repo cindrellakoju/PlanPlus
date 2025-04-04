@@ -2,8 +2,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './ThemeThree.css';
 import OneColName from './onecolname';
-import Colname from './Colname';
 import MoreThanOneCol from './morethanonecol';
+import axios from 'axios';
+import { useUserInfo } from '../../hooks/useUserInfo';
 
 // Props interface
 interface ThemeThreeProps {
@@ -11,14 +12,57 @@ interface ThemeThreeProps {
   urlname?: string;
 }
 
+interface ColumnData {
+  column_name: string;
+}
+
+interface ApiResponse {
+  column_data: string; // The data inside 'column_data' is a stringified JSON object
+}
 
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
+  const {userId , backend_url} = useUserInfo()
+  const [colname, setColName] = useState<string|string[]>()
   const col_name: string | string[] = ["task","priority",'status','description','deadline'];
   const [displacolname, setDisplayColname] = useState<boolean>(true);
   const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
   const [table, setTable] = useState<boolean>(false);
-  const [bgforhead,setBgForHead] = useState<boolean>(true)
+  const [bgforhead,setBgForHead] = useState<boolean>(true);
+  const [datas, setData] = useState<Record<string, any>[]>([]);
 
+  const insertinurl = {
+    tablename : urlname
+  }
+
+  useEffect(() => {
+    console.log("Fetching table:",table_name)
+    axios
+      .get(`${backend_url}/user/tablecolumn/2`)
+      .then((response) => {
+        const columns = response.data.map((item: ColumnData) => item.column_name);
+        setColName(columns);
+      })
+      .catch((error) => {
+        console.log("Error fetching data", error);
+      });
+      
+      console.log("Getting response for",table_name)
+    axios
+      .post(`${backend_url}/user/columndata/2`, insertinurl)
+      .then((response) => {
+        console.log("REsponse", response.data);
+        const parsedData = response.data.map((item: ApiResponse) => {
+          return JSON.parse(item.column_data) as ColumnData;
+        });
+        
+        setData(parsedData);
+      })
+      .catch((err) => {
+        console.log("Error fetching", err);
+      });
+      console.log("Data fetched for",table_name)
+  }, [table_name]);
+  
   const data:  Record<string, any>[] = [
     {
       id: 10,
@@ -69,8 +113,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       deadline: "2025-04-02",
     },
   ];
-  
-  console.log('urlname:', urlname);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [note, setNote] = useState<string>('dcsd  fsfksf sfsbfs fsf f fffgb cfbgh v vhnfgzd fds fs fsjbsfsd fdfjsf sfs f dsj');
@@ -112,21 +154,30 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         </div>
       </div>
       <div className='body'>
-        {
-          col_name.length === 1 && (
-            <OneColName 
-                isEditing={isEditing} 
-                textareaRef={textareaRef} 
-                note={note} 
-                setNote={setNote} 
-            />
-          )
-        }
-        {
-          col_name.length >= 2 && (
-            <MoreThanOneCol data={data} addcheckbox={addcheckbox} displacolname={displacolname} col_name={col_name} table={table} bgforhead={bgforhead} />
-          )
-        }
+      {
+        colname && colname.length === 1 && (
+          <OneColName 
+            isEditing={isEditing} 
+            textareaRef={textareaRef} 
+            note={note} 
+            setNote={setNote} 
+          />
+        )
+      }
+
+      {
+        colname && colname.length >= 2 && (
+          <MoreThanOneCol 
+            data={datas} 
+            addcheckbox={addcheckbox} 
+            displacolname={displacolname} 
+            col_name={colname} 
+            table={table} 
+            bgforhead={bgforhead} 
+          />
+        )
+      }
+
       </div>
 
 

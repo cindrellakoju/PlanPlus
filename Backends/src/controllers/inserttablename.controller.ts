@@ -12,7 +12,7 @@ export const insertTableNameController = async(req:Request, res:Response) => {
         width : width,
         height : height
     }
-    console.log(inserttablename)
+    // console.log(inserttablename)
     try{
         const result = await insertTableNameServices(inserttablename)
         res.status(200).json(result)
