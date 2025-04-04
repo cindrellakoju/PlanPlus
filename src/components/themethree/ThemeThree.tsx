@@ -37,8 +37,9 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   useEffect(() => {
     console.log("Fetching table:",table_name)
     axios
-      .get(`${backend_url}/user/tablecolumn/2`)
+      .post(`${backend_url}/user/tablecolumn/2`, insertinurl)
       .then((response) => {
+        console.log("rES",response.data)
         const columns = response.data.map((item: ColumnData) => item.column_name);
         setColName(columns);
       })
@@ -63,56 +64,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       console.log("Data fetched for",table_name)
   }, [table_name]);
   
-  const data:  Record<string, any>[] = [
-    {
-      id: 10,
-      task: "Complete this task",
-      priority: "high",
-      status: "iscompleted",
-      description: "Task involves finishing the remaining work on the project",
-      deadline: "2025-04-05",
-    },
-    {
-      id: 2,
-      task: "Go to sleep",
-      priority: "low",
-      status: "iscompleted",
-      description: "Ensure proper rest before tomorrow's meeting",
-      deadline: "2025-04-03",
-    },
-    {
-      id: 3,
-      task: "Attend a meeting",
-      priority: "medium",
-      status: "iscompleted",
-      description: "Discuss project updates with the team",
-      deadline: "2025-04-04",
-    },
-    {
-      id:4,
-      task: "Write an email",
-      priority: "low",
-      status: "iscompleted",
-      description: "Send a follow-up email to the client",
-      deadline: "2025-04-02",
-    },
-    {
-      id:5,
-      task: "Exercise",
-      priority: "medium",
-      status: "iscompleted",
-      description: "Complete a 30-minute workout session",
-      deadline: "2025-04-03",
-    },
-    {
-      id : 6,
-      task: "Cook dinner",
-      priority: "high",
-      status: "iscompleted",
-      description: "Prepare a healthy meal for the evening",
-      deadline: "2025-04-02",
-    },
-  ];
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [note, setNote] = useState<string>('dcsd  fsfksf sfsbfs fsf f fffgb cfbgh v vhnfgzd fds fs fsjbsfsd fdfjsf sfs f dsj');
