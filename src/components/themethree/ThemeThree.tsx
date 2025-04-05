@@ -64,7 +64,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [note, setNote] = useState<string>('dcsd  fsfksf sfsbfs fsf f fffgb cfbgh v vhnfgzd fds fs fsjbsfsd fdfjsf sfs f dsj');
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
@@ -108,8 +107,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
           <OneColName 
             isEditing={isEditing} 
             textareaRef={textareaRef} 
-            note={note} 
-            setNote={setNote} 
+            datas={datas} 
+            setData={setData} 
           />
         )
       }
