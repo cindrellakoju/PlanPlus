@@ -35,7 +35,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   }
 
   useEffect(() => {
-    console.log("Fetching table:",table_name)
     axios
       .post(`${backend_url}/user/tablecolumn/2`, insertinurl)
       .then((response) => {
@@ -47,7 +46,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         console.log("Error fetching data", error);
       });
       
-      console.log("Getting response for",table_name)
     axios
       .post(`${backend_url}/user/columndata/2`, insertinurl)
       .then((response) => {
@@ -61,8 +59,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       .catch((err) => {
         console.log("Error fetching", err);
       });
-      console.log("Data fetched for",table_name)
-  }, [table_name]);
+    }, [table_name]);
+
   
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);

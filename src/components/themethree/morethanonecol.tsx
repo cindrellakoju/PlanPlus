@@ -63,7 +63,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                     backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
                   }}
                 >
-                  {name.charAt(0).toUpperCase() + name.slice(1)} {/* Capitalize first letter */}
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
                 </th>
               ))}
             </tr>
