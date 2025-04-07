@@ -1,9 +1,7 @@
-import { JSX, useEffect, useState } from "react"
-import Schedule from "../components/schedule/Schedule"
+import { useEffect, useState } from "react"
 import ThemeThree from "../components/themethree/ThemeThree"
 import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
-import Dummy from "./dummy"
 
 const Selecttheme = () => {
     const [localData, setLocalData] = useState<any[]>([]);
@@ -20,7 +18,7 @@ const Selecttheme = () => {
               case 1:
                 return (
                   <ToDo 
-                    key={comp.table_name} // Add key prop
+                    key={comp.user_table_id} // Add key prop
                     table_name={comp.table_name} 
                     urlname={convertToUnderscoreCase(comp.table_name)} 
                   />
@@ -28,7 +26,7 @@ const Selecttheme = () => {
               case 2:
                 return (
                     <ThemeThree 
-                      key={comp.table_name} // Add key prop
+                      key={comp.user_table_id} // Add key prop
                       table_name={comp.table_name} 
                       urlname={convertToUnderscoreCase(comp.table_name)}
                     />

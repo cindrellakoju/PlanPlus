@@ -13,10 +13,6 @@ interface ThemeContextType{
     setColName : React.Dispatch<React.SetStateAction<string | string[]>>
     addcheckbox : boolean,
     setAddCheckBox : React.Dispatch<React.SetStateAction<boolean>>
-    checkeditemEditing : boolean,
-    setCheckedItemEditing : React.Dispatch<React.SetStateAction<boolean>>
-    isEditing : boolean,
-    setIsEditing : React.Dispatch<React.SetStateAction<boolean>>
 } 
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -31,15 +27,11 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
       const [displaycolname, setDisplayColname] = useState<boolean>(true);
       const [colname, setColName] = useState<string|string[]>('');
       const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
-      const [checkeditemEditing  , setCheckedItemEditing] = useState<boolean>(false);
-      const [isEditing, setIsEditing] = useState<boolean>(false);
 
-        console.log("Theme context rendeing")
       return (
         <ThemeContext.Provider value={{ checkedItems, setCheckedItems, bgforhead, setBgForHead,
          table, setTable, displaycolname, setDisplayColname, colname, setColName ,
-         addcheckbox, setAddCheckBox, checkeditemEditing, setCheckedItemEditing,
-         isEditing, setIsEditing }}>
+         addcheckbox, setAddCheckBox }}>
           {children}
         </ThemeContext.Provider>
       );

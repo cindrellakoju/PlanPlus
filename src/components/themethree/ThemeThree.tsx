@@ -31,6 +31,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   const [colname, setColName] = useState<string|string[]>()
   const col_name: string | string[] = ["task","priority",'status','description','deadline'];
   const [datas, setData] = useState<Record<string, any>[]>([]);
+  const [checkitemEditing , setCheckedItemEditing] = useState<boolean>(false)
+  const [isEditing,setIsEditing] = useState<boolean>(false)
 
   const insertinurl = {
     tablename : urlname
@@ -67,24 +69,24 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    if (context.isEditing && textareaRef.current) {
+    if (isEditing && textareaRef.current) {
       textareaRef.current.focus();
       const length = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(length, length);
     }
-  }, [context.isEditing]);
+  }, [isEditing]);
 
   const handleEdit = () => {
-    if (context.checkedItems.size > 0 && !context.checkeditemEditing) {
-      context.setCheckedItemEditing(true);
+    if (context.checkedItems.size > 0 && !checkitemEditing ) {
+      setCheckedItemEditing(true);
     }
     console.log("Checked Items", context.checkedItems);
-    context.setIsEditing(true);
+      setIsEditing(true);
   };
   
 
   const handleSave = () => {
-    context.setIsEditing(false);
+      setIsEditing(false);
   };
 
   return (
@@ -111,7 +113,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       {
         colname && colname.length === 1 && (
           <OneColName 
-            isEditing={context.isEditing} 
+            isEditing={isEditing} 
             textareaRef={textareaRef} 
             datas={datas} 
             setData={setData} 
@@ -128,6 +130,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             col_name={colname} 
             table={context.table} 
             bgforhead={context.bgforhead} 
+            checkitemEditing = {checkitemEditing }
+            isEditing = {isEditing}
           />
         )
       }
