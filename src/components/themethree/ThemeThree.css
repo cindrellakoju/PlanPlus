@@ -41,6 +41,7 @@
   }
   
   .buttons .dropdown {
+    z-index: 2;
     display: none;
     height: auto;
     width: 100px;
@@ -67,6 +68,7 @@
   
   .buttons:hover .dropdown {
     display: block;
+    z-index: 2;
   }
   
   /* Hover effect for dropdown items */

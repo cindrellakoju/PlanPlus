@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ThemeContext } from '../../context/Theme.context';
 
 // MoreThanOneColProps interface for the props
 interface MoreThanOneColProps {
@@ -18,17 +19,20 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   table,
   bgforhead,
 }) => {
-  // State to store the checked task ids (instead of indices)
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const context = React.useContext(ThemeContext)
+  if (!context) {
+    throw new Error("useThemeContext must be used within a ThemeProvider");
+  }
+  const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
 
   // If col_name is a single string, make it an array for uniform handling
   const colNamesArray = Array.isArray(col_name) ? col_name : [col_name];
 
-  console.log("Received data", data); // Check the data structure
-
   // Handle checkbox change and store the task id
-  const handleCheckChange = (taskId: string) => {
-    setCheckedItems((prevCheckedItems) => {
+  const handleCheckChange = (taskId: number) => {
+    console.log("REceived data:",data)
+    console.log("Task is:",taskId)
+    context.setCheckedItems((prevCheckedItems) => {
       const updatedCheckedItems = new Set(prevCheckedItems);
       if (updatedCheckedItems.has(taskId)) {
         updatedCheckedItems.delete(taskId); // Uncheck
@@ -39,6 +43,20 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     });
   };
 
+  useEffect(() => {
+    if (context.checkeditemEditing) {
+      // Filter data based on checked items
+      const filtered = data.filter((item) =>
+        context.checkedItems.has(item.data_id)
+      );
+      setFilteredData(filtered);
+    } else if(context.isEditing) {
+      // If not editing, show all data
+      setFilteredData(data);
+    }
+  }, [context.checkedItems, context.checkeditemEditing, data]);
+  
+  console.log("filtered data",filteredData)
   return (
     <>
       <div className="tables">
@@ -70,24 +88,30 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           </thead>
 
           <tbody>
-            {data.map((item, idx) => (
-              <tr key={item.task + idx}> {/* Use task + index as a unique key */}
-                {addcheckbox && (
-                  <td style={{ border: table ? '1px solid black' : 'none' }}>
-                    <input
-                      type="checkbox"
-                      checked={checkedItems.has(item.task)} // Use task as unique identifier for checkbox
-                      onChange={() => handleCheckChange(item.task)} // Pass task as ID to handleCheckChange
-                    />
-                  </td>
-                )}
-                {colNamesArray.map((colName, idx) => (
-                  <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
-                    {item[colName] || 'N/A'} {/* Display 'N/A' if data is missing */}
-                  </td>
-                ))}
-              </tr>
-            ))}
+          {data.map((item, idx) => {
+              // Parse the column_data for each row
+              const parsedColumnData = JSON.parse(item.column_data);
+
+              return (
+                <tr key={item.data_id + idx}> {/* Use data_id + index as a unique key */}
+                  {addcheckbox && (
+                    <td style={{ border: table ? '1px solid black' : 'none' }}>
+                      <input
+                        type="checkbox"
+                        checked={context.checkedItems.has(item.data_id)} // Use data_id as unique identifier for checkbox
+                        onChange={() => handleCheckChange(item.data_id)} // Pass data_id as ID to handleCheckChange
+                      />
+                    </td>
+                  )}
+
+                  {colNamesArray.map((colName, idx) => (
+                    <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
+                      {parsedColumnData[colName] || 'N/A'} {/* Display corresponding value or 'N/A' if data is missing */}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -96,7 +120,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       <div>
         <h4>Checked Task IDs:</h4>
         <ul>
-          {Array.from(checkedItems).map((taskId) => (
+          {Array.from(context.checkedItems).map((taskId) => (
             <li key={taskId}>{taskId}</li>
           ))}
         </ul>

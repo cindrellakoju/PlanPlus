@@ -1,10 +1,11 @@
 // ThemeThree.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './ThemeThree.css';
 import OneColName from './onecolname';
 import MoreThanOneCol from './morethanonecol';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
+import { ThemeContext } from '../../context/Theme.context';
 
 // Props interface
 interface ThemeThreeProps {
@@ -20,14 +21,15 @@ interface ApiResponse {
   column_data: string; // The data inside 'column_data' is a stringified JSON object
 }
 
+
 const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
+  const context = React.useContext(ThemeContext)
+  if (!context) {
+    throw new Error("useThemeContext must be used within a ThemeProvider");
+  }
   const {userId , backend_url} = useUserInfo()
   const [colname, setColName] = useState<string|string[]>()
   const col_name: string | string[] = ["task","priority",'status','description','deadline'];
-  const [displacolname, setDisplayColname] = useState<boolean>(true);
-  const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
-  const [table, setTable] = useState<boolean>(false);
-  const [bgforhead,setBgForHead] = useState<boolean>(true);
   const [datas, setData] = useState<Record<string, any>[]>([]);
 
   const insertinurl = {
@@ -38,7 +40,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     axios
       .post(`${backend_url}/user/tablecolumn/2`, insertinurl)
       .then((response) => {
-        console.log("rES",response.data)
         const columns = response.data.map((item: ColumnData) => item.column_name);
         setColName(columns);
       })
@@ -49,36 +50,41 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     axios
       .post(`${backend_url}/user/columndata/2`, insertinurl)
       .then((response) => {
-        console.log("REsponse", response.data);
         const parsedData = response.data.map((item: ApiResponse) => {
           return JSON.parse(item.column_data) as ColumnData;
         });
         
-        setData(parsedData);
+        console.log("Parsed data",response.data)
+        setData(response.data);
       })
       .catch((err) => {
         console.log("Error fetching", err);
       });
     }, [table_name]);
 
-  
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    if (isEditing && textareaRef.current) {
+    if (context.isEditing && textareaRef.current) {
       textareaRef.current.focus();
       const length = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(length, length);
     }
-  }, [isEditing]);
+  }, [context.isEditing]);
 
   const handleEdit = () => {
-    setIsEditing(true);
+    if (context.checkedItems.size > 0 && !context.checkeditemEditing) {
+      context.setCheckedItemEditing(true);
+    }
+    console.log("Checked Items", context.checkedItems);
+    context.setIsEditing(true);
   };
+  
 
   const handleSave = () => {
-    setIsEditing(false);
+    context.setIsEditing(false);
   };
 
   return (
@@ -88,7 +94,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         <i className="bx bx-dots-horizontal-rounded"></i>
         <div className="dropdown">
           <ul>
-            {addcheckbox ? (
+            {context.addcheckbox ? (
               col_name.includes("status") && (
                 <>
                   <li>Completed</li>
@@ -105,7 +111,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       {
         colname && colname.length === 1 && (
           <OneColName 
-            isEditing={isEditing} 
+            isEditing={context.isEditing} 
             textareaRef={textareaRef} 
             datas={datas} 
             setData={setData} 
@@ -117,11 +123,11 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         colname && colname.length >= 2 && (
           <MoreThanOneCol 
             data={datas} 
-            addcheckbox={addcheckbox} 
-            displacolname={displacolname} 
+            addcheckbox={context.addcheckbox} 
+            displacolname={context.displaycolname} 
             col_name={colname} 
-            table={table} 
-            bgforhead={bgforhead} 
+            table={context.table} 
+            bgforhead={context.bgforhead} 
           />
         )
       }

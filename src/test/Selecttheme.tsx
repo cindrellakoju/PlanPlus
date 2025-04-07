@@ -11,13 +11,11 @@ const Selecttheme = () => {
     
     useEffect(() => {
         setLocalData(locaStorageData);  // Ensure the data is set
-        console.log("localData updated:", locaStorageData);  // Log data immediately after setting localData
     }, [locaStorageData]); // When local storage data changes, re-run the effect
 
     return (
         <>
           {localData.map((comp) => {
-   
             switch (comp.theme_id) {
               case 1:
                 return (

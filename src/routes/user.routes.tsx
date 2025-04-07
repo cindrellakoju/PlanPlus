@@ -7,6 +7,7 @@ import LoginPage from "../components/notLogin/LoginPage";
 import SignUpPage from "../components/notLogin/SignUpPage";
 import CreateTable from "../components/allrequire/CreateTable";
 import Selecttheme from "../test/Selecttheme";
+import { ThemeProvider } from "../context/Theme.context";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -45,9 +46,11 @@ const routes = createBrowserRouter([
 
 const UserRoute: React.FC = () => {
   return (
-    <MyProvider>
-      <RouterProvider router={routes} />
-    </MyProvider>
+    <ThemeProvider>
+      <MyProvider>
+        <RouterProvider router={routes} />
+      </MyProvider>
+    </ThemeProvider>
   );
 };
 
