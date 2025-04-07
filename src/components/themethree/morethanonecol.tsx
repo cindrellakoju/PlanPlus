@@ -9,7 +9,9 @@ interface MoreThanOneColProps {
   table: boolean;
   bgforhead: boolean;
   checkitemEditing : boolean;
-  isEditing : boolean
+  isEditing : boolean;
+  checkeditem : Set<number>;
+  setCheckedItems :  React.Dispatch<React.SetStateAction<Set<number>>>;
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
@@ -20,7 +22,9 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   table,
   bgforhead,
   checkitemEditing ,
-  isEditing
+  isEditing,
+  checkeditem,
+  setCheckedItems
 }) => {
   const context = React.useContext(ThemeContext);
   
@@ -38,7 +42,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     console.log("Received data:", data);
     console.log("Task is:", taskId);
     
-    context.setCheckedItems((prevCheckedItems) => {
+    setCheckedItems((prevCheckedItems) => {
       const updatedCheckedItems = new Set(prevCheckedItems);
       if (updatedCheckedItems.has(taskId)) {
         updatedCheckedItems.delete(taskId); // Uncheck
@@ -54,7 +58,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     if (checkitemEditing ) {
       // Filter data based on checked items
       const filtered = data.filter((item) =>
-        context.checkedItems.has(item.data_id)
+        checkeditem.has(item.data_id)
       );
       setFilteredData(filtered);
     } else if (isEditing) {
@@ -63,15 +67,35 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     } else {
       setFilteredData(data); // Reset filtered data
     }
-  }, [context.checkedItems, checkitemEditing , data,isEditing]);
+  }, [checkeditem, checkitemEditing , data,isEditing]);
 
+  const handleInputChange = (e:React.FocusEvent<HTMLTableCellElement>, dataId : number, colName:string) => {
+    console.log("Target val:",e.target.innerText)
+    console.log("data Id:",dataId)
+    console.log("Colname:",colName)
+    const newVal = e.target.innerText;
+
+    const updatedData = filteredData.map((item) => {
+      if (item.data_id === dataId) {
+        return {
+          ...item,
+          column_data: JSON.stringify({
+            ...JSON.parse(item.column_data || '{}'),
+            [colName]: newVal,
+          }),
+        };
+      }
+      return item;
+    });
+
+    setFilteredData(updatedData)
+  }
+
+  console.log("Filtered data:",filteredData)
   return (
     <>
       <div className="tables">
         <table>
-          {isEditing || checkitemEditing  ? (
-            <h1>Edit Mode or Checked Item Editing</h1> // You can replace this with an actual UI for editing
-          ) : (
             <thead>
               <tr>
                 {displacolname && (
@@ -97,7 +121,6 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                 ))}
               </tr>
             </thead>
-          )}
           
           <tbody>
             {filteredData.length === 0 ? (
@@ -122,15 +145,21 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                       <td style={{ border: table ? '1px solid black' : 'none' }}>
                         <input
                           type="checkbox"
-                          checked={context.checkedItems.has(item.data_id)} // Use data_id as unique identifier
+                          checked={checkeditem.has(item.data_id)} // Use data_id as unique identifier
                           onChange={() => handleCheckChange(item.data_id)}
-                          aria-checked={context.checkedItems.has(item.data_id)}
+                          aria-checked={checkeditem.has(item.data_id)}
                         />
                       </td>
                     )}
 
                     {colNamesArray.map((colName, idx) => (
-                      <td key={idx} style={{ border: table ? '1px solid black' : 'none' }}>
+                          <td
+                          key={idx}
+                          style={{ border: table ? '1px solid black' : 'none' }}
+                          contentEditable={isEditing}
+                          suppressContentEditableWarning
+                          onBlur={(e) => handleInputChange(e, item.data_id, colName)} // Use onBlur for saving changes
+                        >
                         {parsedColumnData[colName] || 'N/A'}
                       </td>
                     ))}
@@ -145,7 +174,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       <div>
         <h4>Checked Task IDs:</h4>
         <ul>
-          {Array.from(context.checkedItems).map((taskId) => (
+          {Array.from(checkeditem).map((taskId) => (
             <li key={taskId}>{taskId}</li>
           ))}
         </ul>

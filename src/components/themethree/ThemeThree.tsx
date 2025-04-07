@@ -31,8 +31,9 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   const [colname, setColName] = useState<string|string[]>()
   const col_name: string | string[] = ["task","priority",'status','description','deadline'];
   const [datas, setData] = useState<Record<string, any>[]>([]);
-  const [checkitemEditing , setCheckedItemEditing] = useState<boolean>(false)
-  const [isEditing,setIsEditing] = useState<boolean>(false)
+  const [checkitemEditing , setCheckedItemEditing] = useState<boolean>(false);
+  const [isEditing,setIsEditing] = useState<boolean>(false);
+  const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
 
   const insertinurl = {
     tablename : urlname
@@ -77,10 +78,10 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
   }, [isEditing]);
 
   const handleEdit = () => {
-    if (context.checkedItems.size > 0 && !checkitemEditing ) {
+    if (checkedItems.size > 0 && !checkitemEditing ) {
       setCheckedItemEditing(true);
     }
-    console.log("Checked Items", context.checkedItems);
+    console.log("Checked Items", checkedItems);
       setIsEditing(true);
   };
   
@@ -132,6 +133,8 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             bgforhead={context.bgforhead} 
             checkitemEditing = {checkitemEditing }
             isEditing = {isEditing}
+            checkeditem = {checkedItems}
+            setCheckedItems = {setCheckedItems}
           />
         )
       }
