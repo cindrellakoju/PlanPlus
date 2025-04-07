@@ -56,7 +56,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     }
   }, [context.checkedItems, context.checkeditemEditing, data]);
   
-  console.log("filtered data",filteredData)
+
   return (
     <>
       <div className="tables">

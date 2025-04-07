@@ -27,31 +27,35 @@ const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, 
     setData(updatedDatas);
   };
 
-  console.log("Received data",datas)
+  console.log("Received Data",datas)
   return (
     <div className="notes-lines">
-      {datas.map((data, index) => (
-        <div key={index} className="note-item">
-          {isEditing ? (
-            <textarea
-              ref={textareaRef}
-              value={data.note || ""}
-              onChange={(e) => handleChange(e, index)}
-              className="note-textarea"
-            />
-          ) : (
-            <div className="note-display">
-              <input
-                type="checkbox"
-                className="checkboxtype"
-                checked={data.isChecked || false}
-                onChange={() => handleCheckboxChange(index)}
+      {datas.map((data, index) => {
+        const columnData = JSON.parse(data.column_data); // Parse the column_data to access the note and isChecked
+
+        return (
+          <div key={data.data_id} className="note-item">
+            {isEditing ? (
+              <textarea
+                ref={textareaRef}
+                value={columnData.note || ""}
+                onChange={(e) => handleChange(e, index)}
+                className="note-textarea"
               />
-              <p>{data.note || "No note added yet"}</p>
-            </div>
-          )}
-        </div>
-      ))}
+            ) : (
+              <div className="note-display">
+                <input
+                  type="checkbox"
+                  className="checkboxtype"
+                  checked={columnData.isChecked || false}
+                  onChange={() => handleCheckboxChange(index)}
+                />
+                <p>{columnData.note || "No note added yet"}</p>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
