@@ -53,11 +53,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     axios
       .post(`${backend_url}/user/columndata/2`, insertinurl)
       .then((response) => {
-        const parsedData = response.data.map((item: ApiResponse) => {
-          return JSON.parse(item.column_data) as ColumnData;
-        });
-        
-        console.log("Parsed data",response.data)
         setData(response.data);
       })
       .catch((err) => {
@@ -77,13 +72,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     }
   }, [isEditing]);
 
-  // const handleEdit = () => {
-  //   if (checkedItems.size > 0 && !checkitemEditing ) {
-  //     setCheckedItemEditing(true);
-  //   }
-  //     setIsEditing(true);
-  // };
-
   const handleEdit = () => {
     if (checkedItems.size > 0 && !checkitemEditing ) {
       setCheckedItemEditing(true);
@@ -91,7 +79,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       setIsEditing(true);
   }
   
-  console.log("Send Data:",datas)
   return (
     <div className="note-container">
       <div className="header">{table_name}</div>

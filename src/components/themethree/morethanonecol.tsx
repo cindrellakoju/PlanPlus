@@ -44,8 +44,6 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
 
   // Handle checkbox change and store the task id
   const handleCheckChange = (taskId: number) => {
-    console.log("Received data:", data);
-    console.log("Task is:", taskId);
     
     setCheckedItems((prevCheckedItems) => {
       const updatedCheckedItems = new Set(prevCheckedItems);
@@ -75,12 +73,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   }, [checkeditem, checkitemEditing , data,isEditing]);
 
   const handleInputChange = (e:React.FocusEvent<HTMLTableCellElement>, dataId : number, colName:string) => {
-    console.log("Target val:",e.target.innerText)
-    console.log("data Id:",dataId)
-    console.log("Colname:",colName)
     const newVal = e.target.innerText;
-
-    console.log("new cal:",newVal)
     const updatedData = filteredData.map((item) => {
       if (item.data_id === dataId) {
         let parsedColumnData;
@@ -104,12 +97,9 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       return item;
     });
     
-
-    console.log("Updated data:",updatedData)
     setFilteredData(updatedData)
   }
 
-  console.log("Data from:",data)
   
   const handleSave = () => {
     filteredData.map((item) => {
@@ -118,20 +108,19 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
         data_id: item.data_id,
         value: item.column_data
       }
-      console.log("To send:",tosend)
 
       axios
         .put(`${backend_url}/user/updatedata/2`,tosend)
         .then((response) => {
-          console.log("Response:",response.data)
+          if(response){
+            alert("Successfully edited the data")
+          }
         })
         .catch((error) => {
           console.log("Error while updating:",error)
         })
     })
-    // console.log("To save:",filteredData)
   }
-  console.log("Filtered data:",filteredData)
   return (
     <>
       <div className="tables">
@@ -211,17 +200,13 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
         </table>
       </div>
 
-      <div>
-        <h4>Checked Task IDs:</h4>
-        <ul>
-          {Array.from(checkeditem).map((taskId) => (
-            <li key={taskId}>{taskId}</li>
-          ))}
-        </ul>      
-      </div>
-      <div className="savebutton">
-        <button onClick={handleSave}>Save</button>
-      </div>
+      {
+        (isEditing || checkitemEditing) && (
+          <div className="savebutton">
+            <button onClick={handleSave}>Save</button>
+          </div>
+        )
+      }
     </>
   );
 };

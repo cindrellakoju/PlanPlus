@@ -27,7 +27,6 @@ const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, 
     setData(updatedDatas);
   };
 
-  console.log("Received Data",datas)
   return (
     <div className="notes-lines">
       {datas.map((data, index) => {
