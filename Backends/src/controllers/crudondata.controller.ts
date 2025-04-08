@@ -23,8 +23,6 @@ export const insertTabelData = async(req:Request, res: Response) => {
 export const UpdateDataOfTable = async(req:Request, res:Response) => {
     const user_id = Number(req.params.user_id);
     const {tablename, data_id, value} = req.body;
-
-    console.log("Request for post",req.body)
     const updatedata = {
         user_id : user_id,
         tablename : tablename,

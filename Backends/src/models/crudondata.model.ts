@@ -40,15 +40,12 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
   let keyval = '';
   let queryValues = [];
 
-  console.log(updatedata.value);
-
   try {
     // Ensure updatedata.value is a string before parsing
     const valueObj: { [key: string]: string } = typeof updatedata.value === 'string' ? JSON.parse(updatedata.value) : {};
 
     // Loop through the parsed object and build the keyval string
     for (const [key, val] of Object.entries(valueObj)) {
-      console.log("key:",key)
       keyval += `'$."${key}"', ?, `;
       queryValues.push(val);  // Add the value to the query values array
     }
@@ -73,7 +70,6 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
       AND data_id = ?; 
     `;
 
-    console.log("Query", query);
     // Add user_id, table_name, and data_id to the query values
     queryValues.push(updatedata.user_id, updatedata.tablename, updatedata.data_id);
     console.log(queryValues);
