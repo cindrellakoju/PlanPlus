@@ -77,19 +77,21 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     }
   }, [isEditing]);
 
+  // const handleEdit = () => {
+  //   if (checkedItems.size > 0 && !checkitemEditing ) {
+  //     setCheckedItemEditing(true);
+  //   }
+  //     setIsEditing(true);
+  // };
+
   const handleEdit = () => {
     if (checkedItems.size > 0 && !checkitemEditing ) {
       setCheckedItemEditing(true);
     }
-    console.log("Checked Items", checkedItems);
       setIsEditing(true);
-  };
+  }
   
-
-  const handleSave = () => {
-      setIsEditing(false);
-  };
-
+  console.log("Send Data:",datas)
   return (
     <div className="note-container">
       <div className="header">{table_name}</div>
@@ -135,16 +137,13 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             isEditing = {isEditing}
             checkeditem = {checkedItems}
             setCheckedItems = {setCheckedItems}
+            table_name = {table_name}
           />
         )
       }
 
       </div>
 
-
-      <div className="savebutton">
-        <button onClick={handleSave}>Save</button>
-      </div>
     </div>
   );
 };

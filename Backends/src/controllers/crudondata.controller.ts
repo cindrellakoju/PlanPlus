@@ -24,14 +24,14 @@ export const UpdateDataOfTable = async(req:Request, res:Response) => {
     const user_id = Number(req.params.user_id);
     const {tablename, data_id, value} = req.body;
 
-    // console.log(req.body)
+    console.log("Request for post",req.body)
     const updatedata = {
         user_id : user_id,
         tablename : tablename,
         data_id : Number(data_id),
         value : value
     }
-    // console.log(updatedata)
+    console.log(updatedata)
     try{
         const result = await updatedataoftable(updatedata);
         res.status(200).json(result);

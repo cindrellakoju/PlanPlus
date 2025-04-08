@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { ThemeContext } from '../../context/Theme.context';
+import axios from 'axios';
+import { useUserInfo } from '../../hooks/useUserInfo';
 
 interface MoreThanOneColProps {
   data: Record<string, any>[];
@@ -12,6 +14,7 @@ interface MoreThanOneColProps {
   isEditing : boolean;
   checkeditem : Set<number>;
   setCheckedItems :  React.Dispatch<React.SetStateAction<Set<number>>>;
+  table_name ?: string
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
@@ -24,8 +27,10 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   checkitemEditing ,
   isEditing,
   checkeditem,
-  setCheckedItems
+  setCheckedItems,
+  table_name
 }) => {
+  const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
   
   if (!context) {
@@ -75,22 +80,57 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     console.log("Colname:",colName)
     const newVal = e.target.innerText;
 
+    console.log("new cal:",newVal)
     const updatedData = filteredData.map((item) => {
       if (item.data_id === dataId) {
+        let parsedColumnData;
+        
+        // Attempt to parse column_data safely
+        try {
+          parsedColumnData = JSON.parse(item.column_data || '{}');
+        } catch (error) {
+          // If parsing fails, set it to an empty object
+          parsedColumnData = {};
+        }
+      
         return {
           ...item,
           column_data: JSON.stringify({
-            ...JSON.parse(item.column_data || '{}'),
-            [colName]: newVal,
+            ...parsedColumnData,
+            [colName]: newVal
           }),
         };
       }
       return item;
     });
+    
 
+    console.log("Updated data:",updatedData)
     setFilteredData(updatedData)
   }
 
+  console.log("Data from:",data)
+  
+  const handleSave = () => {
+    filteredData.map((item) => {
+      const tosend = {
+        tablename: table_name,
+        data_id: item.data_id,
+        value: item.column_data
+      }
+      console.log("To send:",tosend)
+
+      axios
+        .put(`${backend_url}/user/updatedata/2`,tosend)
+        .then((response) => {
+          console.log("Response:",response.data)
+        })
+        .catch((error) => {
+          console.log("Error while updating:",error)
+        })
+    })
+    // console.log("To save:",filteredData)
+  }
   console.log("Filtered data:",filteredData)
   return (
     <>
@@ -177,7 +217,10 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           {Array.from(checkeditem).map((taskId) => (
             <li key={taskId}>{taskId}</li>
           ))}
-        </ul>
+        </ul>      
+      </div>
+      <div className="savebutton">
+        <button onClick={handleSave}>Save</button>
       </div>
     </>
   );

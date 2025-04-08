@@ -23,6 +23,7 @@ export const updatedataoftable = (updatedate : updateinfo):Promise<any> => {
             ...updatedate,
             tablename : table_name
         }
+        console.log("Updated datainfo",updated_datainfo)
         UpdateData(updated_datainfo,(err,results) => {
             if(err) rejects(err);
             resolve(results)
