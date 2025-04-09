@@ -8,6 +8,7 @@ import SignUpPage from "../components/notLogin/SignUpPage";
 import CreateTable from "../components/allrequire/CreateTable";
 import Selecttheme from "../test/Selecttheme";
 import { ThemeProvider } from "../context/Theme.context";
+import EditableTable from "../test/dummy";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -41,7 +42,11 @@ const routes = createBrowserRouter([
   {
     path: "/test",
     element: <PrivateRoute element={<Selecttheme/>}/>
-  }
+  },
+  {
+    path: "/dummy",
+    element: <PrivateRoute element={<EditableTable/>}/>
+  },
 ]);
 
 const UserRoute: React.FC = () => {

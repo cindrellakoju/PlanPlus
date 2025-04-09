@@ -38,6 +38,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   }
 
   const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
+  const [newData, setNewData] = useState<Record<string, any>[]>([]);
 
   // If col_name is a single string, convert it to an array for uniform handling
   const colNamesArray = useMemo(() => (Array.isArray(col_name) ? col_name : [col_name]), [col_name]);
@@ -72,10 +73,11 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     }
   }, [checkeditem, checkitemEditing , data,isEditing]);
 
-  const handleInputChange = (e:React.FocusEvent<HTMLTableCellElement>, dataId : number, colName:string) => {
-    const newVal = e.target.innerText;
+
+  const handleInputChange = (e:React.FormEvent<HTMLTableCellElement>, dataId : number, colName:string) => {
+    const newVal = e.currentTarget.innerText;
     const updatedData = filteredData.map((item) => {
-      if (item.data_id === dataId) {
+      if(item.data_id === dataId){
         let parsedColumnData;
         
         // Attempt to parse column_data safely
@@ -85,7 +87,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
           // If parsing fails, set it to an empty object
           parsedColumnData = {};
         }
-      
+
         return {
           ...item,
           column_data: JSON.stringify({
@@ -96,13 +98,13 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       }
       return item;
     });
-    
-    setFilteredData(updatedData)
+
+    setNewData(updatedData)
+    // setFilteredData(updatedData)
   }
 
-  
   const handleSave = () => {
-    filteredData.map((item) => {
+    newData.map((item) => {
       const tosend = {
         tablename: table_name,
         data_id: item.data_id,
@@ -187,7 +189,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                           style={{ border: table ? '1px solid black' : 'none' }}
                           contentEditable={isEditing}
                           suppressContentEditableWarning
-                          onBlur={(e) => handleInputChange(e, item.data_id, colName)} // Use onBlur for saving changes
+                          onInput={(e) => handleInputChange(e, item.data_id, colName)} // Use onBlur for saving changes
                         >
                         {parsedColumnData[colName] || 'N/A'}
                       </td>
