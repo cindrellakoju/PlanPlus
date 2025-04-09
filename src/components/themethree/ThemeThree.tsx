@@ -6,6 +6,7 @@ import MoreThanOneCol from './morethanonecol';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ThemeContext } from '../../context/Theme.context';
+import { it } from 'node:test';
 
 // Props interface
 interface ThemeThreeProps {
@@ -86,7 +87,6 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
         data_id: item
       }));
   
-      // Iterate over each item and send it one by one
       toSend.forEach(item => {
         axios
           .post(`${backend_url}/user/deletedataoftable/2`, item) // Send only one item at a time
@@ -100,7 +100,36 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
     }
   };
   
-  
+  const handleCompleted = () => {
+    if (checkedItems.size > 0 && !checkitemEditing) {
+      const filtered = datas.filter((item) => checkedItems.has(item.data_id));
+
+      const updatedData = filtered.map(item => {
+        const columnData = JSON.parse(item.column_data);  
+        columnData.status = 'completed'; 
+        item.column_data = JSON.stringify(columnData);  
+        return item;  
+      });
+
+      updatedData.map((item) => {
+        const tosend = {
+          tablename: table_name,
+          data_id: item.data_id,
+          value: item.column_data
+        }
+        axios
+        .put(`${backend_url}/user/updatedata/2`,tosend)
+        .then((response) => {
+          if(response){
+            alert("Successfully edited the data")
+          }
+        })
+        .catch((error) => {
+          console.log("Error while updating:",error)
+        })
+      })
+    }
+  }
 
   return (
     <div className="note-container">
@@ -112,7 +141,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
             {context.addcheckbox ? (
               col_name.includes("status") && (
                 <>
-                  <li>Completed</li>
+                  <li onClick={handleCompleted}>Completed</li>
                   <li onClick={handleDelete}>Delete</li>
                 </>
               )
