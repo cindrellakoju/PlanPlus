@@ -41,7 +41,7 @@ export const UpdateDataOfTable = async(req:Request, res:Response) => {
 export const DeleteDataController = async(req :Request, res:Response) => {
     const user_id = Number(req.params.user_id)
     const { data_id } = req.body
-
+    
     try{
         const result = DeleteDataService(user_id,data_id)
         res.status(200).json(result)

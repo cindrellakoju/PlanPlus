@@ -102,7 +102,6 @@ export const DeleteData = (user_id:number,data_id:number,callback:Callback) => {
       callback(err,null)
     }
     console.log("Successfully deleted data :",data_id)
-    console.log(results)
     callback(null,results)
   })
 }

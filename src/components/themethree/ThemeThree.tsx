@@ -79,6 +79,29 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
       setIsEditing(true);
   }
   
+  const handleDelete = () => {
+    if (checkedItems.size > 0 && !checkitemEditing) {
+      // Convert the Set to an array and map each item into an object
+      const toSend = [...checkedItems].map(item => ({
+        data_id: item
+      }));
+  
+      // Iterate over each item and send it one by one
+      toSend.forEach(item => {
+        axios
+          .post(`${backend_url}/user/deletedataoftable/2`, item) // Send only one item at a time
+          .then((response) => {
+            console.log("Successfully Deleted", response.data);
+          })
+          .catch((err) => {
+            console.log("Error Deleting Data", err);
+          });
+      });
+    }
+  };
+  
+  
+
   return (
     <div className="note-container">
       <div className="header">{table_name}</div>
@@ -90,7 +113,7 @@ const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
               col_name.includes("status") && (
                 <>
                   <li>Completed</li>
-                  <li>Delete</li>
+                  <li onClick={handleDelete}>Delete</li>
                 </>
               )
             ) : null}
