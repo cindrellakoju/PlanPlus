@@ -103,6 +103,20 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     // setFilteredData(updatedData)
   }
 
+  const handleDelete = (e:React.MouseEvent<HTMLTableCellElement>,dataId: number) => {
+    const sendData = {
+      data_id : dataId
+    }
+    axios
+      .post(`${backend_url}/user/deletedataoftable/2`,sendData)
+      .then((response) => {
+        console.log("Successfully Deleted",response.data)
+      })
+      .catch((err) => {
+        console.log("Error Deleting Data",err)
+      })
+  }
+  
   const handleSave = () => {
     newData.map((item) => {
       const tosend = {
@@ -150,6 +164,17 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                     {name.charAt(0).toUpperCase() + name.slice(1)}
                   </th>
                 ))}
+
+                {isEditing && (
+                  <th
+                    style={{
+                      border: table ? '1px solid black' : 'none',
+                      backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
+                    }}
+                  >
+                    {/* Column for checkbox */}
+                  </th>
+                )}
               </tr>
             </thead>
           
@@ -171,7 +196,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                 }
 
                 return (
-                  <tr key={item.data_id + idx}>
+                  <tr key={item.data_id + idx} className='tablebody'>
                     {addcheckbox && (
                       <td style={{ border: table ? '1px solid black' : 'none' }}>
                         <input
@@ -194,6 +219,11 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                         {parsedColumnData[colName] || 'N/A'}
                       </td>
                     ))}
+                    {isEditing && (
+                      <td style={{ border: table ? '1px solid black' : 'none' }} className='delete' onClick={(e) => handleDelete(e,item.data_id)}>
+                        <i className='bx bx-mobile' style={{ fontSize: '20px' }}></i> {/* Remove color inline style */}
+                      </td>
+                    )}
                   </tr>
                 );
               })

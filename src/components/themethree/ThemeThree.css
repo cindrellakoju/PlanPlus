@@ -193,3 +193,15 @@
     transform: scale(1.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
   }
+
+  .delete {
+    cursor: pointer;
+    color: rgb(184, 68, 68);
+  }
+  
+  .delete i.bx-mobile:hover {
+    color: red; 
+    transform: scale(1.1);
+    transition: all 0.3s ease; 
+  }
+  
