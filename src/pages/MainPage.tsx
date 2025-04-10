@@ -1,4 +1,5 @@
 import "../styles/MainPage.css"
+import Selecttheme from "../test/Selecttheme";
 import profile from "./profile.jpg"
 
 const MainPage:React.FC = () => {
@@ -39,6 +40,7 @@ const MainPage:React.FC = () => {
                     </div>
                 </div>
                 <div className="body-field">
+                    <Selecttheme/>
                 </div>
             </div>
         </div>

@@ -69,7 +69,7 @@ const ThemeOne: React.FC<ThemeProps>  = ({ table_name, urlname }) => {
                         displacolname={true} 
                         col_name={colname} 
                         table={false} 
-                        bgforhead={true} 
+                        bgforhead={false} 
                         checkitemEditing ={false}
                         isEditing = {false}
                         checkeditem = {checkedItems}
