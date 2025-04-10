@@ -1,0 +1,87 @@
+.container{
+    height: 100vh;
+    width: 100vw;
+    background-color: #CCE3C8;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.container .tabs{
+    height: 100%;
+    width: 6%;
+    background-color: #668F66;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs .logo{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo i{
+    font-size: 2.5rem;
+}
+
+.tabs .options{
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.options div{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.options div i{
+    font-size: 2rem;
+}
+.container .info{
+    height: 100%;
+    width: 94%;
+}
+
+.container .info .header-field{
+    height: 10%;
+    width: 94%;
+    display: grid;
+    grid-template-columns: 95% 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-field p{
+    font-size: 3rem;
+    padding-left: 5rem;
+    font-family: cursive;
+}
+
+.header-field .users{
+    width: 40px;
+    height: 40px;
+}
+
+.users img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.info .body-field{
+    height: 90%;
+    width: 100%;
+}
