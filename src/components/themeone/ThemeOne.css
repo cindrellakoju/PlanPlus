@@ -13,11 +13,67 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
+.headerfield{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 90% 10%;
+}
+
 .heading{
     font-size: 1.3rem;
     font-weight: bold;
+    text-align: center;
     height: 50px;
 }
+
+.buttons {
+    margin-top: 4px;
+    height: 35px;
+    width: 100%;
+    font-size: 2rem;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    position: relative; /* Ensures the dropdown can be positioned correctly */
+  }
+  
+  .buttons .dropdown {
+    z-index: 2;
+    display: none;
+    height: auto;
+    width: 100px;
+    background-color: rgb(185, 216, 190);
+    list-style: none;
+    position: absolute;
+    top: 30px;
+    right: -80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
+  }
+  
+  .dropdown ul {
+    list-style: none;
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 5px;
+  }
+  
+  .dropdown ul li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .buttons:hover .dropdown {
+    display: block;
+    z-index: 2;
+  }
+  
+  /* Hover effect for dropdown items */
+  .dropdown ul li:hover {
+    background-color: #7fb4c3; /* Light gray background on hover */
+    margin: 4px;
+  }
+
 
 .themeonebody{
     width: 90%;
@@ -30,5 +86,5 @@
     margin: 0;
     padding: 0;
     background-color: #c9c2e3;
-    border-radius: 1rem ;
+    border-radius: 0.5rem ;
 }

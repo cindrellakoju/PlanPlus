@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProps } from "../../types";
-import { ChooseField } from "../allrequire/ChooseField";
 import "./ThemeOne.css"
-import { Button } from "../allrequire/Button";
 import MoreThanOneCol from "../themethree/morethanonecol";
 import axios from "axios";
 import { useUserInfo } from "../../hooks/useUserInfo";
@@ -45,7 +43,23 @@ const ThemeOne: React.FC<ThemeProps>  = ({ table_name, urlname }) => {
 
     return(
         <div className="themeonecontainer">
-            <div className="heading">{table_name}</div>
+            <div className="headerfield">
+                <div className="heading">{table_name}</div>
+                <div className="buttons">
+                <i className='bx bx-dots-vertical-rounded'></i>
+                    <div className="dropdown">
+                    <ul>
+                            <>
+                            <li>Completed</li>
+                            <li >Delete</li>
+                            </>
+                        <li>Add</li>
+                        <li >Edit</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
             <div className="themeonebody">
             {
                 colname && colname.length >= 2 && (

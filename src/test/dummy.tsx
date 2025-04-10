@@ -1,99 +1,65 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
+import './dummy.css';
 
-interface EditableTableProps {}
-
-interface Cell {
-  row: number;
-  col: number;
+interface User {
+  name: string;
+  username: string;
 }
 
-const EditableTable: React.FC<EditableTableProps> = () => {
-  // State for the currently edited cell
-  const [editingCell, setEditingCell] = useState<Cell | null>(null);
-  const [cellValue, setCellValue] = useState<string>('');
-  
-  // Ref to store the input element for focusing and positioning the cursor
-  const inputRef = useRef<HTMLInputElement | null>(null);
+const App: React.FC = () => {
+  // Dummy data for users
+  const users: User[] = [
+    { name: "John Doe", username: "john_doe" },
+    { name: "Jane Smith", username: "jane_smith" },
+    { name: "Michael Lee", username: "michael_lee" },
+    { name: "Emma Watson", username: "emma_watson" },
+    { name: "Lucas Grey", username: "lucas_grey" },
+  ];
 
-  // Handle cell click to toggle edit mode
-  const handleCellClick = (rowIndex: number, colIndex: number) => {
-    setEditingCell({ row: rowIndex, col: colIndex });
-    setCellValue(''); // Clear value when editing starts
+  const [dragging, setDragging] = useState<boolean>(false);
+  const [dragX, setDragX] = useState<number>(0);
+
+  const startDrag = (e: React.MouseEvent) => {
+    setDragging(true);
+    setDragX(e.clientX);
   };
 
-  // Handle the loss of focus to stop editing
-  const handleBlur = () => {
-    setEditingCell(null);
+  const stopDrag = () => {
+    setDragging(false);
   };
 
-  // Handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCellValue(e.target.value);
-  };
-
-  // Focus and move cursor to the end of the input when it's rendered
-  useEffect(() => {
-    if (inputRef.current) {
-      // Focus the input and move the cursor to the end of the text
-      const input = inputRef.current;
-      input.focus();
-      input.setSelectionRange(input.value.length, input.value.length); // Position cursor at the end
+  const handleDrag = (e: React.MouseEvent) => {
+    if (dragging) {
+      const diff = dragX - e.clientX;
+      setDragX(e.clientX);
+      const list = document.getElementById('user-list');
+      if (list) {
+        const currentLeft = list.getBoundingClientRect().left;
+        list.style.left = `${currentLeft - diff}px`;
+      }
     }
-  }, [editingCell]); // Triggered when editingCell changes (when a cell is clicked)
+  };
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td
-            onClick={() => handleCellClick(0, 0)}
-            style={{
-              cursor: editingCell && editingCell.row === 0 && editingCell.col === 0 ? 'text' : 'pointer',
-            }}
-          >
-            {editingCell && editingCell.row === 0 && editingCell.col === 0 ? (
-              <input
-                ref={inputRef}
-                type="text"
-                value={cellValue}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                autoFocus
-              />
-            ) : (
-              'John Doe'
-            )}
-          </td>
-          <td
-            onClick={() => handleCellClick(0, 1)}
-            style={{
-              cursor: editingCell && editingCell.row === 0 && editingCell.col === 1 ? 'text' : 'pointer',
-            }}
-          >
-            {editingCell && editingCell.row === 0 && editingCell.col === 1 ? (
-              <input
-                ref={inputRef}
-                type="number"
-                value={cellValue}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                autoFocus
-              />
-            ) : (
-              '30'
-            )}
-          </td>
-        </tr>
-        {/* You can add more rows here */}
-      </tbody>
-    </table>
+    <div className="App">
+      <div
+        className="user-list-container"
+        onMouseDown={startDrag}
+        onMouseMove={handleDrag}
+        onMouseUp={stopDrag}
+        onMouseLeave={stopDrag}
+      >
+        <div id="user-list" className="user-list">
+          {users.map((user, index) => (
+            <div className="user-card" key={index}>
+              <div className="user-name">{user.name}</div>
+              <div className="user-username">@{user.username}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default EditableTable;
+export default App;
