@@ -1,0 +1,34 @@
+.themeonecontainer{
+    margin: 30px;
+    margin-top: 50px;
+    width: 400px; 
+    height: 400px;
+    background-color: #e0f2e9; 
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.heading{
+    font-size: 1.3rem;
+    font-weight: bold;
+    height: 50px;
+}
+
+.themeonebody{
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* align content to the top */
+    align-items: flex-start; /* optional: aligns content to the left */
+    overflow-y: auto; /* optional: scroll if content overflows */
+    margin: 0;
+    padding: 0;
+    background-color: #c9c2e3;
+    border-radius: 1rem ;
+}

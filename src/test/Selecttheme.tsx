@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import ThemeThree from "../components/themethree/ThemeThree"
 import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
+import ThemeOne from "../components/themeone/ThemeOne"
 
 const Selecttheme = () => {
     const [localData, setLocalData] = useState<any[]>([]);
@@ -17,7 +18,7 @@ const Selecttheme = () => {
             switch (comp.theme_id) {
               case 1:
                 return (
-                  <ToDo 
+                  <ThemeOne
                     key={comp.user_table_id} // Add key prop
                     table_name={comp.table_name} 
                     urlname={convertToUnderscoreCase(comp.table_name)} 

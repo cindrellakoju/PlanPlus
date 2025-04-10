@@ -33,3 +33,8 @@ export interface userinfo{
   last_name : string,
   user_id : number
 }
+
+export interface ThemeProps{
+  table_name: string;
+  urlname: string;
+}

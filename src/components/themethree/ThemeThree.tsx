@@ -6,13 +6,9 @@ import MoreThanOneCol from './morethanonecol';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ThemeContext } from '../../context/Theme.context';
-import { it } from 'node:test';
+import { ThemeProps } from '../../types';
 
-// Props interface
-interface ThemeThreeProps {
-  table_name?: string;
-  urlname?: string;
-}
+
 
 interface ColumnData {
   column_name: string;
@@ -23,7 +19,7 @@ interface ApiResponse {
 }
 
 
-const ThemeThree: React.FC<ThemeThreeProps> = ({ table_name, urlname }) => {
+const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname }) => {
   const context = React.useContext(ThemeContext)
   if (!context) {
     throw new Error("useThemeContext must be used within a ThemeProvider");
