@@ -128,7 +128,10 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname }) => {
   }
 
   return (
+    <>
     <div className="note-container">
+      <div className='width'></div>
+      <div className='height'></div>
       <div className="header">{table_name}</div>
       <div className="buttons">
         <i className="bx bx-dots-horizontal-rounded"></i>
@@ -178,8 +181,8 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname }) => {
       }
 
       </div>
-
     </div>
+    </>
   );
 };
 

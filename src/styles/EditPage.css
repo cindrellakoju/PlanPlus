@@ -1,0 +1,25 @@
+.body-field{
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.body-field .editheader{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    padding-left: 5rem;
+    gap: 2.5rem;
+}
+
+.body-field .editbody{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 3rem;
+}
