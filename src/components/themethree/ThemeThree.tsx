@@ -5,7 +5,6 @@ import OneColName from './onecolname';
 import MoreThanOneCol from './morethanonecol';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
-import { ThemeContext } from '../../context/Theme.context';
 import { ThemeProps } from '../../types';
 import { EditThemeContext } from '../../context/EditThemeContext';
 
@@ -13,10 +12,6 @@ import { EditThemeContext } from '../../context/EditThemeContext';
 
 interface ColumnData {
   column_name: string;
-}
-
-interface ApiResponse {
-  column_data: string; // The data inside 'column_data' is a stringified JSON object
 }
 
 

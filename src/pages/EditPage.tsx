@@ -12,9 +12,28 @@ const EditPage:React.FC = () => {
         throw new Error("EditPage must be used within a EditThemeProvider");
     }
 
-    const handlesave = () => {
+    const handlesave = (e:React.MouseEvent<HTMLButtonElement>) => {
         editcontext.setSaveMode(true)
     }
+
+    const handleHeightwidth = (e:React.MouseEvent<HTMLAnchorElement>) => {
+        editcontext.setEditHeightWidth(true)
+        editcontext.setEditPosition(false)
+        editcontext.setAddTable(false)
+    }
+
+    const handlePosition = (e:React.MouseEvent<HTMLAnchorElement>) => {
+        editcontext.setEditPosition(true)
+        editcontext.setEditHeightWidth(false)
+        editcontext.setAddTable(false)
+    }
+
+    const handleAddTable = (e:React.MouseEvent<HTMLAnchorElement>) => {
+        editcontext.setAddTable(true)
+        editcontext.setEditHeightWidth(false)
+        editcontext.setEditPosition(false)
+    }
+
     return(
         <div className="container">
             <div className="tabs">
@@ -25,11 +44,11 @@ const EditPage:React.FC = () => {
                 <div className="body-field">
                     <div className="editheader">
                         <div className="names">
-                            <a onClick={(e) =>editcontext.setEditHeightWidth(true)}>Height and Width</a>
-                            <a>Positions</a>
-                            <a>Add Tables</a>
+                            <a onClick={(e) =>handleHeightwidth(e)}>Height and Width</a>
+                            <a onClick={(e) => handlePosition(e)}>Positions</a>
+                            <a onClick={(e) => handleAddTable(e)}>Add Tables</a>
                         </div>
-                        <button onClick={(e) => handlesave()}>Save</button>
+                        <button onClick={(e) => handlesave(e)}>Save</button>
                     </div>
                     <div className="editbody">
                         <Selecttheme/>
