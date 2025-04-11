@@ -12,6 +12,9 @@ const EditPage:React.FC = () => {
         throw new Error("EditPage must be used within a EditThemeProvider");
     }
 
+    const handlesave = () => {
+        editcontext.setSaveMode(true)
+    }
     return(
         <div className="container">
             <div className="tabs">
@@ -26,7 +29,7 @@ const EditPage:React.FC = () => {
                             <a>Positions</a>
                             <a>Add Tables</a>
                         </div>
-                        <button>Save</button>
+                        <button onClick={(e) => handlesave()}>Save</button>
                     </div>
                     <div className="editbody">
                         <Selecttheme/>

@@ -188,6 +188,27 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
       }
     }, [isResizingHeight,isResizingWidth])
 
+    useEffect(()=> {
+      if(editcontext.savemode){
+        localData.map((comp) => {
+          axios
+          .put(`${backend_url}/user/updatetable/${userId}`,comp)
+          .then((response) => {
+            console.log("Successfull Updating Data:",response.data)
+            if(response){
+              alert("Updated Successfully")
+            }
+          })
+          .catch((err)=> {
+            console.log("Error Updating data:",err)
+          })
+        })
+
+        editcontext.setEditHeightWidth(false)
+      }
+
+    },[editcontext.savemode])
+
   const handleMouseDownWidth = (e:React.MouseEvent<HTMLDivElement>, id:number, width: number) => {
     setDistWdth(e.clientX - width )
     setNewId(id)
