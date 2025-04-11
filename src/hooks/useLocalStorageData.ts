@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ComponentType } from "../types";
+import { MyContext } from "../context/Component.context";
 
 export const useLocalStorageData = () => {
+    const context = useContext(MyContext)
     const [localStoragedata, setLocalStoragedata] = useState<ComponentType[]>([]);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ export const useLocalStorageData = () => {
         localStoragedata.sort((a, b) => a.orderindex - b.orderindex);
         
         setLocalStoragedata(localStoragedata); // Update state
-    }, []);
+    }, [context?.components]);
 
     return localStoragedata;
 };

@@ -46,20 +46,6 @@ const EditPage: React.FC = () => {
         editcontext.setEditPosition(false);
     };
 
-    const buttonLabels = [
-        'Bucket List',
-        'To do List List',
-        'Money List',
-        'Bucket List',
-        'Bucket List',
-        'To do List List',
-        'Money List',
-        'Bucket List',
-        'Money List',
-        'HAHAHA',
-    ];
-
-    // ⭐ Infinite loop scroll logic
     const carouselRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -86,15 +72,21 @@ const EditPage: React.FC = () => {
 
     useEffect(() => {
         axios
-          .get(`${backend_url}/user/tablename/2`) // API endpoint for components
+          .get(`${backend_url}/user/tablename/2`)
           .then((response) => {
-            console.log("Successfully fetched components from AppPage: ", response.data);
-            context.setComponents(response.data); // Set the fetched components to context
+            const newComponents = response.data;
+            const currentComponents = context.components;
+      
+            // Only update if there's a difference
+            if (JSON.stringify(newComponents) !== JSON.stringify(currentComponents)) {
+              context.setComponents(newComponents);
+            }
           })
           .catch((error) => {
-            console.error("Error fetching the data: ", error); // Handle any errors
+            console.error("Error fetching the data: ", error);
           });
-      }, []);
+      }, [context.components]);
+      
 
 
     const handleSelectComponent = (component: ComponentType) => {
@@ -118,16 +110,20 @@ const EditPage: React.FC = () => {
                         <button onClick={(e) => handlesave(e)}>Save</button>
                     </div>
                     <div className="editbody">
-                        <div className="sidebar">
-                            <p>Available Tables</p>
-                            <div className="carousel-wrapper">
-                                <div className="carousel" ref={carouselRef}>
-                                    {context.components.map((component, index) => (
-                                        <button key={index} onClick={() => handleSelectComponent(component)}>{component.table_name}</button>
-                                    ))}
+                        {
+                            editcontext.addTable && (
+                                <div className="sidebar">
+                                    <p>Available Tables</p>
+                                    <div className="carousel-wrapper">
+                                        <div className="carousel" ref={carouselRef}>
+                                            {context.components.map((component, index) => (
+                                                <button key={index} onClick={() => handleSelectComponent(component)}>{component.table_name}</button>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            )
+                        }
                         <Selecttheme/>
                     </div>
                 </div>
