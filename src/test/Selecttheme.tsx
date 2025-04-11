@@ -4,8 +4,12 @@ import { useLocalStorageData } from "../hooks/useLocalStorageData"
 import ThemeOne from "../components/themeone/ThemeOne"
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { EditThemeContext } from "../context/EditThemeContext";
+import axios from "axios";
+import { useUserInfo } from "../hooks/useUserInfo";
+import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 
 const Selecttheme = () => {
+    const {userId , backend_url} = useUserInfo()
     const editcontext = useContext(EditThemeContext)
     if(!editcontext){
       throw new Error("Wrap Selecttheme within EditThemeProvider")
@@ -17,6 +21,21 @@ const Selecttheme = () => {
         setLocalData(locaStorageData);  // Ensure the data is set
     }, [locaStorageData]); // When local storage data changes, re-run the effect
 
+    useEffect(() =>{
+      if(editcontext.savemode && editcontext.editPosition){
+        localData.map((comp) => {
+          axios
+            .put(`${backend_url}/user/updatetable/${userId}`,comp)
+            .then((response) => {
+              console.log("Successfully updated the table of userid ", comp.user_table_id, "Respondse",response.data)
+            })
+            .catch((error) => {
+              console.error("Error fetching the data:",error)
+            })
+          compareLocalStorageData(comp)
+        })
+      }
+    },[editcontext.savemode])
 
     console.log("Local Stoage data:",localData)
 
@@ -24,10 +43,18 @@ const Selecttheme = () => {
       const { source, destination } = result;
       if (!destination) return;
   
+      if(destination.index === source.index) return;
+      
       const reordered = Array.from(localData);
-      const [moved] = reordered.splice(source.index, 1);
-      reordered.splice(destination.index, 0, moved);
-      setLocalData(reordered);
+      const [removed] = reordered.splice(source.index, 1);
+      // const [moved] = reordered.splice(source.index, 1);
+      reordered.splice(destination.index, 0, removed);
+
+      const updatedData = reordered.map((comp,index) => ({
+        ...comp,
+        orderindex : index + 1,
+      }))
+      setLocalData(updatedData);
     };
 
 
@@ -59,9 +86,7 @@ const Selecttheme = () => {
       <>
       {localData.map((comp) => renderTheme(comp,localData, setLocalData))}
     </>
-    )
-
-      
+    )      
 }
 
 function renderTheme(comp: any, localData: any[], setLocalData: React.Dispatch<React.SetStateAction<any[]>>) {

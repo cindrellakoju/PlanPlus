@@ -184,7 +184,7 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
     }, [isResizingHeight,isResizingWidth])
 
     useEffect(()=> {
-      if(editcontext.savemode){
+      if(editcontext.savemode && editcontext.editHeightWidth){
         localData.map((comp) => {
           axios
           .put(`${backend_url}/user/updatetable/${userId}`,comp)
