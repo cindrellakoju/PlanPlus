@@ -146,6 +146,8 @@ const AdjustHeightWidth: React.FC = () => {
         flexWrap: "wrap",
         gap: "20px",
       }}
+
+      
     >
       {context?.editHeightWidth.map((comp) => {
         const Component = removeSpaces(comp.table_name);

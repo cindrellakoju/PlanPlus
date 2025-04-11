@@ -2,8 +2,6 @@
 .note-container {
     margin: 30px;
     margin-top: 50px;
-    width: 400px; 
-    height: 400px;
     background-color: #e0f2e9; 
     border-radius: 15px;
     padding: 20px;
@@ -203,7 +201,7 @@
   
 .note-container .width{
   width: 15px;
-  height: 400px;
+
   background-color: #7fb4c3;
   position: absolute;
   top: 0px;
@@ -213,7 +211,6 @@
 }
 
 .note-container .height{
-  width: 400px;
   height: 15px;
   background-color: #b1d6e0;
   position: absolute;

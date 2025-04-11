@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface Todo {
     todolist_id: number;  
     task: string;         
@@ -37,4 +39,9 @@ export interface userinfo{
 export interface ThemeProps{
   table_name: string;
   urlname: string;
+  height: number;
+  width : number;
+  id : number;
+  setLocalData: Dispatch<SetStateAction<any[]>>;
+  localData : any[]
 }

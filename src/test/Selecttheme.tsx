@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import ThemeThree from "../components/themethree/ThemeThree"
-import ToDo from "../components/todo/ToDo"
 import { useLocalStorageData } from "../hooks/useLocalStorageData"
 import ThemeOne from "../components/themeone/ThemeOne"
 
@@ -12,6 +11,8 @@ const Selecttheme = () => {
         setLocalData(locaStorageData);  // Ensure the data is set
     }, [locaStorageData]); // When local storage data changes, re-run the effect
 
+
+    console.log("Local Stoage data:",localData)
     return (
         <>
           {localData.map((comp) => {
@@ -22,6 +23,11 @@ const Selecttheme = () => {
                     key={comp.user_table_id} // Add key prop
                     table_name={comp.table_name} 
                     urlname={convertToUnderscoreCase(comp.table_name)} 
+                    height = {comp.height}
+                    width = {comp.width}
+                    id = {comp.user_table_id}
+                    setLocalData = {setLocalData}
+                    localData={localData}
                   />
                 );
               case 2:
@@ -30,6 +36,11 @@ const Selecttheme = () => {
                       key={comp.user_table_id} // Add key prop
                       table_name={comp.table_name} 
                       urlname={convertToUnderscoreCase(comp.table_name)}
+                      height = {comp.height}
+                      width = {comp.width}
+                      id = {comp.user_table_id}
+                      setLocalData = {setLocalData}
+                      localData={localData}
                     />
                 );
                 

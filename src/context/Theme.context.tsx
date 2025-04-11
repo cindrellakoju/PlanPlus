@@ -21,8 +21,8 @@ interface ThemeProviderProps {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
 
       const [bgforhead,setBgForHead] = useState<boolean>(true);
-      const [table, setTable] = useState<boolean>(false);
       const [displaycolname, setDisplayColname] = useState<boolean>(true);
+      const [table, setTable] = useState<boolean>(false);
       const [colname, setColName] = useState<string|string[]>('');
       const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
 

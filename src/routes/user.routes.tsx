@@ -10,6 +10,7 @@ import Selecttheme from "../test/Selecttheme";
 import { ThemeProvider } from "../context/Theme.context";
 import MainPage from "../pages/MainPage";
 import EditPage from "../pages/EditPage";
+import { EditThemeProvider } from "../context/EditThemeContext";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -56,11 +57,13 @@ const routes = createBrowserRouter([
 
 const UserRoute: React.FC = () => {
   return (
-    <ThemeProvider>
-      <MyProvider>
-        <RouterProvider router={routes} />
-      </MyProvider>
-    </ThemeProvider>
+    <EditThemeProvider>
+      <ThemeProvider>
+        <MyProvider>
+          <RouterProvider router={routes} />
+        </MyProvider>
+      </ThemeProvider>
+    </EditThemeProvider>
   );
 };
 
