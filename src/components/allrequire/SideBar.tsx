@@ -4,7 +4,7 @@ import { MyContext } from "../../context/Component.context";
 import { ComponentType } from "../../types";
 import { compareLocalStorageData } from "../../utils/compareLocalStorageData";
 
-const SideBar: React.FC = () => {
+const InsideSideBar: React.FC = () => {
   // Use context
   const context = useContext(MyContext);
 
@@ -35,4 +35,4 @@ const SideBar: React.FC = () => {
   );
 };
 
-export default SideBar;
+export default InsideSideBar;
