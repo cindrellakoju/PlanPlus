@@ -1,9 +1,0 @@
-.chooseoption{
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.chooseoption label{
-    margin-top: 4px;
-}

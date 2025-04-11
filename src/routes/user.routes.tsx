@@ -1,7 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import AppPage from "../pages/AppPage";
-import FrontPageEdit from "../pages/FrontPageEdit";
 import { MyProvider } from "../context/Component.context";
 import LoginPage from "../components/notLogin/LoginPage";
 import SignUpPage from "../components/notLogin/SignUpPage";
@@ -23,11 +21,7 @@ const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <PrivateRoute element={<AppPage />} /> // Protect homepage
-  },
-  {
-    path: "/homepgedit",
-    element: <PrivateRoute element={<FrontPageEdit />} /> // Protect homepage
+    element: <PrivateRoute element={<MainPage />} /> // Protect homepage
   },
   {
     path: "/login",
@@ -40,14 +34,6 @@ const routes = createBrowserRouter([
   {
     path: "/createtable",
     element: <PrivateRoute element={<CreateTable />} /> // Protect create table page
-  },
-  {
-    path: "/test",
-    element: <PrivateRoute element={<Selecttheme/>}/>
-  },
-  {
-    path: "/homepage",
-    element: <PrivateRoute element={<MainPage/>}/>
   },
   {
     path: "/editpage",

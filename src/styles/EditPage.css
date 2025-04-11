@@ -53,7 +53,7 @@
     flex-direction: row;
     /* justify-content: center; */
     flex-wrap: wrap;
-    padding-left: 3rem;
+    /* padding-left: 3rem; */
 }
 
 .editbody .sidebar{
@@ -62,12 +62,14 @@
     background-color: #AED5CE;
     border-radius: 1rem;
     margin-top: 2rem;
+    margin-left: 2rem;
 }
 .sidebar p{
     font-size: 1.2rem;
     padding: 1rem;
     padding-left: 1.8rem;
 }
+
 
 .sidebar .carousel{
     display: flex;
@@ -104,4 +106,8 @@
 .carousel button:hover{
     background-color: #9dca9d;
     transform: scale(1.05);
+}
+
+.selected{
+    color: rgb(205, 162, 44);
 }

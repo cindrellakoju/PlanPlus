@@ -77,7 +77,6 @@ const EditPage: React.FC = () => {
             const newComponents = response.data;
             const currentComponents = context.components;
       
-            // Only update if there's a difference
             if (JSON.stringify(newComponents) !== JSON.stringify(currentComponents)) {
               context.setComponents(newComponents);
             }
@@ -103,9 +102,9 @@ const EditPage: React.FC = () => {
                 <div className="body-field">
                     <div className="editheader">
                         <div className="names">
-                            <a onClick={(e) => handleHeightwidth(e)}>Height and Width</a>
-                            <a onClick={(e) => handlePosition(e)}>Positions</a>
-                            <a onClick={(e) => handleAddTable(e)}>Add Tables</a>
+                            <a onClick={(e) => handleHeightwidth(e)} className={editcontext.editHeightWidth ? "selected" : ""} >Height and Width</a>
+                            <a onClick={(e) => handlePosition(e)} className={editcontext.editPosition ? "selected" : ""}>Positions</a>
+                            <a onClick={(e) => handleAddTable(e)} className={editcontext.addTable ? "selected" : ""}>Add Tables</a>
                         </div>
                         <button onClick={(e) => handlesave(e)}>Save</button>
                     </div>
