@@ -25,6 +25,7 @@ export const InsertData = (insertdata: insertinfo, callback: Callback) => {
     LIMIT 1;
   `;
 
+  console.log("Quey:",query)
   // Execute the query with parameters
   db.query(query, [insertdata.user_id, insertdata.tablename], (err, results) => {
     if (err) {

@@ -34,7 +34,7 @@ router.post("/tablecolumn/:user_id",fetchtablecolumn);
 router.post("/columndata/:user_id",fetchcolumndata);
 router.get("/tablename/:user_id", fetchtablename); // Using a GET request with a URL parameter
 
-router.post("/insertintotable/:user_id",insertTabelData)
+router.post("/insertdata/:user_id",insertTabelData)
 router.put("/updatedata/:user_id",UpdateDataOfTable)
 router.post("/deletedataoftable/:user_id",DeleteDataController)
 

@@ -49,7 +49,7 @@ export interface Datas {
     tablename: string;
 }
 
-interface task {
+export interface task {
   [key: string]: string;  // Task can have any number of string key-value pairs
 }
   

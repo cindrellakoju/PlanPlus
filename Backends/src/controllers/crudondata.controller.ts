@@ -5,13 +5,14 @@ export const insertTabelData = async(req:Request, res: Response) => {
     const user_id = Number(req.params.user_id);
     const {tablename , value} = req.body;
 
+    console.log("Req Body:",req.body)
     const insertdata = {
         user_id : user_id,
         tablename : tablename,
         value : value
     }
 
-    // console.log(insertdata)
+    console.log("Inserted data:",insertdata)
     try{
         const result = await insertintotable(insertdata);
         res.status(200).json(result);

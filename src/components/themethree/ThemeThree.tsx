@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ThemeProps } from '../../types';
 import { EditThemeContext } from '../../context/EditThemeContext';
-import { useNavigate } from 'react-router-dom';
 
 interface ColumnData {
   column_name: string;
@@ -148,13 +147,24 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // If you want to log key:value format as a string:
-    const formatted = Object.entries(formData)
-      .map(([key, val]) => `${key}:${val}`)
-      .join(', ');
       
     console.log('Raw form data:', formData);
-    console.log('Formatted string:', formatted);
+
+    const tosend = {
+      tablename: table_name,
+      value: formData
+    }
+
+    console.log("To send:",tosend)
+    axios
+    .post(`${backend_url}/user/insertdata/2`, tosend)
+      .then((response) => {
+        console.log("Response:",response.data)
+      })
+      .catch((err) => {
+        console.log("Error inserting data:",err)
+      })
+
   };
   return (
     <>
