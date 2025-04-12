@@ -4,11 +4,11 @@ import { MyProvider } from "../context/Component.context";
 import LoginPage from "../components/notLogin/LoginPage";
 import SignUpPage from "../components/notLogin/SignUpPage";
 import CreateTable from "../components/allrequire/CreateTable";
-import Selecttheme from "../test/Selecttheme";
 import { ThemeProvider } from "../context/Theme.context";
 import MainPage from "../pages/MainPage";
 import EditPage from "../pages/EditPage";
 import { EditThemeProvider } from "../context/EditThemeContext";
+import AddPage from "../components/allrequire/Addpage";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -38,6 +38,10 @@ const routes = createBrowserRouter([
   {
     path: "/editpage",
     element: <PrivateRoute element={<EditPage/>}/>
+  },
+  {
+    path: "/add",
+    element: <PrivateRoute element={<AddPage/>}/>
   },
 ]);
 

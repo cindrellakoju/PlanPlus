@@ -24,28 +24,31 @@ const EditPage: React.FC = () => {
         throw new Error("SideBar must be used within a MyProvider");
       }
 
-    const handlesave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handlesave = () => {
         editcontext.setSaveMode(true);
     };
 
-    const handleHeightwidth = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleHeightwidth = () => {
         editcontext.setEditHeightWidth(true);
         editcontext.setEditPosition(false);
         editcontext.setAddTable(false);
     };
 
-    const handlePosition = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handlePosition = () => {
         editcontext.setEditPosition(true);
         editcontext.setEditHeightWidth(false);
         editcontext.setAddTable(false);
     };
 
-    const handleAddTable = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleAddTable = () => {
         editcontext.setAddTable(true);
         editcontext.setEditHeightWidth(false);
         editcontext.setEditPosition(false);
     };
 
+    const handleCreateTable = () => {
+
+    }
     const carouselRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -72,7 +75,7 @@ const EditPage: React.FC = () => {
 
     useEffect(() => {
         axios
-          .get(`${backend_url}/user/tablename/2`)
+          .get(`${backend_url}/user/tablename/${userId}`)
           .then((response) => {
             const newComponents = response.data;
             const currentComponents = context.components;
@@ -102,11 +105,12 @@ const EditPage: React.FC = () => {
                 <div className="body-field">
                     <div className="editheader">
                         <div className="names">
-                            <a onClick={(e) => handleHeightwidth(e)} className={editcontext.editHeightWidth ? "selected" : ""} >Height and Width</a>
-                            <a onClick={(e) => handlePosition(e)} className={editcontext.editPosition ? "selected" : ""}>Positions</a>
-                            <a onClick={(e) => handleAddTable(e)} className={editcontext.addTable ? "selected" : ""}>Add Tables</a>
+                            <a onClick={() => handleHeightwidth()} className={editcontext.editHeightWidth ? "selected" : ""} >Height and Width</a>
+                            <a onClick={() => handlePosition()} className={editcontext.editPosition ? "selected" : ""}>Positions</a>
+                            <a onClick={() => handleAddTable()} className={editcontext.addTable ? "selected" : ""}>Add Tables</a>
+                            <a onClick={() => handleCreateTable()}>Create Table</a>
                         </div>
-                        <button onClick={(e) => handlesave(e)}>Save</button>
+                        <button onClick={() => handlesave()}>Save</button>
                     </div>
                     <div className="editbody">
                         {
