@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    overflow-y: auto;
 }
 
 .body-field .editheader{
@@ -47,6 +46,7 @@
     transform: scale(1.05);
 }
 .body-field .editbody{
+    overflow-y: auto;
     width: 100%;
     height: 100%;
     display: flex;
@@ -63,6 +63,7 @@
     border-radius: 1rem;
     margin-top: 2rem;
     margin-left: 2rem;
+    overflow-y: auto;
 }
 .sidebar p{
     font-size: 1.2rem;
@@ -110,4 +111,124 @@
 
 .selected{
     color: rgb(205, 162, 44);
+}
+
+.createtable{
+    height: 95%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Container styling */
+.tablefield {
+    height: 80%;
+    width: 90%;
+    margin: 2rem auto;
+    background-color: rgba(255, 255, 255, 0.644);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-y: auto;
+}
+
+/* Heading */
+.tablefield h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 2rem;
+    font-family: cursive;
+}
+
+/* Form styling */
+.tablefield form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Labels */
+.tablefield label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Text and number inputs */
+.tablefield input[type="text"],
+.tablefield input[type="number"],
+.tablefield select {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tablefield input:focus,
+.tablefield select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+/* Column group layout */
+.colname {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.colname:hover {
+    background-color: #f0f4f8;
+}
+
+/* Input containers */
+.colname > div {
+    flex: 1 1 45%;
+    min-width: 220px;
+}
+
+/* Button styling */
+.tablefield button[type="submit"] {
+    align-self: flex-start;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.tablefield button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Mobile responsive behavior */
+@media (max-width: 600px) {
+    .colname {
+        flex-direction: column;
+    }
+
+    .colname > div {
+        flex: 1 1 100%;
+    }
 }

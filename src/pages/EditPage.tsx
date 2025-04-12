@@ -10,6 +10,7 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 import { ComponentType } from "../types";
 import Selecttheme from "../test/Selecttheme";
+import CreateTable from "../components/allrequire/CreateTable";
 
 const EditPage: React.FC = () => {
     const {userId , backend_url} = useUserInfo()
@@ -32,22 +33,28 @@ const EditPage: React.FC = () => {
         editcontext.setEditHeightWidth(true);
         editcontext.setEditPosition(false);
         editcontext.setAddTable(false);
+        editcontext.setCreateTable(false);
     };
 
     const handlePosition = () => {
         editcontext.setEditPosition(true);
         editcontext.setEditHeightWidth(false);
         editcontext.setAddTable(false);
+        editcontext.setCreateTable(false);
     };
 
     const handleAddTable = () => {
         editcontext.setAddTable(true);
         editcontext.setEditHeightWidth(false);
         editcontext.setEditPosition(false);
+        editcontext.setCreateTable(false);
     };
 
     const handleCreateTable = () => {
-
+        editcontext.setCreateTable(true);
+        editcontext.setAddTable(false);
+        editcontext.setEditHeightWidth(false);
+        editcontext.setEditPosition(false);
     }
     const carouselRef = useRef<HTMLDivElement | null>(null);
 
@@ -108,7 +115,7 @@ const EditPage: React.FC = () => {
                             <a onClick={() => handleHeightwidth()} className={editcontext.editHeightWidth ? "selected" : ""} >Height and Width</a>
                             <a onClick={() => handlePosition()} className={editcontext.editPosition ? "selected" : ""}>Positions</a>
                             <a onClick={() => handleAddTable()} className={editcontext.addTable ? "selected" : ""}>Add Tables</a>
-                            <a onClick={() => handleCreateTable()}>Create Table</a>
+                            <a onClick={() => handleCreateTable()} className={editcontext.createTable ? "selected" : ""}>Create Table</a>
                         </div>
                         <button onClick={() => handlesave()}>Save</button>
                     </div>
@@ -127,7 +134,16 @@ const EditPage: React.FC = () => {
                                 </div>
                             )
                         }
-                        <Selecttheme/>
+                            {
+                            editcontext.createTable ? (
+                                <div className="createtable">
+                                    <CreateTable/>
+                                </div>
+                            ) : (
+                                <Selecttheme />
+                            )
+                            }
+
                     </div>
                 </div>
             </div>

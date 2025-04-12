@@ -9,6 +9,8 @@ interface EditThemeContextType{
     setEditPosition : React.Dispatch<React.SetStateAction<boolean>>,
     addTable : boolean,
     setAddTable: React.Dispatch<React.SetStateAction<boolean>>,
+    createTable : boolean,
+    setCreateTable: React.Dispatch<React.SetStateAction<boolean>>,
 } 
 
 const EditThemeContext = createContext<EditThemeContextType | undefined>(undefined)
@@ -22,9 +24,10 @@ const EditThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
     const [savemode, setSaveMode] = useState<boolean>(false)
     const [editPosition, setEditPosition] = useState<boolean>(false)
     const [addTable, setAddTable] = useState<boolean>(false)
+    const [createTable, setCreateTable] = useState<boolean>(false)
 
       return (
-        <EditThemeContext.Provider value={{ editHeightWidth, setEditHeightWidth, savemode, setSaveMode, editPosition, setEditPosition, addTable, setAddTable }}>
+        <EditThemeContext.Provider value={{ editHeightWidth, setEditHeightWidth, savemode, setSaveMode, editPosition, setEditPosition, addTable, setAddTable, createTable, setCreateTable }}>
           {children}
         </EditThemeContext.Provider>
       );

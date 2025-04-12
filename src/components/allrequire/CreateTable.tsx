@@ -25,7 +25,7 @@ const CreateTable = () => {
     };
 
     return (
-        <div className="container">
+        <div className="tablefield">
             <h1>Create a Table</h1>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -52,14 +52,31 @@ const CreateTable = () => {
                 {column > 0 && (
                     <div>
                         {Array.from({ length: column }, (_, index) => (
-                            <div key={index}>
-                                <label htmlFor={`column-${index}`}>Column {index + 1} Name:</label>
-                                <input
-                                    type="text"
-                                    id={`column-${index}`}
-                                    value={columnValues[index] || ''}
-                                    onChange={(e) => handleColumnChange(index, e.target.value)}
-                                />
+                            <div className="colname">
+                                <div key={index}>
+                                    <label htmlFor={`column-${index}`}>Column {index + 1} Name:</label>
+                                    <input
+                                        type="text"
+                                        id={`column-${index}`}
+                                        value={columnValues[index] || ''}
+                                        onChange={(e) => handleColumnChange(index, e.target.value)}
+                                    />
+                                </div>
+                                <div key={`type-${index}`}>
+                                    <label htmlFor={`column-type-${index}`}>Column {index + 1} Type:</label>
+                                    <select
+                                        id={`column-type-${index}`}
+                                        // value={columnTypes[index] || ''}
+                                        // onChange={(e) => handleColumnTypeChange(index, e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Select type</option>
+                                        <option value="string">String</option>
+                                        <option value="number">Number</option>
+                                        <option value="date">Date</option>
+                                    </select>
+                                </div>
+
                             </div>
                         ))}
                     </div>
