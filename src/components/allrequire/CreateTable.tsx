@@ -76,6 +76,19 @@ const CreateTable = () => {
                                         <option value="date">Date</option>
                                     </select>
                                 </div>
+                                <div key={`unique-${index}`}>
+                                    <label htmlFor={`unique-${index}`}>Column {index + 1} IsUnique:</label>
+                                    <select
+                                        id={`unique-${index}`}
+                                        // value={columnTypes[index] || ''}
+                                        // onChange={(e) => handleColumnTypeChange(index, e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Select type</option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
 
                             </div>
                         ))}
