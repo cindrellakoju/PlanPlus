@@ -48,6 +48,7 @@ const CreateTable = () => {
         setColumnTypes(newColumnTypes);
     };
     
+    
     const handleIsUnique = (index: number, value: string) => {
         const newIsUnique = [...isUnique];
         newIsUnique[index] = value;
@@ -106,7 +107,8 @@ const CreateTable = () => {
                                         >
                                             <option value="">Select type</option>
                                             <option value="string">String</option>
-                                            <option value="number">Number</option>
+                                            <option value="number-float">Number(Float)</option>
+                                            <option value="number-int">Number(Int)</option>
                                             <option value="date">Date</option>
                                         </select>
                                     </div>
