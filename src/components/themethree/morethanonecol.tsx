@@ -115,6 +115,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   }
 
   const handleDelete = (e:React.MouseEvent<HTMLTableCellElement>,dataId: number) => {
+    e.preventDefault()
     const sendData = {
       data_id : dataId
     }
