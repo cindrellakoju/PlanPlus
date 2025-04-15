@@ -16,10 +16,6 @@ const SideBar = () => {
                     <i className='bx bx-time'></i>
                     <p>Schedule</p>
                 </div>
-                <div className="tables">
-                    <i className='bx bx-table'></i>
-                    <p>Tables</p>
-                </div>
                 <div className="calender">
                     <i className='bx bx-calendar' ></i>
                     <p>Calender</p>

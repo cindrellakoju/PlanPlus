@@ -11,7 +11,7 @@ interface ColumnData {
   column_name: string;
 }
 
-const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, id, setLocalData, localData }) => {
+const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, checkbox, tablemargin, backgroundforhead, displaycolname, setLocalData, localData }) => {
   const { userId, backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const col_name: string | string[] = ['task', 'priority', 'status', 'description', 'deadline'];
@@ -19,10 +19,6 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
-  const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
-  const [table, setTable] = useState<boolean>(false);
-  const [bgforhead, setBgForHead] = useState<boolean>(true);
-  const [displaycolname, setDisplayColname] = useState<boolean>(true);
 
   const [isResizingWidth, setIsResizingWidth] = useState<boolean>(false);
   const [isResizingHeight, setIsResizingHeight] = useState<boolean>(false);
@@ -174,7 +170,7 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
           <i className="bx bx-dots-horizontal-rounded"></i>
           <div className="dropdown">
             <ul>
-              {addcheckbox ? (
+              {checkbox ? (
                 col_name.includes('status') && (
                   <>
                     <li onClick={handleCompleted}>Completed</li>
@@ -235,11 +231,11 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
           {colname && colname.length >= 2 && (
             <MoreThanOneCol
               data={datas}
-              addcheckbox={addcheckbox}
+              addcheckbox={checkbox}
               displacolname={displaycolname}
               col_name={colname}
-              table={table}
-              bgforhead={bgforhead}
+              table={tablemargin}
+              bgforhead={backgroundforhead}
               checkitemEditing={checkitemEditing}
               isEditing={isEditing}
               checkeditem={checkedItems}

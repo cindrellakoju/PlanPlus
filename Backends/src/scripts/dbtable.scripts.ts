@@ -127,6 +127,20 @@ const createUserTableData = () => {
   sendQuery(createUserTableDataQuery, "User Table Data");
 };
 
+
+// 0 flase 1 true
+const UpdateTable = () => {
+  const alterUserTableQuery = `
+    ALTER TABLE user_tables
+      ADD COLUMN checkbox TINYINT(1) NOT NULL DEFAULT 0,
+      ADD COLUMN table_margin TINYINT(1) NOT NULL DEFAULT 0,
+      ADD COLUMN bg_for_header TINYINT(1) NOT NULL DEFAULT 0,
+      ADD COLUMN col_name TINYINT(1) NOT NULL DEFAULT 0;
+  `;
+
+  sendQuery(alterUserTableQuery, "Alter User Table - Add Boolean Flags");
+}
+
 const sendQuery = (query:string,tablename:string) =>{
   db.query(query,(err,results)=>{
     if(err){
@@ -143,11 +157,12 @@ const createAllTable = () =>{
   // createToDoListTable();
   // createBucketListTable();
   // createComponentTable();
-  createUsers();
-  createThemeTable();
-  createUserTable();
-  createUserTableColumns();
-  createUserTableData();
+  // createUsers();
+  // createThemeTable();
+  // createUserTable();
+  // createUserTableColumns();
+  // createUserTableData();
+  UpdateTable()
 }
 
 export default createAllTable;

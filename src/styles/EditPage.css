@@ -123,6 +123,10 @@
 }
 
 /* Container styling */
+.wholefield{
+    height: 100%;
+    width: 100%;
+}
 .tablefield {
     height: 80%;
     width: 90%;

@@ -41,7 +41,10 @@ export interface ThemeProps{
   urlname: string;
   height: number;
   width : number;
-  id : number;
+  checkbox:  boolean;
+  tablemargin : boolean,
+  backgroundforhead : boolean,
+  displaycolname : boolean,
   setLocalData: Dispatch<SetStateAction<any[]>>;
   localData : any[]
 }

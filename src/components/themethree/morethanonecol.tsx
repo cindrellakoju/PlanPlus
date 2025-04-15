@@ -143,17 +143,16 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
         <table>
             <thead>
               <tr>
-                {displacolname && (
+                {displacolname  &&  addcheckbox && (
                   <th
                     style={{
                       border: table ? '1px solid black' : 'none',
                       backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
                     }}
                   >
-                    {/* Column for checkbox */}
                   </th>
                 )}
-                {colNamesArray.map((name, index) => (
+                {displacolname && colNamesArray.map((name, index) => (
                   <th
                     key={index}
                     style={{

@@ -9,6 +9,10 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 
 const Selecttheme = () => {
+    // const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
+    // const [table, setTable] = useState<boolean>(false);
+    // const [bgforhead, setBgForHead] = useState<boolean>(true);
+    // const [displaycolname, setDisplayColname] = useState<boolean>(true);
     const {userId , backend_url} = useUserInfo()
     const editcontext = useContext(EditThemeContext)
     if(!editcontext){
@@ -37,7 +41,6 @@ const Selecttheme = () => {
       }
     },[editcontext.savemode])
 
-    console.log("Local Stoage data:",localData)
 
     const handleDragEnd = (result: DropResult) => {
       const { source, destination } = result;
@@ -89,23 +92,31 @@ const Selecttheme = () => {
     )      
 }
 
-function renderTheme(comp: any, localData: any[], setLocalData: React.Dispatch<React.SetStateAction<any[]>>) {
+function renderTheme(
+  comp: any,
+  localData: any[],
+  setLocalData: React.Dispatch<React.SetStateAction<any[]>>
+) {
+  const key = comp.user_table_id;
+
   const commonProps = {
-    key: comp.user_table_id,
     table_name: comp.table_name,
     urlname: convertToUnderscoreCase(comp.table_name),
     height: comp.height,
     width: comp.width,
-    id: comp.user_table_id,
+    checkbox: comp.checkbox === 1,
+    tablemargin: comp.table_margin === 1,
+    backgroundforhead: comp.bg_for_header === 1,
+    displaycolname: comp.col_name === 1,
     setLocalData,
     localData
   };
 
   switch (comp.theme_id) {
     case 1:
-      return <ThemeOne {...commonProps} />;
+      return <ThemeOne key={key} {...commonProps} />;
     case 2:
-      return <ThemeThree {...commonProps} />;
+      return <ThemeThree key={key} {...commonProps} />;
     case 3:
       console.log("Theme 3", comp.table_name);
       return null;
@@ -113,6 +124,7 @@ function renderTheme(comp: any, localData: any[], setLocalData: React.Dispatch<R
       return null;
   }
 }
+
 
 function convertToUnderscoreCase(str:string) {
     return str

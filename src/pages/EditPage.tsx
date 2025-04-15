@@ -14,6 +14,7 @@ import CreateTable from "../components/allrequire/CreateTable";
 
 const EditPage: React.FC = () => {
     const {userId , backend_url} = useUserInfo()
+
     const editcontext = useContext(EditThemeContext);
     if (!editcontext) {
         throw new Error("EditPage must be used within a EditThemeProvider");
@@ -81,6 +82,7 @@ const EditPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        if(userId){
         axios
           .get(`${backend_url}/user/tablename/${userId}`)
           .then((response) => {
@@ -94,6 +96,7 @@ const EditPage: React.FC = () => {
           .catch((error) => {
             console.error("Error fetching the data: ", error);
           });
+        }
       }, [context.components]);
       
 
