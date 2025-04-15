@@ -5,6 +5,8 @@ const CreateTable = () => {
     const [tablename, setTableName] = useState<string>("")
     const [column, setColumn] = useState<number>(0); // Default to 0 or any initial value you prefer
     const [columnValues, setColumnValues] = useState<string[]>([]); // To store values for each column
+    const [columnTypes, setColumnTypes] = useState<string[]>([]); // To store values for each column
+    const [isUnique, setIsUnique] = useState<string[]>([]); // To store values for each column
     const [themeid,setThemeId] = useState<number>(1)
     const [checkbox,setCheckBox] = useState<boolean>(false)
     const [tablemargin, setTableMargin] = useState<boolean>(false)
@@ -13,9 +15,19 @@ const CreateTable = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(`Table Name: ${tablename}`); // Get table name from form
-        console.log(`Number of Columns: ${column}`);
-        console.log("Column Values:", columnValues);
+        const tosend = {
+            "tablename" : tablename,
+            "colname" : columnValues,
+            "coltype" : columnTypes,
+            "isUnique" : isUnique,
+            "themeid" : themeid,
+            "checkbox" :checkbox,
+            "tablemargin" : tablemargin,
+            "bgforhead" : backgroundforhead,
+            "displaycolname": displacolname
+        }
+
+        console.log("To send:",tosend)
     };
 
     const handleColumnChange = (index: number, value: string) => {
@@ -29,6 +41,19 @@ const CreateTable = () => {
         setColumn(numColumns);
         setColumnValues(new Array(numColumns).fill('')); // Reset column values when number of columns changes
     };
+
+    const handleColumnTypeChange = (index: number, value: string) => {
+        const newColumnTypes = [...columnTypes];
+        newColumnTypes[index] = value;
+        setColumnTypes(newColumnTypes);
+    };
+    
+    const handleIsUnique = (index: number, value: string) => {
+        const newIsUnique = [...isUnique];
+        newIsUnique[index] = value;
+        setIsUnique(newIsUnique);
+    };
+    
 
     console.log("Column Value:",columnValues)
     return (
@@ -68,14 +93,15 @@ const CreateTable = () => {
                                             id={`column-${index}`}
                                             value={columnValues[index] || ''}
                                             onChange={(e) => handleColumnChange(index, e.target.value)}
+                                            required
                                         />
                                     </div>
                                     <div key={`type-${index}`}>
                                         <label htmlFor={`column-type-${index}`}>Column {index + 1} Type:</label>
                                         <select
                                             id={`column-type-${index}`}
-                                            // value={columnTypes[index] || ''}
-                                            // onChange={(e) => handleColumnTypeChange(index, e.target.value)}
+                                            value={columnTypes[index] || ''}
+                                            onChange={(e) => handleColumnTypeChange(index, e.target.value)}
                                             required
                                         >
                                             <option value="">Select type</option>
@@ -88,8 +114,8 @@ const CreateTable = () => {
                                         <label htmlFor={`unique-${index}`}>Column {index + 1} IsUnique:</label>
                                         <select
                                             id={`unique-${index}`}
-                                            // value={columnTypes[index] || ''}
-                                            // onChange={(e) => handleColumnTypeChange(index, e.target.value)}
+                                            value={isUnique[index] || ''}
+                                            onChange={(e) => handleIsUnique(index, e.target.value)}
                                             required
                                         >
                                             <option value="true">True</option>
