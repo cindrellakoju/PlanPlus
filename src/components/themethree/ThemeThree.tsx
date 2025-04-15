@@ -11,7 +11,7 @@ interface ColumnData {
   column_name: string;
 }
 
-const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, checkbox, tablemargin, backgroundforhead, displaycolname, setLocalData, localData }) => {
+const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, checkbox, tablemargin, backgroundforhead, displaycolname, colnames, creatingtable }) => {
   const { userId, backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const col_name: string | string[] = ['task', 'priority', 'status', 'description', 'deadline'];
@@ -19,12 +19,7 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
-
-  const [isResizingWidth, setIsResizingWidth] = useState<boolean>(false);
-  const [isResizingHeight, setIsResizingHeight] = useState<boolean>(false);
-  const [upheight, setUpHeight] = useState<number>(0);
-  const [distwidth, setDistWdth] = useState<number>(0);
-  const [newid, setNewId] = useState<number>(0);
+  const columnList = colnames ?? colname;
 
   const [showAddForm, setShowAddForm] = useState<boolean>(false); // New state for showing the add form
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -191,8 +186,8 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
                   <form className="add-form" onSubmit={handleSubmit}>
                     <h3>{table_name}</h3>
           
-                    {Array.isArray(colname) &&
-                      colname.map((column, index) => (
+                    {Array.isArray(columnList) &&
+                      columnList.map((column, index) => (
                         <div key={index} className="field">
                           <label htmlFor={column}>
                             {column.charAt(0).toUpperCase() + column.slice(1)}
@@ -228,12 +223,12 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
             />
           )}
 
-          {colname && colname.length >= 2 && (
+          {columnList && columnList.length >= 2 && (
             <MoreThanOneCol
               data={datas}
               addcheckbox={checkbox}
               displacolname={displaycolname}
-              col_name={colname}
+              col_name={columnList}
               table={tablemargin}
               bgforhead={backgroundforhead}
               checkitemEditing={checkitemEditing}
@@ -241,6 +236,7 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
               checkeditem={checkedItems}
               setCheckedItems={setCheckedItems}
               table_name={table_name}
+              creatingtable = {creatingtable}
             />
           )}
         </div>

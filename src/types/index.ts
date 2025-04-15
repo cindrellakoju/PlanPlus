@@ -38,13 +38,15 @@ export interface userinfo{
 
 export interface ThemeProps{
   table_name: string;
-  urlname: string;
+  urlname?: string;
   height: number;
   width : number;
   checkbox:  boolean;
   tablemargin : boolean,
   backgroundforhead : boolean,
   displaycolname : boolean,
-  setLocalData: Dispatch<SetStateAction<any[]>>;
-  localData : any[]
+  setLocalData?: Dispatch<SetStateAction<any[]>>;
+  localData ?: any[]
+  colnames ?: string | string[]
+  creatingtable ?: boolean 
 }

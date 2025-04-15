@@ -8,7 +8,7 @@ import axios from "axios";
 import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 
-const Selecttheme = () => {
+const Selecttheme= () => {
     // const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
     // const [table, setTable] = useState<boolean>(false);
     // const [bgforhead, setBgForHead] = useState<boolean>(true);
@@ -112,7 +112,7 @@ function renderTheme(
     localData
   };
 
-  switch (comp.theme_id) {
+  switch (comp.theme_id ) {
     case 1:
       return <ThemeOne key={key} {...commonProps} />;
     case 2:
@@ -123,7 +123,40 @@ function renderTheme(
     default:
       return null;
   }
+
 }
+
+interface SelectthemeProps{
+  themeid : number,
+  table_name : string,
+  checkbox : boolean,
+  tablemargin : boolean,
+  backgroundforhead : boolean,
+  displaycolname : boolean,
+  colnames : string[],
+  creatingtable : boolean
+}
+export const DummyrenderTheme: React.FC<SelectthemeProps> = ({ themeid, table_name, checkbox, tablemargin , backgroundforhead, displaycolname, colnames, creatingtable}) => {
+  const commonProps = {
+    table_name: table_name,
+    height: 465,
+    width: 465,
+    checkbox: checkbox,
+    tablemargin: tablemargin,
+    backgroundforhead: backgroundforhead,
+    displaycolname: displaycolname,
+    colnames : colnames,
+    creatingtable: creatingtable
+  };
+  switch (themeid) {
+    case 1:
+      return <ThemeOne key={themeid} {...commonProps} />;
+    case 2:
+      return <ThemeThree key={themeid} {...commonProps} />;
+    default:
+      return null;
+  }
+};
 
 
 function convertToUnderscoreCase(str:string) {

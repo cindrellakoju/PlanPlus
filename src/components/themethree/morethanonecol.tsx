@@ -14,7 +14,8 @@ interface MoreThanOneColProps {
   isEditing : boolean;
   checkeditem : Set<number>;
   setCheckedItems :  React.Dispatch<React.SetStateAction<Set<number>>>;
-  table_name ?: string
+  table_name ?: string,
+  creatingtable ?: boolean
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
@@ -28,16 +29,26 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   isEditing,
   checkeditem,
   setCheckedItems,
-  table_name
+  table_name,
+  creatingtable
 }) => {
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
+  const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
+  console.log("Col_name:",col_name)
+  useEffect(() => {
+    if (col_name && creatingtable) {
+      // Assuming col_name is used to filter `datas` somehow — or just a placeholder for demo data?
+      // If you meant to filter from datas, do that here.
+      const initialData = typeof col_name === 'string' ? [] : col_name.map(name => ({ name }));
+      setFilteredData(initialData);
+    }
+  }, [col_name, creatingtable]);
   
   if (!context) {
     throw new Error("useThemeContext must be used within a ThemeProvider");
   }
 
-  const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
   const [newData, setNewData] = useState<Record<string, any>[]>([]);
 
   // If col_name is a single string, convert it to an array for uniform handling

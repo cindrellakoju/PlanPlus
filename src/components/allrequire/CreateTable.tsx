@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { DummyrenderTheme } from "../../test/Selecttheme";
 
 const CreateTable = () => {
     const [tablename, setTableName] = useState<string>("")
     const [column, setColumn] = useState<number>(0); // Default to 0 or any initial value you prefer
     const [columnValues, setColumnValues] = useState<string[]>([]); // To store values for each column
+    const [themeid,setThemeId] = useState<number>(1)
+    const [checkbox,setCheckBox] = useState<boolean>(false)
+    const [tablemargin, setTableMargin] = useState<boolean>(false)
+    const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
+    const [displacolname,setDisplayColname] = useState<boolean>(false)
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,9 +30,10 @@ const CreateTable = () => {
         setColumnValues(new Array(numColumns).fill('')); // Reset column values when number of columns changes
     };
 
+    console.log("Column Value:",columnValues)
     return (
-        <div className="wholefield">
-            <div className="tablefield">
+        <div className={tablename ? "wholefield doubledisplay" : "wholefield"} >
+            <div className="tablefield" style={tablename ? { width : "45%" } : { width : "90%"}}>
                 <h1>Create a Table</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -85,7 +92,6 @@ const CreateTable = () => {
                                             // onChange={(e) => handleColumnTypeChange(index, e.target.value)}
                                             required
                                         >
-                                            <option value="">Select type</option>
                                             <option value="true">True</option>
                                             <option value="false">False</option>
                                         </select>
@@ -95,11 +101,64 @@ const CreateTable = () => {
                             ))}
                         </div>
                     )}
+
+                    {column > 0 && (
+                    <div className="settings-panel">
+                        <div className="setting-item">
+                        <label htmlFor="checkbox">Check Box</label>
+                        <select id="checkbox" value={checkbox.toString()} onChange={(e) => setCheckBox(e.target.value === "true")}>
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                        </div>
+
+                        <div className="setting-item">
+                        <label htmlFor="tablemargin">Table Margin</label>
+                        <select id="tablemargin" value={tablemargin.toString()} onChange={(e) => setTableMargin(e.target.value === "true")}>
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                        </div>
+
+                        <div className="setting-item">
+                        <label htmlFor="bgforhead">Background for Header</label>
+                        <select id="bgforhead" value={backgroundforhead.toString()} onChange={(e) => setBackgroundForHead(e.target.value === "true")}>
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                        </div>
+
+                        <div className="setting-item">
+                        <label htmlFor="displaycolname">Display Column Name</label>
+                        <select id="displaycolname" value={displacolname.toString()} onChange={(e) => setDisplayColname(e.target.value === "true")}>
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                        </div>
+
+                        <div className="setting-item">
+                        <label htmlFor="theme">Select Theme</label>
+                        <select id="theme" value={themeid} onChange={(e) => setThemeId(Number(e.target.value))}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                        </div>
+                    </div>
+                    )}
+
                     
                     <button type="submit">Create Table</button>
                 </form>
             </div>
-            <div className="displayfield"></div>
+            {
+                tablename && (
+                    <div className="displayfield" style={{ width : "45%"}}>
+                        <DummyrenderTheme table_name={tablename}  themeid={themeid} checkbox={checkbox} tablemargin={tablemargin} backgroundforhead={backgroundforhead}
+                        displaycolname={displacolname} colnames={columnValues} creatingtable={true}/>
+                    </div>
+                    
+                )
+            }
         </div>
     );
 };
