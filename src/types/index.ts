@@ -52,7 +52,10 @@ export interface ThemeProps{
   creatingtable ?: boolean 
   setEditEachTable?: Dispatch<SetStateAction<boolean>>;
   themeid : number,
-  addcheckbox ?: boolean,
+  addcheckbox ?: boolean,    
+  editdisplaycolname ?: boolean,
+  editbgforhead ?: boolean,
+  edittablemargin ?: boolean,
 
   // editcheckbox ?: boolean
   // setEditCheckBox ?: Dispatch<SetStateAction<boolean>>;

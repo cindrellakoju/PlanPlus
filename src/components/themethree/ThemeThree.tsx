@@ -27,6 +27,9 @@ const ThemeThree: React.FC<ThemeProps> = ({
     setEditEachTable ,
     themeid,
     addcheckbox,
+    editdisplaycolname,
+    editbgforhead,
+    edittablemargin,
     localData,
     setLocalData
   }) => {
@@ -327,7 +330,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
         </div>
         {
           isTableEditing && (
-            <EachTableEditOption tablename={table_name} themeid={themeid} localData={localData} setLocalData={setLocalData} addcheckbox={addcheckbox} />
+            <EachTableEditOption tablename={table_name} themeid={themeid} localData={localData} setLocalData={setLocalData} addcheckbox={addcheckbox} editdisplaycolname={editdisplaycolname} editbgforhead={editbgforhead} edittablemargin={edittablemargin} />
           )
         }
 

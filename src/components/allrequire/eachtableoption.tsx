@@ -5,15 +5,12 @@ interface EditEachTableProps {
     tablename : string,
     localData: any[] | undefined,
     setLocalData: React.Dispatch<React.SetStateAction<any[]>> | undefined,
-    addcheckbox : boolean | undefined
+    addcheckbox : boolean | undefined,
+    editdisplaycolname : boolean | undefined,
+    editbgforhead : boolean | undefined,
+    edittablemargin : boolean | undefined,
 }
-export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,themeid, localData, setLocalData, addcheckbox}) => {
-        // const [themeid,setThemeId] = useState<number>(1)
-        const [checkbox,setCheckBox] = useState<boolean>(false)
-        const [tablemargin, setTableMargin] = useState<boolean>(false)
-        const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
-        const [displacolname,setDisplayColname] = useState<boolean>(false)
-
+export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,themeid, localData, setLocalData}) => {
         console.log("Localdaa:",localData)
         // console.log("Localdaa:",localData)
         
@@ -48,6 +45,51 @@ export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,them
             }
             console.log("checbox:",selectedcheckboxval)
         } 
+
+        const handleTableMargin = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const selectedtablemarginval = e.target.value === "true" ? 1 : 0;
+
+            if(localData && setLocalData){
+                const updatedData = localData.map((comp) => {
+                    if (tablename === comp.table_name) {
+                        return { ...comp, table_margin: selectedtablemarginval }; // Return a new object with updated theme_id
+                    }
+                    return comp;
+                });
+
+                setLocalData(updatedData); // Trigger state update
+            }
+        } 
+
+        const handleBgForHeader = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const selectedbgval = e.target.value === "true" ? 1 : 0;
+
+            if(localData && setLocalData){
+                const updatedData = localData.map((comp) => {
+                    if (tablename === comp.table_name) {
+                        return { ...comp, bg_for_header: selectedbgval }; // Return a new object with updated theme_id
+                    }
+                    return comp;
+                });
+
+                setLocalData(updatedData); // Trigger state update
+            }
+        } 
+
+        const handleDisplayColName = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const selecteddisplaycolnameval = e.target.value === "true" ? 1 : 0;
+
+            if(localData && setLocalData){
+                const updatedData = localData.map((comp) => {
+                    if (tablename === comp.table_name) {
+                        return { ...comp, col_name: selecteddisplaycolnameval }; // Return a new object with updated theme_id
+                    }
+                    return comp;
+                });
+
+                setLocalData(updatedData); // Trigger state update
+            }
+        } 
         
     return(
         <div className="settings-panel">
@@ -68,7 +110,11 @@ export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,them
 
             <div className="setting-item">
             <label htmlFor="tablemargin">Table Margin</label>
-            <select id="tablemargin" value={tablemargin.toString()} onChange={(e) => setTableMargin(e.target.value === "true")}>
+            <select id="tablemargin" 
+            value={
+                localData?.find((comp) => comp.table_name === tablename)?.table_margin?.toString() ?? ""
+            }
+            onChange={handleTableMargin}>
                 <option value="false">false</option>
                 <option value="true">true</option>
             </select>
@@ -76,7 +122,11 @@ export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,them
 
             <div className="setting-item">
             <label htmlFor="bgforhead">Background for Header</label>
-            <select id="bgforhead" value={backgroundforhead.toString()} onChange={(e) => setBackgroundForHead(e.target.value === "true")}>
+            <select id="bgforhead" 
+            value={
+                localData?.find((comp) => comp.table_name === tablename)?.bg_for_header?.toString() ?? ""
+            }
+            onChange={handleBgForHeader}>
                 <option value="false">false</option>
                 <option value="true">true</option>
             </select>
@@ -84,7 +134,10 @@ export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,them
 
             <div className="setting-item">
             <label htmlFor="displaycolname">Display Column Name</label>
-            <select id="displaycolname" value={displacolname.toString()} onChange={(e) => setDisplayColname(e.target.value === "true")}>
+            <select id="displaycolname" 
+            value={
+                localData?.find((comp) => comp.table_name === tablename)?.col_name?.toString() ?? ""
+            }onChange={handleDisplayColName}>
                 <option value="false">false</option>
                 <option value="true">true</option>
             </select>
