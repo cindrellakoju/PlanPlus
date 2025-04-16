@@ -30,60 +30,44 @@ const Selecttheme= () => {
   }, [locaStorageData]); // When local storage data changes, re-run the effect
 
   console.log("LocalData:",localData)
-
-  // useEffect(() => {
-  //   if (editcontext.savemode) {
-  //     const updateRequests = localData.map((comp) =>
-  //       axios.put(`${backend_url}/user/updatetable/${userId}`, comp)
-  //     );
-  
-  //     Promise.all(updateRequests)
-  //       .then((responses) => {
-  //         console.log("All updates successful:", responses.map(res => res.data));
-  //         alert("Successfully updated the table!");
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error updating one or more entries:", error);
-  //         alert("Error occurred while updating the table.");
-  //       });
-  //   }
-  // }, [editcontext.savemode]);
-  
-    // useEffect(() => {
-    //   console.log("RErendere")
-    //   console.log("Lo",localData)
-    // },[localData])
       
-    useEffect(() => {
-      if (editcontext.savemode || editcontext.editPosition) {
-        const updateRequests = localData.map((comp) => {
-          return axios
-            .put(`${backend_url}/user/updatetable/${userId}`, comp)
-            .then((response) => {
-              console.log(
-                "✅ Successfully updated table with user_table_id:",
-                comp.user_table_id,
-                "→ Response:",
-                response.data
-              );
-              compareLocalStorageData(comp); // Move this inside success if needed
-              return response;
-            })
-            .catch((error) => {
-              console.error("❌ Error updating user_table_id:", comp.user_table_id, error);
-              // Optional: you can still call compareLocalStorageData here if needed
-            });
-        });
-    
-        Promise.all(updateRequests)
-          .then(() => {
-            alert("✅ All tables updated successfully!");
+  useEffect(() => {
+    if (editcontext.savemode || (editcontext.savemode && editcontext.editPosition)) {
+      // Create an array of update requests (PUT requests)
+      const updateRequests = localData.map((comp) => {
+        return axios
+          .put(`${backend_url}/user/updatetable/${userId}`, comp) // Send PUT request
+          .then((response) => {
+            // If PUT is successful
+            console.log(
+              "✅ Successfully updated table with user_table_id:",
+              comp.user_table_id,
+              "→ Response:",
+              response.data
+            );
+            // Call compareLocalStorageData only after successful PUT
+            compareLocalStorageData(comp);
+            return response;
           })
-          .catch(() => {
-            alert("⚠️ Some updates failed. Check console for details.");
+          .catch((error) => {
+            // If PUT fails
+            console.error("❌ Error updating user_table_id:", comp.user_table_id, error);
           });
-      }
-    }, [editcontext.savemode, editcontext.editPosition]);
+      });
+  
+      // Wait for all PUT requests to complete
+      Promise.all(updateRequests)
+        .then(() => {
+          // Show success message after all requests succeed
+          alert("✅ All tables updated successfully!");
+        })
+        .catch(() => {
+          // If any PUT request fails
+          alert("⚠️ Some updates failed. Check console for details.");
+        });
+    }
+  }, [editcontext.savemode, editcontext.editPosition]);
+  
     
 
 
@@ -116,7 +100,7 @@ const Selecttheme= () => {
               {...provided.droppableProps}
               style={{ display: "flex",flexDirection: "row",flexWrap: "wrap" }}
             >
-              {(editcontext.editHeightWidth ? localData: locaStorageData).map ((comp, index)  => (
+              {localData.map ((comp, index)  => (
                 <Draggable key={comp.user_table_id} draggableId={comp.user_table_id.toString()} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
