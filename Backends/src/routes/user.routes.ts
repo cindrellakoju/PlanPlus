@@ -27,7 +27,7 @@ router.post("/signup",signup);
 router.get("/componentsposition",getComponentsController);
 router.put("/componentsposition/edit/:id",updateComponentsController);
 
-router.post("/usercreatetable", CreateTableByUserController);
+router.post("/usercreatetable/:user_id", CreateTableByUserController);
 
 router.get("/tableinfo",fetchtableinfo);
 router.post("/tablecolumn/:user_id",fetchtablecolumn);

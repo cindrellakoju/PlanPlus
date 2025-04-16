@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { DummyrenderTheme } from "../../test/Selecttheme";
+import axios from "axios";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 const CreateTable = () => {
     const [tablename, setTableName] = useState<string>("")
@@ -12,6 +14,7 @@ const CreateTable = () => {
     const [tablemargin, setTableMargin] = useState<boolean>(false)
     const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
     const [displacolname,setDisplayColname] = useState<boolean>(false)
+    const {userId,backend_url} = useUserInfo()
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,6 +30,10 @@ const CreateTable = () => {
             "displaycolname": displacolname
         }
 
+        axios
+            .post(`${backend_url}/user/usercreatetable/${userId}`,tosend)
+            .then((response) => console.log("Response:",response.data))
+            .catch((err) => console.log("Error:",err))  
         console.log("To send:",tosend)
     };
 

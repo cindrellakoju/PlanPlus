@@ -1,45 +1,68 @@
 import db from "../src/config/db.config";
 import { userinputfortable, Callback } from "../src/types/todo.type";
 
-export const CreateTableByUserModel = (userinputfortable: userinputfortable, callback: Callback) => {
-    const tablename: string = userinputfortable.name;
+export const CreateTableByUserModel = (userId:number,userinputfortable: userinputfortable, callback: Callback) => {
+    const tablename = userinputfortable.tablename
+    console.log("Obtained info:",userinputfortable)
+    const orderindexquery = `
+    SELECT MAX(orderindex) AS maxorderindex
+    FROM user_tables
+    WHERE user_id = ?;
+    `;
 
-    // Generates the SQL query for creating the table
-    const generateQuery = () => {
-        // Create the column definitions string by iterating through the arrays
-        const columnInfo = userinputfortable.colname
-            .map((colname, index) => {
-                const coltype = userinputfortable.coltype[index];
-                const unique = userinputfortable.unique[index] ? "UNIQUE" : ""; // Check uniqueness for each column
-                return `${colname} ${coltype} NOT NULL ${unique}`.trim();
-            })
-            .join(", "); // Join all column definitions with commas
-
-        // SQL query template with PRIMARY KEY as the first column (auto-incremented id)
-        const query = `
-            CREATE TABLE IF NOT EXISTS ${tablename} (
-                ${tablename}_id INT PRIMARY KEY AUTO_INCREMENT,  -- Primary key auto-increment
-                ${columnInfo},                                 -- Dynamic columns
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Auto timestamp fields
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `;
-        return query;
-    };
-
-    // Generate the query string
-    const query = generateQuery();
-
-    // Execute the SQL query using db.query
-    db.query(query, (err, results) => {
-        if (err) {
-            console.log(`Error creating table ${tablename}:`, err);
-            // Invoke the callback with the error
-            callback(err, null);
+    db.query(orderindexquery,[userId],(err,results) => {
+        if(err){
+            console.log("Error feching order index",err);
             return;
         }
-        console.log(`Successfully created table ${tablename}`, results);
-        // Invoke the callback with the results
-        callback(null, results);
-    });
+        const rows = results as { maxorderindex: number | null }[];
+        const maxOrderIndex = rows[0]?.maxorderindex ?? 0;
+        const order_index = maxOrderIndex + 1
+        const Inserttablenamequery = `
+        INSERT INTO user_tables(user_id,table_name,theme_id,orderindex,width,height,checkbox,table_margin,bg_for_header,col_name)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        db.query(Inserttablenamequery,[userId,tablename,userinputfortable.themeid,order_index,400,400,userinputfortable.checkbox,userinputfortable.tablemargin,userinputfortable.bgforhead,userinputfortable.displaycolname],(err,results) => {
+            if(err){
+                console.log("Error inserting newTable:",err.message)
+                callback(err,null);
+                return
+            }
+            console.log("Sucessfully inserted table")
+        })
+
+        const extracttableid = `
+        SELECT user_table_id
+        FROM user_tables
+        WHERE user_id = ? AND table_name = ?
+    ` 
+        db.query(extracttableid,[userId,tablename],(err,results)=>{
+            if(err){
+                console.log("Error extractting table id:",err.message)
+                callback(err,null);
+                return
+            }
+            const rows = results as { user_table_id : number | null}[];
+            const tableid = rows[0]?.user_table_id ?? 0
+            const insertcolumnquery = `
+                INSERT INTO user_table_columns(user_table_id,column_name,column_type,theme_id)
+                VALUES (?, ?, ?, ?)
+            `
+        
+            userinputfortable.colname
+            .map((colname, index) => {
+                const coltype = userinputfortable.coltype[index];
+                const columnname = colname.toLowerCase()
+                db.query(insertcolumnquery,[tableid, columnname,coltype,userinputfortable.themeid],(err,results) => {
+                    if(err){
+                        console.log("Error inserting colname:",err.message)
+                        callback(err,null);
+                        return
+                    }
+                    console.log("Sucessfully inserted colname",results) 
+                })
+                })
+            })
+
+        })
 };

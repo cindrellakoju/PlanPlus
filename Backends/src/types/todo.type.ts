@@ -38,10 +38,15 @@ export interface user{
     password: string
 }
 export interface userinputfortable {
-    name: string;         // Name of the table
+    tablename: string;         // Name of the table
     colname: string[];    // Array of column names
     coltype: string[];    // Array of column types
-    unique: boolean[];    // Array of uniqueness constraints (true/false for each column)
+    isUnique: boolean[]; 
+    themeid : number,
+    checkbox : boolean,
+    tablemargin : boolean,
+    bgforhead : boolean,
+    displaycolname : boolean
 }
 
 export interface Datas {
