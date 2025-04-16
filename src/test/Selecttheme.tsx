@@ -9,10 +9,13 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 
 const Selecttheme= () => {
-    // const [addcheckbox, setAddCheckBox] = useState<boolean>(true);
-    // const [table, setTable] = useState<boolean>(false);
-    // const [bgforhead, setBgForHead] = useState<boolean>(true);
-    // const [displaycolname, setDisplayColname] = useState<boolean>(true);
+  // const [table, setTable] = useState<boolean>(false);
+  // const [bgforhead, setBgForHead] = useState<boolean>(true);
+  // const [displaycolname, setDisplayColname] = useState<boolean>(true);
+  const [editeachtable, setEditEachTable] = useState<boolean>(false);
+  const [themeid, setThemeId] = useState<number>(2)
+  const [addcheckbox, setAddCheckBox] = useState<boolean>(false);
+
     const {userId , backend_url} = useUserInfo()
     const editcontext = useContext(EditThemeContext)
     if(!editcontext){
@@ -25,6 +28,11 @@ const Selecttheme= () => {
         setLocalData(locaStorageData);  // Ensure the data is set
     }, [locaStorageData]); // When local storage data changes, re-run the effect
 
+    useEffect(() => {
+      console.log("RErendere")
+      console.log("Lo",localData)
+    },[localData])
+      
     useEffect(() =>{
       if(editcontext.savemode && editcontext.editPosition){
         localData.map((comp) => {
@@ -75,7 +83,7 @@ const Selecttheme= () => {
                 <Draggable key={comp.user_table_id} draggableId={comp.user_table_id.toString()} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      {renderTheme(comp, localData, setLocalData)}
+                      {renderTheme(comp, localData, setLocalData,setEditEachTable, themeid,addcheckbox)}
                     </div>
                   )}
                 </Draggable>
@@ -87,7 +95,7 @@ const Selecttheme= () => {
       </DragDropContext>
     ):(
       <>
-      {localData.map((comp) => renderTheme(comp,localData, setLocalData))}
+      {localData.map((comp) => renderTheme(comp,localData, setLocalData,setEditEachTable, themeid,addcheckbox))}
     </>
     )      
 }
@@ -95,7 +103,10 @@ const Selecttheme= () => {
 function renderTheme(
   comp: any,
   localData: any[],
-  setLocalData: React.Dispatch<React.SetStateAction<any[]>>
+  setLocalData: React.Dispatch<React.SetStateAction<any[]>>,
+  setEditEachTable: React.Dispatch<React.SetStateAction<boolean>>,
+  themeid : number,
+  addcheckbox : boolean,
 ) {
   const key = comp.user_table_id;
 
@@ -104,14 +115,19 @@ function renderTheme(
     urlname: convertToUnderscoreCase(comp.table_name),
     height: comp.height,
     width: comp.width,
+    id:  comp.user_table_id,
     checkbox: comp.checkbox === 1,
     tablemargin: comp.table_margin === 1,
     backgroundforhead: comp.bg_for_header === 1,
     displaycolname: comp.col_name === 1,
+    setEditEachTable : setEditEachTable,
+    addcheckbox : addcheckbox,
     setLocalData,
-    localData
+    localData,
+    themeid : themeid,
   };
 
+  // console.log("Theme id:",comp.theme_id)
   switch (comp.theme_id ) {
     case 1:
       return <ThemeOne key={key} {...commonProps} />;
@@ -126,7 +142,7 @@ function renderTheme(
 
 }
 
-interface SelectthemeProps{
+interface SelectDummythemeProps{
   themeid : number,
   table_name : string,
   checkbox : boolean,
@@ -136,7 +152,7 @@ interface SelectthemeProps{
   colnames : string[],
   creatingtable : boolean
 }
-export const DummyrenderTheme: React.FC<SelectthemeProps> = ({ themeid, table_name, checkbox, tablemargin , backgroundforhead, displaycolname, colnames, creatingtable}) => {
+export const DummyrenderTheme: React.FC<SelectDummythemeProps> = ({ themeid, table_name, checkbox, tablemargin , backgroundforhead, displaycolname, colnames, creatingtable}) => {
   const commonProps = {
     table_name: table_name,
     height: 465,
@@ -146,7 +162,8 @@ export const DummyrenderTheme: React.FC<SelectthemeProps> = ({ themeid, table_na
     backgroundforhead: backgroundforhead,
     displaycolname: displaycolname,
     colnames : colnames,
-    creatingtable: creatingtable
+    creatingtable: creatingtable,
+    themeid : themeid
   };
   switch (themeid) {
     case 1:
@@ -167,3 +184,70 @@ function convertToUnderscoreCase(str:string) {
       + '_table';
 }
 export default Selecttheme
+
+// import { useEffect, useState } from "react"
+// import ThemeThree from "../components/themethree/ThemeThree"
+// import { useLocalStorageData } from "../hooks/useLocalStorageData"
+// import ThemeOne from "../components/themeone/ThemeOne"
+
+// const Selecttheme = () => {
+//     const [localData, setLocalData] = useState<any[]>([]);
+//     const locaStorageData = useLocalStorageData();  // Assume this fetches the local storage data
+    
+//     useEffect(() => {
+//         setLocalData(locaStorageData);  // Ensure the data is set
+//     }, [locaStorageData]); // When local storage data changes, re-run the effect
+
+
+//     console.log("Local Stoage data:",localData)
+//     return (
+//         <>
+//           {localData.map((comp) => {
+//             switch (comp.theme_id) {
+//               case 1:
+//                 return (
+//                   <ThemeOne
+//                     key={comp.user_table_id} // Add key prop
+//                     table_name={comp.table_name} 
+//                     urlname={convertToUnderscoreCase(comp.table_name)} 
+//                     height = {comp.height}
+//                     width = {comp.width}
+//                     id = {comp.user_table_id}
+//                     setLocalData = {setLocalData}
+//                     localData={localData}
+//                   />
+//                 );
+//               case 2:
+//                 return (
+//                     <ThemeThree 
+//                       key={comp.user_table_id} // Add key prop
+//                       table_name={comp.table_name} 
+//                       urlname={convertToUnderscoreCase(comp.table_name)}
+//                       height = {comp.height}
+//                       width = {comp.width}
+//                       id = {comp.user_table_id}
+//                       setLocalData = {setLocalData}
+//                       localData={localData}
+//                     />
+//                 );
+                
+//               case 3:
+//                 console.log("Theme 3", comp.table_name);
+//                 break;
+//               default:
+//                 return null;
+//             }
+//           })}
+//         </>
+//       );
+      
+// }
+
+// function convertToUnderscoreCase(str:string) {
+//     return str
+//       .split(' ')            // Split the string into words based on spaces
+//       .join('_')             // Join the words with underscores
+//       .toLowerCase();        // Convert the entire string to lowercase
+//       + '_table';
+// }
+// export default Selecttheme

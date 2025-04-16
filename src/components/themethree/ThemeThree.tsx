@@ -6,12 +6,30 @@ import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ThemeProps } from '../../types';
 import { EditThemeContext } from '../../context/EditThemeContext';
+import { EachTableEditOption } from '../allrequire/eachtableoption';
 
 interface ColumnData {
   column_name: string;
 }
 
-const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, checkbox, tablemargin, backgroundforhead, displaycolname, colnames, creatingtable }) => {
+const ThemeThree: React.FC<ThemeProps> = ({ 
+    table_name,
+    urlname,
+    height, 
+    width, 
+    id,
+    checkbox, 
+    tablemargin, 
+    backgroundforhead, 
+    displaycolname, 
+    colnames, 
+    creatingtable,
+    setEditEachTable ,
+    themeid,
+    addcheckbox,
+    localData,
+    setLocalData
+  }) => {
   const { userId, backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const col_name: string | string[] = ['task', 'priority', 'status', 'description', 'deadline'];
@@ -23,7 +41,20 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
 
   const [showAddForm, setShowAddForm] = useState<boolean>(false); // New state for showing the add form
   const [formData, setFormData] = useState<Record<string, string>>({});
+  const [isTableEditing, setIsTableEditing] = useState<boolean>(false);
 
+  const [isResizingWidth, setIsResizingWidth] = useState<boolean>(false)
+  const [isResizingHeight, setIsResizingHeight] = useState<boolean>(false)
+  const [upheight,setUpHeight] = useState<number>(0)
+  const [distwidth, setDistWdth] = useState<number>(0)
+  const [newid,setNewId] = useState<number>(0) 
+  // const [themeid,setThemeId] = useState<number>(1)
+  // const [checkbox,setCheckBox] = useState<boolean>(false)
+  // const [tablemargin, setTableMargin] = useState<boolean>(false)
+  // const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
+  // const [displacolname,setDisplayColname] = useState<boolean>(false)
+
+  console.log("Local Data:",localData)
   const editcontext = useContext(EditThemeContext);
   if (!editcontext) {
     throw new Error('Theme Three must be within EditThemeProvider');
@@ -64,6 +95,43 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    if (isResizingHeight || isResizingWidth) {
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!localData || !setLocalData) return;
+  
+        if (isResizingHeight) {
+          const mousedrag = e.clientY - upheight;
+          const updatedHeight = localData.map((comp) =>
+            comp.user_table_id === newid ? { ...comp, height: mousedrag } : comp
+          );
+          setLocalData(updatedHeight);
+        }
+  
+        if (isResizingWidth) {
+          const dragwidth = e.clientX - distwidth;
+          const updatedWidth = localData.map((comp) =>
+            comp.user_table_id === newid ? { ...comp, width: dragwidth } : comp
+          );
+          setLocalData(updatedWidth);
+        }
+      };
+  
+      const handleMouseUp = () => {
+        setIsResizingHeight(false);
+        setIsResizingWidth(false);
+      };
+  
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+  
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+      };
+    }
+  }, [isResizingHeight, isResizingWidth, localData, setLocalData]);
+  
   const handleEdit = () => {
     if (checkedItems.size > 0 && !checkitemEditing) {
       setCheckedItemEditing(true);
@@ -155,29 +223,113 @@ const ThemeThree: React.FC<ThemeProps> = ({ table_name, urlname, height, width, 
       .catch((err) => {
         console.log("Error inserting data:",err)
       })
-
   };
+
+  useEffect(() => {
+    if (isResizingHeight || isResizingWidth) {
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!localData || !setLocalData) return;
+  
+        if (isResizingHeight) {
+          const mousedrag = e.clientY - upheight;
+          const updatedHeight = localData.map((comp) =>
+            comp.user_table_id === newid ? { ...comp, height: mousedrag } : comp
+          );
+          setLocalData(updatedHeight);
+        }
+  
+        if (isResizingWidth) {
+          const dragwidth = e.clientX - distwidth;
+          const updatedWidth = localData.map((comp) =>
+            comp.user_table_id === newid ? { ...comp, width: dragwidth } : comp
+          );
+          setLocalData(updatedWidth);
+        }
+      };
+  
+      const handleMouseUp = () => {
+        setIsResizingHeight(false);
+        setIsResizingWidth(false);
+      };
+  
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+  
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+      };
+    }
+  }, [isResizingHeight, isResizingWidth, localData, setLocalData]);
+  
+    const handleMouseDownWidth = (e:React.MouseEvent<HTMLDivElement>, id:number | undefined, width: number) => {
+      if(id){
+        setDistWdth(e.clientX - width )
+        setNewId(id)
+        setIsResizingWidth(true)
+      }
+  }
+
+  const handleMouseDownHeight = (e:React.MouseEvent<HTMLDivElement>, id: number | undefined, height: number) => {
+    if(id){
+      setUpHeight(e.clientY - height)
+      setNewId(id)
+      setIsResizingHeight(true)
+    }
+  }
+
   return (
     <>
       <div className="note-container" style={{ height: `${height}px`, width: `${width}px` }}>
+      {
+        editcontext.editHeightWidth && (
+          <>
+            <div className='width'
+              style={{ height: `${height}px`, cursor:'ew-resize' }}
+              onMouseDown={(e) => handleMouseDownWidth(e, id,width)}
+            />
+            <div className='height' 
+              style={{width: `${width}px`,cursor:'ns-resize'}}
+              onMouseDown={(e) => handleMouseDownHeight(e, id, height)}/>
+          </>
+        )
+      }
         <div className="header">{table_name}</div>
-        <div className="buttons">
-          <i className="bx bx-dots-horizontal-rounded"></i>
-          <div className="dropdown">
-            <ul>
-              {checkbox ? (
-                col_name.includes('status') && (
-                  <>
-                    <li onClick={handleCompleted}>Completed</li>
-                    <li onClick={handleDelete}>Delete</li>
-                  </>
-                )
-              ) : null}
-              <li onClick={handleAdd}>Add</li>
-              <li onClick={handleEdit}>Edit</li>
-            </ul>
-          </div>
+        <div className="buttons" style={{ marginTop: "2rem"}}>
+          {
+            editcontext.editHeightWidth ? (
+              <i className='bx bx-edit' onClick={() =>{
+                setIsTableEditing(prev => !prev)
+                if(setEditEachTable){
+                  setEditEachTable( prev => !prev)
+                }
+              }}></i>
+            ):(
+              <>
+                <i className="bx bx-dots-horizontal-rounded"></i>
+                <div className="dropdown">
+                  <ul>
+                    {checkbox ? (
+                      col_name.includes('status') && (
+                        <>
+                          <li onClick={handleCompleted}>Completed</li>
+                          <li onClick={handleDelete}>Delete</li>
+                        </>
+                      )
+                    ) : null}
+                    <li onClick={handleAdd}>Add</li>
+                    <li onClick={handleEdit}>Edit</li>
+                  </ul>
+                </div>
+              </>
+          )
+          } 
         </div>
+        {
+          isTableEditing && (
+            <EachTableEditOption tablename={table_name} themeid={themeid} localData={localData} setLocalData={setLocalData} addcheckbox={addcheckbox} />
+          )
+        }
 
         {/* Conditional rendering for the Add Form */}
         {

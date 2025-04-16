@@ -41,6 +41,7 @@ export interface ThemeProps{
   urlname?: string;
   height: number;
   width : number;
+  id?: number | undefined,
   checkbox:  boolean;
   tablemargin : boolean,
   backgroundforhead : boolean,
@@ -49,4 +50,26 @@ export interface ThemeProps{
   localData ?: any[]
   colnames ?: string | string[]
   creatingtable ?: boolean 
+  setEditEachTable?: Dispatch<SetStateAction<boolean>>;
+  themeid : number,
+  addcheckbox ?: boolean,
+
+  // editcheckbox ?: boolean
+  // setEditCheckBox ?: Dispatch<SetStateAction<boolean>>;
+  // edittablemargin?: boolean;
+  // setEditTableMargin ?: Dispatch<SetStateAction<boolean>>;
+  // editbgforhead?: boolean;
+  // setEditBgForHead ?: Dispatch<SetStateAction<boolean>>;
+  // editdisplaycolname?: boolean;
+  // setEditDisplayColname?: Dispatch<SetStateAction<boolean>>;
 }
+
+// export interface ThemeProps{
+//   table_name: string;
+//   urlname: string;
+//   height: number;
+//   width : number;
+//   id : number;
+//   setLocalData: Dispatch<SetStateAction<any[]>>;
+//   localData : any[]
+// }

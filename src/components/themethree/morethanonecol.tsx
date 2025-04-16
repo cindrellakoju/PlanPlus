@@ -35,7 +35,6 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
   const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
-  console.log("Col_name:",col_name)
   useEffect(() => {
     if (col_name && creatingtable) {
       // Assuming col_name is used to filter `datas` somehow — or just a placeholder for demo data?
