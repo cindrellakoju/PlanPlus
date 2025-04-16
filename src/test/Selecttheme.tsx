@@ -89,6 +89,9 @@ const Selecttheme= () => {
       setLocalData(updatedData);
     };
 
+    useEffect(() => {
+      setLocalData(locaStorageData)
+    },[editcontext.editPosition])
 
     return editcontext.editPosition ? (
       <DragDropContext onDragEnd={handleDragEnd}>
