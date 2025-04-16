@@ -110,7 +110,7 @@ const EditPage: React.FC = () => {
             <div className="tabs">
                 <SideBar />
             </div>
-            <div className="info">
+            <div className="edit-info" style={{ overflow: 'hidden'}}>
                 <UpHeader />
                 <div className="body-field">
                     <div className="editheader">
