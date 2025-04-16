@@ -11,11 +11,6 @@ export interface Todo {
 }
 
 export interface ComponentType {
-  // component_id : number;
-  // name: string;
-  // order_index : number;
-  // position_x : number;
-  // position_y : number;
   user_table_id : number;
   user_id :number;
   table_name : string
@@ -54,29 +49,4 @@ export interface ThemeProps{
   localData ?: any[]
   colnames ?: string | string[]
   creatingtable ?: boolean 
-  setEditEachTable?: Dispatch<SetStateAction<boolean>>;
-  themeid : number,
-  addcheckbox ?: boolean,    
-  editdisplaycolname ?: boolean,
-  editbgforhead ?: boolean,
-  edittablemargin ?: boolean,
-
-  // editcheckbox ?: boolean
-  // setEditCheckBox ?: Dispatch<SetStateAction<boolean>>;
-  // edittablemargin?: boolean;
-  // setEditTableMargin ?: Dispatch<SetStateAction<boolean>>;
-  // editbgforhead?: boolean;
-  // setEditBgForHead ?: Dispatch<SetStateAction<boolean>>;
-  // editdisplaycolname?: boolean;
-  // setEditDisplayColname?: Dispatch<SetStateAction<boolean>>;
 }
-
-// export interface ThemeProps{
-//   table_name: string;
-//   urlname: string;
-//   height: number;
-//   width : number;
-//   id : number;
-//   setLocalData: Dispatch<SetStateAction<any[]>>;
-//   localData : any[]
-// }

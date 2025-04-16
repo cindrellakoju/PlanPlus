@@ -9,12 +9,8 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 
 const Selecttheme= () => {
-  const [editeachtable, setEditEachTable] = useState<boolean>(false);
-  const [themeid, setThemeId] = useState<number>(2)
-  const [addcheckbox, setAddCheckBox] = useState<boolean>(false);
-  const [displaycolname, setDisplayColname] = useState<boolean>(true);
-  const [bgforhead, setBgForHead] = useState<boolean>(true);
-  const [tablemargin, setTableMargin] = useState<boolean>(false);
+  // const [editeachtable, setEditEachTable] = useState<boolean>(false);
+
 
   const {userId , backend_url} = useUserInfo()
 
@@ -107,7 +103,7 @@ const Selecttheme= () => {
                 <Draggable key={comp.user_table_id} draggableId={comp.user_table_id.toString()} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      {renderTheme(comp, localData, setLocalData,setEditEachTable, themeid,addcheckbox,  displaycolname, bgforhead, tablemargin)}
+                      {renderTheme(comp, localData, setLocalData)}
                     </div>
                   )}
                 </Draggable>
@@ -122,10 +118,10 @@ const Selecttheme= () => {
         {
           editcontext.editHeightWidth
             ? localData.map((comp) =>
-                renderTheme(comp, localData, setLocalData, setEditEachTable, themeid, addcheckbox, displaycolname, bgforhead, tablemargin)
+                renderTheme(comp, localData, setLocalData)
               )
             : locaStorageData.map((comp) =>
-                renderTheme(comp, localData, setLocalData, setEditEachTable, themeid, addcheckbox, displaycolname, bgforhead, tablemargin)
+                renderTheme(comp, localData, setLocalData)
               )
         }
       </>
@@ -136,12 +132,6 @@ function renderTheme(
   comp: any,
   localData: any[],
   setLocalData: React.Dispatch<React.SetStateAction<any[]>>,
-  setEditEachTable: React.Dispatch<React.SetStateAction<boolean>>,
-  themeid : number,
-  addcheckbox : boolean,
-  displaycolname : boolean,
-  bgforhead : boolean, 
-  tablemargin : boolean
 ) {
   const key = comp.user_table_id;
 
@@ -155,14 +145,8 @@ function renderTheme(
     tablemargin: comp.table_margin === 1,
     backgroundforhead: comp.bg_for_header === 1,
     displaycolname: comp.col_name === 1,
-    setEditEachTable : setEditEachTable,
-    addcheckbox : addcheckbox,
-    editdisplaycolname : displaycolname,
-    editbgforhead : bgforhead,
-    edittablemargin: tablemargin,
     setLocalData,
     localData,
-    themeid : themeid,
   };
 
   switch (comp.theme_id ) {

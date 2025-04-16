@@ -97,7 +97,7 @@ const EditPage: React.FC = () => {
             console.error("Error fetching the data: ", error);
           });
         }
-      }, [context.components]);
+    }, [editcontext.addTable]);
       
 
 

@@ -11,7 +11,7 @@ interface ColumnData {
   
 
 const ThemeOne: React.FC<ThemeProps>  = ({ table_name, urlname }) => {
-    const {userId , backend_url} = useUserInfo()
+    const {backend_url} = useUserInfo()
     const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
     const [colname, setColName] = useState<string|string[]>()
     const [datas, setData] = useState<Record<string, any>[]>([]);

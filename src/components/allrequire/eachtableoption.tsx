@@ -1,154 +1,105 @@
 interface EditEachTableProps {
-    themeid : number,
-    tablename : string,
+    tablename: string,
     localData: any[] | undefined,
     setLocalData: React.Dispatch<React.SetStateAction<any[]>> | undefined,
-    addcheckbox : boolean | undefined,
-    editdisplaycolname : boolean | undefined,
-    editbgforhead : boolean | undefined,
-    edittablemargin : boolean | undefined,
 }
-export const EachTableEditOption:React.FC<EditEachTableProps> = ({tablename,themeid, localData, setLocalData}) => {
-        console.log("Localdaa:",localData)
-        // console.log("Localdaa:",localData)
-        
-        const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selectedThemeId = parseInt(e.target.value); // Convert to number
-        
-            if(localData && setLocalData){
-                const updatedData = localData.map((comp) => {
-                    if (tablename === comp.table_name) {
-                        return { ...comp, theme_id: selectedThemeId }; // Return a new object with updated theme_id
-                    }
-                    return comp;
-                });
 
-                setLocalData(updatedData); // Trigger state update
-            }
-        
-        };
+export const EachTableEditOption: React.FC<EditEachTableProps> = ({
+    tablename,
+    localData,
+    setLocalData,
+}) => {
 
-        const handleCheckbox = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selectedcheckboxval = e.target.value === "true" ? 1 : 0;
+    const getCurrentTable = () => localData?.find(comp => comp.table_name === tablename);
 
-            if(localData && setLocalData){
-                const updatedData = localData.map((comp) => {
-                    if (tablename === comp.table_name) {
-                        return { ...comp, checkbox: selectedcheckboxval }; // Return a new object with updated theme_id
-                    }
-                    return comp;
-                });
+    const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedThemeId = parseInt(e.target.value);
+        if (localData && setLocalData) {
+            const updatedData = localData.map((comp) =>
+                comp.table_name === tablename
+                    ? { ...comp, theme_id: selectedThemeId }
+                    : comp
+            );
+            setLocalData(updatedData);
+        }
+    };
 
-                setLocalData(updatedData); // Trigger state update
-            }
-            console.log("checbox:",selectedcheckboxval)
-        } 
+    const handleSelectChange = (key: string) => (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedVal = e.target.value === "true" ? 1 : 0;
+        if (localData && setLocalData) {
+            const updatedData = localData.map((comp) =>
+                comp.table_name === tablename
+                    ? { ...comp, [key]: selectedVal }
+                    : comp
+            );
+            setLocalData(updatedData);
+        }
+    };
 
-        const handleTableMargin = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selectedtablemarginval = e.target.value === "true" ? 1 : 0;
+    const currentTable = getCurrentTable();
 
-            if(localData && setLocalData){
-                const updatedData = localData.map((comp) => {
-                    if (tablename === comp.table_name) {
-                        return { ...comp, table_margin: selectedtablemarginval }; // Return a new object with updated theme_id
-                    }
-                    return comp;
-                });
-
-                setLocalData(updatedData); // Trigger state update
-            }
-        } 
-
-        const handleBgForHeader = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selectedbgval = e.target.value === "true" ? 1 : 0;
-
-            if(localData && setLocalData){
-                const updatedData = localData.map((comp) => {
-                    if (tablename === comp.table_name) {
-                        return { ...comp, bg_for_header: selectedbgval }; // Return a new object with updated theme_id
-                    }
-                    return comp;
-                });
-
-                setLocalData(updatedData); // Trigger state update
-            }
-        } 
-
-        const handleDisplayColName = (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selecteddisplaycolnameval = e.target.value === "true" ? 1 : 0;
-
-            if(localData && setLocalData){
-                const updatedData = localData.map((comp) => {
-                    if (tablename === comp.table_name) {
-                        return { ...comp, col_name: selecteddisplaycolnameval }; // Return a new object with updated theme_id
-                    }
-                    return comp;
-                });
-
-                setLocalData(updatedData); // Trigger state update
-            }
-        } 
-        
-    return(
+    return (
         <div className="settings-panel">
             <div className="setting-item">
-            <label htmlFor="checkbox">Check Box</label>
-            <select
-            id="checkbox"
-            value={
-                localData?.find((comp) => comp.table_name === tablename)?.checkbox?.toString() ?? ""
-            }
-            onChange={handleCheckbox}
-            >
-
-                <option value="false">false</option>
-                <option value="true">true</option>
-            </select>
+                <label htmlFor="checkbox">Check Box</label>
+                <select
+                    id="checkbox"
+                    value={currentTable?.checkbox === 1 ? "true" : "false"}
+                    onChange={handleSelectChange("checkbox")}
+                >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
             </div>
 
             <div className="setting-item">
-            <label htmlFor="tablemargin">Table Margin</label>
-            <select id="tablemargin" 
-            value={
-                localData?.find((comp) => comp.table_name === tablename)?.table_margin?.toString() ?? ""
-            }
-            onChange={handleTableMargin}>
-                <option value="false">false</option>
-                <option value="true">true</option>
-            </select>
+                <label htmlFor="tablemargin">Table Margin</label>
+                <select
+                    id="tablemargin"
+                    value={currentTable?.table_margin === 1 ? "true" : "false"}
+                    onChange={handleSelectChange("table_margin")}
+                >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
             </div>
 
             <div className="setting-item">
-            <label htmlFor="bgforhead">Background for Header</label>
-            <select id="bgforhead" 
-            value={
-                localData?.find((comp) => comp.table_name === tablename)?.bg_for_header?.toString() ?? ""
-            }
-            onChange={handleBgForHeader}>
-                <option value="false">false</option>
-                <option value="true">true</option>
-            </select>
+                <label htmlFor="bgforhead">Background for Header</label>
+                <select
+                    id="bgforhead"
+                    value={currentTable?.bg_for_header === 1 ? "true" : "false"}
+                    onChange={handleSelectChange("bg_for_header")}
+                >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
             </div>
 
             <div className="setting-item">
-            <label htmlFor="displaycolname">Display Column Name</label>
-            <select id="displaycolname" 
-            value={
-                localData?.find((comp) => comp.table_name === tablename)?.col_name?.toString() ?? ""
-            }onChange={handleDisplayColName}>
-                <option value="false">false</option>
-                <option value="true">true</option>
-            </select>
+                <label htmlFor="displaycolname">Display Column Name</label>
+                <select
+                    id="displaycolname"
+                    value={currentTable?.col_name === 1 ? "true" : "false"}
+                    onChange={handleSelectChange("col_name")}
+                >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
             </div>
 
             <div className="setting-item">
-            <label htmlFor="theme">Select Theme</label>
-            <select id="theme" value={themeid}  onChange={handleThemeChange}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
+                <label htmlFor="theme">Select Theme</label>
+                <select
+                    id="theme"
+                    value={currentTable?.theme_id?.toString() ?? ""}
+                    onChange={handleThemeChange}
+                >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
             </div>
         </div>
-    )
-}
+    );
+};

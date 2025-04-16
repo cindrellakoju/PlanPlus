@@ -24,16 +24,10 @@ const ThemeThree: React.FC<ThemeProps> = ({
     displaycolname, 
     colnames, 
     creatingtable,
-    setEditEachTable ,
-    themeid,
-    addcheckbox,
-    editdisplaycolname,
-    editbgforhead,
-    edittablemargin,
     localData,
     setLocalData
   }) => {
-  const { userId, backend_url } = useUserInfo();
+  const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const col_name: string | string[] = ['task', 'priority', 'status', 'description', 'deadline'];
   const [datas, setData] = useState<Record<string, any>[]>([]);
@@ -51,11 +45,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
   const [upheight,setUpHeight] = useState<number>(0)
   const [distwidth, setDistWdth] = useState<number>(0)
   const [newid,setNewId] = useState<number>(0) 
-  // const [themeid,setThemeId] = useState<number>(1)
-  // const [checkbox,setCheckBox] = useState<boolean>(false)
-  // const [tablemargin, setTableMargin] = useState<boolean>(false)
-  // const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
-  // const [displacolname,setDisplayColname] = useState<boolean>(false)
+
+  const [reloadbool,setReloadBool] = useState<boolean>(false)
 
   const editcontext = useContext(EditThemeContext);
   if (!editcontext) {
@@ -85,14 +76,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
       .catch((err) => {
         console.log('Error fetching', err);
       });
-  }, [table_name]);
-
-  // useEffect(()=> {
-  //   if(editcontext.savemode){
-
-  //   }
-
-  // },[editcontext.savemode])
+  }, [table_name,reloadbool]);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -150,23 +134,32 @@ const ThemeThree: React.FC<ThemeProps> = ({
 
   const handleDelete = () => {
     if (checkedItems.size > 0 && !checkitemEditing) {
-      // Convert the Set to an array and map each item into an object
       const toSend = [...checkedItems].map((item) => ({
         data_id: item,
       }));
-
-      toSend.forEach((item) => {
+  
+      // Array of promises for each delete request
+      const deleteRequests = toSend.map((item) =>
         axios
-          .post(`${backend_url}/user/deletedataoftable/2`, item) // Send only one item at a time
+          .post(`${backend_url}/user/deletedataoftable/2`, item)
           .then((response) => {
             console.log('Successfully Deleted', response.data);
+            return response.data;
           })
           .catch((err) => {
             console.log('Error Deleting Data', err);
-          });
+            return null; // handle failure without breaking the flow
+          })
+      );
+  
+      // Wait for all requests to complete
+      Promise.all(deleteRequests).then((results) => {
+        alert('Selected items deleted successfully!');
+        setReloadBool(prev => !prev)
       });
     }
   };
+  
 
   const handleCompleted = () => {
     if (checkedItems.size > 0 && !checkitemEditing) {
@@ -179,7 +172,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
         return item;
       });
 
-      updatedData.map((item) => {
+      const completeRequest = updatedData.map((item) => {
         const tosend = {
           tablename: table_name,
           data_id: item.data_id,
@@ -196,11 +189,17 @@ const ThemeThree: React.FC<ThemeProps> = ({
             console.log('Error while updating:', error);
           });
       });
+
+      Promise.all(completeRequest).then(() => {
+        alert("Successfully Updated data")
+        setReloadBool(prev => !prev)
+      })
     }
   };
 
   const handleAdd = () => {
     setShowAddForm(true); // Show the add form when the "Add" button is clicked
+    setReloadBool(prev => !prev)
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -228,10 +227,14 @@ const ThemeThree: React.FC<ThemeProps> = ({
     .post(`${backend_url}/user/insertdata/2`, tosend)
       .then((response) => {
         console.log("Response:",response.data)
+        alert("Successfully added data")
+        setReloadBool(prev => !prev)
       })
       .catch((err) => {
         console.log("Error inserting data:",err)
       })
+      setShowAddForm(false)
+
   };
 
   useEffect(() => {
@@ -309,9 +312,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
             editcontext.editHeightWidth ? (
               <i className='bx bx-edit' onClick={() =>{
                 setIsTableEditing(prev => !prev)
-                if(setEditEachTable){
-                  setEditEachTable( prev => !prev)
-                }
               }}></i>
             ):(
               <>
@@ -336,7 +336,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
         </div>
         {
           isTableEditing && (
-            <EachTableEditOption tablename={table_name} themeid={themeid} localData={localData} setLocalData={setLocalData} addcheckbox={addcheckbox} editdisplaycolname={editdisplaycolname} editbgforhead={editbgforhead} edittablemargin={edittablemargin} />
+            <EachTableEditOption tablename={table_name} localData={localData} setLocalData={setLocalData} />
           )
         }
 
