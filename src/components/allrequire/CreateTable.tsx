@@ -31,10 +31,16 @@ const CreateTable = () => {
         }
 
         axios
-            .post(`${backend_url}/user/usercreatetable/${userId}`,tosend)
-            .then((response) => console.log("Response:",response.data))
-            .catch((err) => console.log("Error:",err))  
-        console.log("To send:",tosend)
+            .post(`${backend_url}/user/usercreatetable/${userId}`, tosend)
+            .then((response) => {
+                console.log("Response:", response);
+                alert(response.data.data.message);
+            })
+            .catch((err) => {
+                console.log("Error:", err);
+                alert("Something went wrong while creating the table.");
+            });
+
     };
 
     const handleColumnChange = (index: number, value: string) => {

@@ -59,10 +59,12 @@ export const CreateTableByUserModel = (userId:number,userinputfortable: userinpu
                         callback(err,null);
                         return
                     }
-                    console.log("Sucessfully inserted colname",results) 
+                    callback(null, results);
                 })
                 })
             })
 
         })
+
+
 };

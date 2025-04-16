@@ -3,6 +3,7 @@ import { CreateTableByUserModel } from "./db.createtable.models";
 import { userinputfortable } from "../src/types/todo.type";
 import { tablename } from "../src/models/extractusertable.model";
 import { convertTable } from "../src/utils/converttable.utils";
+import { extracttablename } from "../src/models/extracttablename.model";
 
 
 export const CreateTableByUserServices = (userId:number,userinputfortable: userinputfortable): Promise<any> => {
@@ -23,9 +24,21 @@ export const CreateTableByUserServices = (userId:number,userinputfortable: useri
                 coltype[index] = "INT"
             }
         });
-        CreateTableByUserModel(userId,userinputfortable, (err,results) => {
+        extracttablename(userId,(err,results) => {
             if(err) reject(err);
-            resolve(results)
+            const existingtable = results.some((table: { table_name: string }) => {
+                console.log(table.table_name);
+                return table.table_name === userinputfortable.tablename;
+            });
+            if(existingtable){
+                resolve({ success: false, message: "Table name already exists." });
+            }
+            else{
+                CreateTableByUserModel(userId,userinputfortable, (err,results) => {
+                    if(err) reject(err);
+                    resolve({ success: true, message: "Table created successfully.", data: results });
+                })
+            }         
         })
     })
 }
