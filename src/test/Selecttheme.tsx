@@ -16,39 +16,75 @@ const Selecttheme= () => {
   const [bgforhead, setBgForHead] = useState<boolean>(true);
   const [tablemargin, setTableMargin] = useState<boolean>(false);
 
+  const {userId , backend_url} = useUserInfo()
 
-    const {userId , backend_url} = useUserInfo()
-    const editcontext = useContext(EditThemeContext)
-    if(!editcontext){
-      throw new Error("Wrap Selecttheme within EditThemeProvider")
-    } 
-    const [localData, setLocalData] = useState<any[]>([]);
-    const locaStorageData = useLocalStorageData();  // Assume this fetches the local storage data
-    
-    useEffect(() => {
-        setLocalData(locaStorageData);  // Ensure the data is set
-    }, [locaStorageData]); // When local storage data changes, re-run the effect
+  const editcontext = useContext(EditThemeContext)
+  if(!editcontext){
+    throw new Error("Wrap Selecttheme within EditThemeProvider")
+  } 
+  const [localData, setLocalData] = useState<any[]>([]);
+  const locaStorageData = useLocalStorageData();  // Assume this fetches the local storage data
+  
+  useEffect(() => {
+    setLocalData(locaStorageData);  // Ensure the data is set
+  }, [locaStorageData]); // When local storage data changes, re-run the effect
 
-    useEffect(() => {
-      console.log("RErendere")
-      console.log("Lo",localData)
-    },[localData])
+  console.log("LocalData:",localData)
+
+  // useEffect(() => {
+  //   if (editcontext.savemode) {
+  //     const updateRequests = localData.map((comp) =>
+  //       axios.put(`${backend_url}/user/updatetable/${userId}`, comp)
+  //     );
+  
+  //     Promise.all(updateRequests)
+  //       .then((responses) => {
+  //         console.log("All updates successful:", responses.map(res => res.data));
+  //         alert("Successfully updated the table!");
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error updating one or more entries:", error);
+  //         alert("Error occurred while updating the table.");
+  //       });
+  //   }
+  // }, [editcontext.savemode]);
+  
+    // useEffect(() => {
+    //   console.log("RErendere")
+    //   console.log("Lo",localData)
+    // },[localData])
       
-    useEffect(() =>{
-      if(editcontext.savemode && editcontext.editPosition){
-        localData.map((comp) => {
-          axios
-            .put(`${backend_url}/user/updatetable/${userId}`,comp)
+    useEffect(() => {
+      if (editcontext.savemode || editcontext.editPosition) {
+        const updateRequests = localData.map((comp) => {
+          return axios
+            .put(`${backend_url}/user/updatetable/${userId}`, comp)
             .then((response) => {
-              console.log("Successfully updated the table of userid ", comp.user_table_id, "Respondse",response.data)
+              console.log(
+                "✅ Successfully updated table with user_table_id:",
+                comp.user_table_id,
+                "→ Response:",
+                response.data
+              );
+              compareLocalStorageData(comp); // Move this inside success if needed
+              return response;
             })
             .catch((error) => {
-              console.error("Error fetching the data:",error)
-            })
-          compareLocalStorageData(comp)
-        })
+              console.error("❌ Error updating user_table_id:", comp.user_table_id, error);
+              // Optional: you can still call compareLocalStorageData here if needed
+            });
+        });
+    
+        Promise.all(updateRequests)
+          .then(() => {
+            alert("✅ All tables updated successfully!");
+          })
+          .catch(() => {
+            alert("⚠️ Some updates failed. Check console for details.");
+          });
       }
-    },[editcontext.savemode])
+    }, [editcontext.savemode, editcontext.editPosition]);
+    
 
 
     const handleDragEnd = (result: DropResult) => {
@@ -80,7 +116,7 @@ const Selecttheme= () => {
               {...provided.droppableProps}
               style={{ display: "flex",flexDirection: "row",flexWrap: "wrap" }}
             >
-              {localData.map((comp, index) => (
+              {(editcontext.editHeightWidth ? localData: locaStorageData).map ((comp, index)  => (
                 <Draggable key={comp.user_table_id} draggableId={comp.user_table_id.toString()} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -96,11 +132,19 @@ const Selecttheme= () => {
       </DragDropContext>
     ):(
       <>
-      {localData.map((comp) => renderTheme(comp,localData, setLocalData,setEditEachTable, themeid,addcheckbox, displaycolname, bgforhead, tablemargin))}
-    </>
+        {
+          editcontext.editHeightWidth
+            ? localData.map((comp) =>
+                renderTheme(comp, localData, setLocalData, setEditEachTable, themeid, addcheckbox, displaycolname, bgforhead, tablemargin)
+              )
+            : locaStorageData.map((comp) =>
+                renderTheme(comp, localData, setLocalData, setEditEachTable, themeid, addcheckbox, displaycolname, bgforhead, tablemargin)
+              )
+        }
+      </>
     )      
-}
 
+}
 function renderTheme(
   comp: any,
   localData: any[],

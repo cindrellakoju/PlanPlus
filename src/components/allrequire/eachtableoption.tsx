@@ -1,5 +1,3 @@
-import React, { useState } from "react"
-
 interface EditEachTableProps {
     themeid : number,
     tablename : string,

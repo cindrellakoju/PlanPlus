@@ -22,7 +22,11 @@ export interface ComponentType {
   theme_id : number;
   orderindex : number;
   height : number;
-  width : number
+  width : number;
+  checkbox : boolean,
+  bg_for_header :boolean,
+  col_name : boolean,
+  table_margin : boolean 
 }
 
 export interface selectedComponent {

@@ -57,7 +57,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
   // const [backgroundforhead,setBackgroundForHead] = useState<boolean>(false)
   // const [displacolname,setDisplayColname] = useState<boolean>(false)
 
-  console.log("Local Data:",localData)
   const editcontext = useContext(EditThemeContext);
   if (!editcontext) {
     throw new Error('Theme Three must be within EditThemeProvider');
@@ -87,6 +86,13 @@ const ThemeThree: React.FC<ThemeProps> = ({
         console.log('Error fetching', err);
       });
   }, [table_name]);
+
+  // useEffect(()=> {
+  //   if(editcontext.savemode){
+
+  //   }
+
+  // },[editcontext.savemode])
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 

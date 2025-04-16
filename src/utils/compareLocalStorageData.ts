@@ -14,7 +14,11 @@ export const compareLocalStorageData = (component:ComponentType) => {
             comp.user_table_id === component.user_table_id &&
             comp.orderindex === component.orderindex &&
             comp.height === component.height &&
-            comp.width === component.width
+            comp.width === component.width &&
+            comp.checkbox === component.checkbox &&
+            comp.bg_for_header === component.bg_for_header &&
+            comp.col_name === component.col_name &&
+            comp.table_margin === component.table_margin
         );
     });  
     // console.log("Already Selcted:",alreadySelected)
