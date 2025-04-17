@@ -5,9 +5,10 @@ interface OneColNameProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   datas: Record<string, any>[]; // Array of objects with dynamic keys
   setData: React.Dispatch<React.SetStateAction<Record<string, any>[]>>; 
+  themeid : number;
 }
 
-const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, setData }) => {
+const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, setData,themeid }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
     const updatedDatas = [...datas];
@@ -27,8 +28,9 @@ const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, 
     setData(updatedDatas);
   };
 
+  console.log("Theme Id:",themeid)
   return (
-    <div className="notes-lines">
+    <div className={ themeid === 1 ? "themeonebody" : "notes-lines"}>
       {datas.map((data, index) => {
         const columnData = JSON.parse(data.column_data); // Parse the column_data to access the note and isChecked
 

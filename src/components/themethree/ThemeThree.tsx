@@ -24,6 +24,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
     displaycolname, 
     colnames, 
     creatingtable,
+    themeid,
     localData,
     setLocalData
   }) => {
@@ -315,7 +316,12 @@ const ThemeThree: React.FC<ThemeProps> = ({
               }}></i>
             ):(
               <>
+              {
+                themeid === 1 ? 
+                <i className='bx bx-dots-vertical-rounded'></i>
+                :
                 <i className="bx bx-dots-horizontal-rounded"></i>
+              }
                 <div className="dropdown">
                   <ul>
                     {checkbox ? (
@@ -374,13 +380,14 @@ const ThemeThree: React.FC<ThemeProps> = ({
         }
 
 
-        <div className="body">
+        <div className='body'>
           {colname && colname.length === 1 && (
             <OneColName
               isEditing={isEditing}
               textareaRef={textareaRef}
               datas={datas}
               setData={setData}
+              themeid = {themeid}
             />
           )}
 

@@ -9,7 +9,6 @@ export const useLocalStorageData = () => {
     useEffect(() => {
         const localStoragedataString = localStorage.getItem("selecteditem");
         let localStoragedata: ComponentType[] = [];
-        
         if (localStoragedataString) {
             localStoragedata = JSON.parse(localStoragedataString);
         }

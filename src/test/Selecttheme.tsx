@@ -11,9 +11,8 @@ import { compareLocalStorageData } from "../utils/compareLocalStorageData";
 const Selecttheme= () => {
   // const [editeachtable, setEditEachTable] = useState<boolean>(false);
 
-
   const {userId , backend_url} = useUserInfo()
-
+  
   const editcontext = useContext(EditThemeContext)
   if(!editcontext){
     throw new Error("Wrap Selecttheme within EditThemeProvider")
@@ -24,9 +23,10 @@ const Selecttheme= () => {
   useEffect(() => {
     setLocalData(locaStorageData);  // Ensure the data is set
   }, [locaStorageData]); // When local storage data changes, re-run the effect
-
+  
   console.log("LocalData:",localData)
-      
+
+
   useEffect(() => {
     if (editcontext.savemode || (editcontext.savemode && editcontext.editPosition)) {
       // Create an array of update requests (PUT requests)
@@ -145,21 +145,22 @@ function renderTheme(
     tablemargin: comp.table_margin === 1,
     backgroundforhead: comp.bg_for_header === 1,
     displaycolname: comp.col_name === 1,
+    themeid : comp.theme_id,
     setLocalData,
     localData,
   };
 
-  switch (comp.theme_id ) {
-    case 1:
-      return <ThemeOne key={key} {...commonProps} />;
-    case 2:
+  // switch (comp.theme_id ) {
+  //   case 1:
+  //     return <ThemeOne key={key} {...commonProps} />;
+  //   case 2:
       return <ThemeThree key={key} {...commonProps} />;
-    case 3:
-      console.log("Theme 3", comp.table_name);
-      return null;
-    default:
-      return null;
-  }
+    // case 3:
+    //   console.log("Theme 3", comp.table_name);
+    //   return null;
+    // default:
+    //   return null;
+  // }
 
 }
 
