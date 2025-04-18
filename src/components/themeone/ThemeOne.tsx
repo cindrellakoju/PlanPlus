@@ -75,6 +75,7 @@ const ThemeOne: React.FC<ThemeProps>  = ({ table_name, urlname }) => {
                         checkeditem = {checkedItems}
                         setCheckedItems = {setCheckedItems}
                         table_name = {table_name}
+                        themeid={1}
                     />
                 )
             }

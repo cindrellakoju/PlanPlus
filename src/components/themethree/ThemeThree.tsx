@@ -238,42 +238,42 @@ const ThemeThree: React.FC<ThemeProps> = ({
 
   };
 
-  useEffect(() => {
-    if (isResizingHeight || isResizingWidth) {
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!localData || !setLocalData) return;
+  // useEffect(() => {
+  //   if (isResizingHeight || isResizingWidth) {
+  //     const handleMouseMove = (e: MouseEvent) => {
+  //       if (!localData || !setLocalData) return;
   
-        if (isResizingHeight) {
-          const mousedrag = e.clientY - upheight;
-          const updatedHeight = localData.map((comp) =>
-            comp.user_table_id === newid ? { ...comp, height: mousedrag } : comp
-          );
-          setLocalData(updatedHeight);
-        }
+  //       if (isResizingHeight) {
+  //         const mousedrag = e.clientY - upheight;
+  //         const updatedHeight = localData.map((comp) =>
+  //           comp.user_table_id === newid ? { ...comp, height: mousedrag } : comp
+  //         );
+  //         setLocalData(updatedHeight);
+  //       }
   
-        if (isResizingWidth) {
-          const dragwidth = e.clientX - distwidth;
-          const updatedWidth = localData.map((comp) =>
-            comp.user_table_id === newid ? { ...comp, width: dragwidth } : comp
-          );
-          setLocalData(updatedWidth);
-        }
-      };
+  //       if (isResizingWidth) {
+  //         const dragwidth = e.clientX - distwidth;
+  //         const updatedWidth = localData.map((comp) =>
+  //           comp.user_table_id === newid ? { ...comp, width: dragwidth } : comp
+  //         );
+  //         setLocalData(updatedWidth);
+  //       }
+  //     };
   
-      const handleMouseUp = () => {
-        setIsResizingHeight(false);
-        setIsResizingWidth(false);
-      };
+  //     const handleMouseUp = () => {
+  //       setIsResizingHeight(false);
+  //       setIsResizingWidth(false);
+  //     };
   
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
+  //     window.addEventListener("mousemove", handleMouseMove);
+  //     window.addEventListener("mouseup", handleMouseUp);
   
-      return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
-      };
-    }
-  }, [isResizingHeight, isResizingWidth, localData, setLocalData]);
+  //     return () => {
+  //       window.removeEventListener("mousemove", handleMouseMove);
+  //       window.removeEventListener("mouseup", handleMouseUp);
+  //     };
+  //   }
+  // }, [isResizingHeight, isResizingWidth, localData, setLocalData]);
   
     const handleMouseDownWidth = (e:React.MouseEvent<HTMLDivElement>, id:number | undefined, width: number) => {
       if(id){
@@ -390,7 +390,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
               themeid = {themeid}
             />
           )}
-
           {columnList && columnList.length >= 2 && (
             <MoreThanOneCol
               data={datas}
@@ -405,8 +404,10 @@ const ThemeThree: React.FC<ThemeProps> = ({
               setCheckedItems={setCheckedItems}
               table_name={table_name}
               creatingtable = {creatingtable}
+              themeid = { themeid}
             />
           )}
+
         </div>
       </div>
     </>

@@ -15,7 +15,8 @@ interface MoreThanOneColProps {
   checkeditem : Set<number>;
   setCheckedItems :  React.Dispatch<React.SetStateAction<Set<number>>>;
   table_name ?: string,
-  creatingtable ?: boolean
+  creatingtable ?: boolean,
+  themeid : number,
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
@@ -30,7 +31,8 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   checkeditem,
   setCheckedItems,
   table_name,
-  creatingtable
+  creatingtable,
+  themeid
 }) => {
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
@@ -151,7 +153,11 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   return (
     <>
       <div className="tables">
-        <table>
+        <table style={{
+            borderCollapse: themeid ===1 ? 'separate':'collapse',
+            borderSpacing: themeid ===1 ?'0 12px' : '0 0',
+            width: '100%',
+        }}>
             <thead>
               <tr>
                 {displacolname  &&  addcheckbox && (
@@ -188,57 +194,74 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
               </tr>
             </thead>
           
-          <tbody>
-            {filteredData.length === 0 ? (
-              <tr>
-                <td colSpan={colNamesArray.length + (addcheckbox ? 1 : 0)}>
-                  No data available
-                </td>
-              </tr>
-            ) : (
-              filteredData.map((item, idx) => {
-                // Parse the column_data for each row
-                let parsedColumnData;
-                try {
-                  parsedColumnData = JSON.parse(item.column_data);
-                } catch (e) {
-                  parsedColumnData = {}; // Handle invalid JSON gracefully
-                }
+            <tbody style={{ backgroundColor: themeid===1 && col_name.length ===2 ?"#BCC1F2" : 'transparent' }}>
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan={colNamesArray.length + (addcheckbox ? 1 : 0)}>
+                    No data available
+                  </td>
+                </tr>
+              ) : (
+                filteredData.map((item, idx) => {
+                  let parsedColumnData;
+                  try {
+                    parsedColumnData = JSON.parse(item.column_data);
+                    // console.log("Parsed ColumnDta:", parsedColumnData);
+                  } catch (e) {
+                    parsedColumnData = {};
+                  }
 
-                return (
-                  <tr key={item.data_id + idx} className='tablebody'>
-                    {addcheckbox && (
-                      <td style={{ border: table ? '1px solid black' : 'none' }}>
-                        <input
-                          type="checkbox"
-                          checked={checkeditem.has(item.data_id)} // Use data_id as unique identifier
-                          onChange={() => handleCheckChange(item.data_id)}
-                          aria-checked={checkeditem.has(item.data_id)}
-                        />
-                      </td>
-                    )}
+                  return (
+                    <tr key={item.data_id + idx}>
+                      {addcheckbox && (
+                        <td style={{ border: table ? '1px solid black' : 'none' }}>
+                          <input
+                            type="checkbox"
+                            checked={checkeditem.has(item.data_id)}
+                            onChange={() => handleCheckChange(item.data_id)}
+                            aria-checked={checkeditem.has(item.data_id)}
+                          />
+                        </td>
+                      )}
 
-                    {colNamesArray.map((colName, idx) => (
+                      {colNamesArray.map((colName, colIdx) => {
+                        // Determine if this is the first or last column
+                        const isFirstColumn = colIdx === 0 && !addcheckbox; // Adjust for checkbox column
+                        const isLastColumn = colIdx === colNamesArray.length - 1;
+
+                        return (
                           <td
-                          key={idx}
+                            key={colIdx}
+                            style={{
+                              border: table ? '1px solid black' : 'none',
+                              borderTopLeftRadius: isFirstColumn ? '10px' : '0px',
+                              borderBottomLeftRadius: isFirstColumn ? '10px' : '0px',
+                              borderTopRightRadius: isLastColumn ? '10px' : '0px',
+                              borderBottomRightRadius: isLastColumn ? '10px' : '0px',
+                            }}
+                            contentEditable={isEditing}
+                            suppressContentEditableWarning
+                            onInput={(e) => handleInputChange(e, item.data_id, colName)}
+                          >
+                            {parsedColumnData[colName] || "N/A"}
+                          </td>
+                        );
+                      })}
+
+                      {isEditing && (
+                        <td
                           style={{ border: table ? '1px solid black' : 'none' }}
-                          contentEditable={isEditing}
-                          suppressContentEditableWarning
-                          onInput={(e) => handleInputChange(e, item.data_id, colName)} // Use onBlur for saving changes
+                          className="delete"
+                          onClick={(e) => handleDelete(e, item.data_id)}
                         >
-                        {parsedColumnData[colName] || 'N/A'}
-                      </td>
-                    ))}
-                    {isEditing && (
-                      <td style={{ border: table ? '1px solid black' : 'none' }} className='delete' onClick={(e) => handleDelete(e,item.data_id)}>
-                        <i className='bx bx-mobile' style={{ fontSize: '20px' }}></i> {/* Remove color inline style */}
-                      </td>
-                    )}
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
+                          <i className="bx bx-mobile" style={{ fontSize: "20px" }}></i>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
         </table>
       </div>
 
