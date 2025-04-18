@@ -30,13 +30,13 @@ const ThemeThree: React.FC<ThemeProps> = ({
   }) => {
   const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
-  const col_name: string | string[] = ['task', 'priority', 'status', 'description', 'deadline'];
   const [datas, setData] = useState<Record<string, any>[]>([]);
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
   const columnList = colnames ?? colname;
 
+  console.log( "Collist:",columnList)
   const [showAddForm, setShowAddForm] = useState<boolean>(false); // New state for showing the add form
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isTableEditing, setIsTableEditing] = useState<boolean>(false);
@@ -154,7 +154,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
       );
   
       // Wait for all requests to complete
-      Promise.all(deleteRequests).then((results) => {
+      Promise.all(deleteRequests).then(() => {
         alert('Selected items deleted successfully!');
         setReloadBool(prev => !prev)
       });
@@ -324,8 +324,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
               }
                 <div className="dropdown">
                   <ul>
-                    {checkbox ? (
-                      col_name.includes('status') && (
+                    {checkbox && columnList ? (
+                      columnList.includes('status') && (
                         <>
                           <li onClick={handleCompleted}>Completed</li>
                           <li onClick={handleDelete}>Delete</li>
@@ -381,7 +381,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
 
 
         <div className='body'>
-          {colname && colname.length === 1 && (
+          {columnList && columnList.length === 1 && (
             <OneColName
               isEditing={isEditing}
               textareaRef={textareaRef}
