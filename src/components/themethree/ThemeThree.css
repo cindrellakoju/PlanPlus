@@ -113,7 +113,7 @@
     height: 100%;
     line-height: 50px; /* Increase the line spacing to match the background lines */
     white-space: pre-wrap; /* Preserve line breaks and spaces */
-    background-image: linear-gradient(to bottom, transparent 49px, #000 49px, #000 50px, transparent 50px);
+    /* background-image: linear-gradient(to bottom, transparent 49px, #000 49px, #000 50px, transparent 50px); */
     background-size: 90% 50px; /* Cover 90% width and repeat the line every 50px */
     background-repeat: repeat-y; /* Repeat the background vertically */
     background-position: center top; /* Center the lines horizontally and start from the top */

@@ -44,7 +44,9 @@ const OneColName: React.FC<OneColNameProps> = ({ isEditing, textareaRef, datas, 
                 className="note-textarea"
               />
             ) : (
-              <div className="note-display">
+              <div className="note-display" style={{
+                backgroundImage: themeid === 1? "": "linear-gradient(to bottom, transparent 49px, #000 49px, #000 50px, transparent 50px)",
+              }}>
                 <input
                   type="checkbox"
                   className="checkboxtype"
