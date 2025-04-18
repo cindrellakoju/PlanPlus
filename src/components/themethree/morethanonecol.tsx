@@ -169,17 +169,24 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                   >
                   </th>
                 )}
-                {displacolname && colNamesArray.map((name, index) => (
+              {displacolname && colNamesArray.map((name, index) => {
+                const isLastColumn = index === colNamesArray.length - 1;
+
+                return (
                   <th
                     key={index}
                     style={{
                       border: table ? '1px solid black' : 'none',
                       backgroundColor: bgforhead ? '#9ec4a8' : 'transparent',
+                      borderTopRightRadius: themeid === 1 &&isLastColumn ? '10px' : '0px',
+                      borderBottomRightRadius: themeid===1 && isLastColumn ? '10px' : '0px',
                     }}
                   >
                     {name.charAt(0).toUpperCase() + name.slice(1)}
                   </th>
-                ))}
+                );
+              })}
+
 
                 {isEditing && (
                   <th
@@ -194,7 +201,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
               </tr>
             </thead>
           
-            <tbody style={{ backgroundColor: themeid===1 && col_name.length ===2 ?"#BCC1F2" : 'transparent' }}>
+            <tbody style={{ backgroundColor: themeid===1 ?"#BCC1F2" : 'transparent' }}>
               {filteredData.length === 0 ? (
                 <tr>
                   <td colSpan={colNamesArray.length + (addcheckbox ? 1 : 0)}>
