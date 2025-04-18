@@ -307,7 +307,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
           </>
         )
       }
-        <div className="header">{table_name}</div>
+            <div className='headerfield'>
+        <div className={themeid ===1 ? 'heading' : 'header' }>{table_name}</div>
         <div className="buttons" style={{ marginTop: "2rem"}}>
           {
             editcontext.editHeightWidth ? (
@@ -339,6 +340,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
               </>
           )
           } 
+        </div>
         </div>
         {
           isTableEditing && (
