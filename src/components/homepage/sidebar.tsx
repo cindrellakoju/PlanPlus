@@ -12,7 +12,7 @@ const SideBar = () => {
                     <i className='bx bx-home'></i>
                     <p>Home</p>
                 </div>
-                <div className="schedule">
+                <div className="schedule" onClick={() => navigate('/schedule')}>
                     <i className='bx bx-time'></i>
                     <p>Schedule</p>
                 </div>
