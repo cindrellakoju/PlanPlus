@@ -58,7 +58,12 @@ const ThemeThree: React.FC<ThemeProps> = ({
     tablename: urlname,
   };
 
+  const tosend = {
+    days: "Monday"
+  };
+
   useEffect(() => {
+    if(!colnames){
     axios
       .post(`${backend_url}/user/tablecolumn/2`, insertinurl)
       .then((response) => {
@@ -68,10 +73,20 @@ const ThemeThree: React.FC<ThemeProps> = ({
       .catch((error) => {
         console.log('Error fetching data', error);
       });
+    }
+    const url =
+    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday"
+      ? `${backend_url}/user/schedule/2`
+      : `${backend_url}/user/columndata/2`;
 
+      const payload =
+      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday"
+        ? tosend
+        : insertinurl;
     axios
-      .post(`${backend_url}/user/columndata/2`, insertinurl)
+    .post(url, payload)
       .then((response) => {
+        console.log("Responsedayayyay",response.data)
         setData(response.data);
       })
       .catch((err) => {

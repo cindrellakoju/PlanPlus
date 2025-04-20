@@ -43,5 +43,5 @@ router.post("/inserttablename/:user_id",insertTableNameController)
 
 router.put("/updatetable/:user_id",updateTableInfoController)
 
-router.get('/schedule/:user_id',extractDayDataController)
+router.post('/schedule/:user_id',extractDayDataController)
 export default router

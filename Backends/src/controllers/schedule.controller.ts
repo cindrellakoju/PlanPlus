@@ -3,7 +3,8 @@ import { extractDayDataServices } from "../services/schedule.services";
 
 export const extractDayDataController = async(req:Request, res : Response) => {
     const userId = Number(req.params.user_id)
-    const days = "Monday"
+    const days = req.body.days
+    console.log("Days:",days)
     try{
         const result = await extractDayDataServices(userId, days);
         res.status(200).json(result)
