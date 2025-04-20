@@ -7,6 +7,7 @@ import { EditThemeContext } from "../context/EditThemeContext";
 import axios from "axios";
 import { useUserInfo } from "../hooks/useUserInfo";
 import { compareLocalStorageData } from "../utils/compareLocalStorageData";
+import ExtractSchedule from "./ExtractSchedule";
 
 const Selecttheme= () => {
   // const [editeachtable, setEditEachTable] = useState<boolean>(false);
@@ -134,35 +135,48 @@ function renderTheme(
   setLocalData: React.Dispatch<React.SetStateAction<any[]>>,
 ) {
   const key = comp.user_table_id;
+  const date = new Date();
+  const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const today = weekday[date.getDay()];
+
+  if (comp.table_name === "Schedule") {
+    return <ExtractSchedule key={key} receiveday={today} height={comp.height} width={comp.width} 
+      checkbox= {comp.checkbox === 1} tablemargin={ comp.table_margin === 1 }
+      backgroundforhead= {comp.bg_for_header === 1} displaycolname= {comp.col_name === 1}
+      themeid= {comp.theme_id}
+    />;
+  }
 
   const commonProps = {
     table_name: comp.table_name,
     urlname: convertToUnderscoreCase(comp.table_name),
     height: comp.height,
     width: comp.width,
-    id:  comp.user_table_id,
+    id: comp.user_table_id,
     checkbox: comp.checkbox === 1,
     tablemargin: comp.table_margin === 1,
     backgroundforhead: comp.bg_for_header === 1,
     displaycolname: comp.col_name === 1,
-    themeid : comp.theme_id,
+    themeid: comp.theme_id,
     setLocalData,
     localData,
   };
 
-  // switch (comp.theme_id ) {
+  // If you plan to add more themes, use a switch here
+  // switch (comp.theme_id) {
   //   case 1:
   //     return <ThemeOne key={key} {...commonProps} />;
   //   case 2:
       return <ThemeThree key={key} {...commonProps} />;
-    // case 3:
-    //   console.log("Theme 3", comp.table_name);
-    //   return null;
+    // Add other themes here as needed
     // default:
-    //   return null;
+    //   return null; // or a fallback UI
   // }
-
 }
+
+
+
+
 
 interface SelectDummythemeProps{
   themeid : number,

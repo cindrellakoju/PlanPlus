@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 
 interface MoreThanOneColProps {
+  key: string,
   data: Record<string, any>[];
   addcheckbox: boolean;
   displacolname: boolean;
@@ -20,6 +21,7 @@ interface MoreThanOneColProps {
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
+  key,
   data,
   addcheckbox,
   displacolname,
@@ -37,7 +39,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
   const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
-  console.log("Received data:",data)
+  // console.log("Received data:",data)
   useEffect(() => {
     if (col_name && creatingtable) {
       // Assuming col_name is used to filter `datas` somehow — or just a placeholder for demo data?
@@ -152,7 +154,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     })
   }
 
-  console.log("filtered data:",filteredData)
+  // console.log("filtered data:",filteredData)
   return (
     <>
       <div className="tables">
@@ -221,7 +223,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                       parsedColumnData = JSON.parse(item.column_data)
                       
                     }
-                    console.log("Parsed ColumnDta:", parsedColumnData);
+                    // console.log("Parsed ColumnDta:", parsedColumnData);
                   } catch (e) {
                     parsedColumnData = {};
                   }

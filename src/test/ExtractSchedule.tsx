@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserInfo } from "../hooks/useUserInfo";
 import ThemeThree from "../components/themethree/ThemeThree";
 
@@ -7,7 +7,17 @@ interface ScheduleProps {
   [key: string]: string;
 }
 
-const ExtractSchedule = () => {
+interface ExtractScheduleProps{
+  receiveday ?:string,
+  height ?: number,
+  width ?: number,
+  checkbox ?: boolean,
+  tablemargin ?: boolean ,
+  backgroundforhead ?: boolean,
+  displaycolname ?: boolean ,
+  themeid ?:number 
+}
+const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, width, checkbox,tablemargin, backgroundforhead, displaycolname, themeid}) => {
   const { userId, backend_url } = useUserInfo();
   const [localData, setLocalData] = useState<ScheduleProps[]>([]);
   const [columns, setColumns] = useState<string[]>([]);
@@ -42,25 +52,46 @@ const ExtractSchedule = () => {
   // Render ThemeThree components for each day
   return (
     <>
-      {updatedays.map((day, index) => {
-        const commonProps = {
-          table_name: day,
-          height: 465,
-          width: 465,
-          checkbox: false,
-          tablemargin: false,
-          backgroundforhead: false,
-          displaycolname: true,
-          themeid: 1,
-          setLocalData,
-          localData,
-          colnames: columns,
-        };
-
-        return <ThemeThree key={day} {...commonProps} />;
-      })}
+      {receiveday && height && width && checkbox && tablemargin && backgroundforhead && displaycolname && themeid? (
+        (() => {
+          const commonProps = {
+            table_name: receiveday,
+            height: height,
+            width: width,
+            checkbox: checkbox,
+            tablemargin: tablemargin,
+            backgroundforhead: backgroundforhead,
+            displaycolname: displaycolname,
+            themeid: themeid,
+            setLocalData,
+            localData,
+            colnames: columns,
+          };
+  
+          return <ThemeThree key={receiveday} {...commonProps} />;
+        })()
+      ) : (
+        updatedays.map((day, index) => {
+          const commonProps = {
+            table_name: day,
+            height: 465,
+            width: 465,
+            checkbox: false,
+            tablemargin: false,
+            backgroundforhead: false,
+            displaycolname: true,
+            themeid: 1,
+            setLocalData,
+            localData,
+            colnames: columns,
+          };
+  
+          return <ThemeThree key={day} {...commonProps} />;
+        })
+      )}
     </>
   );
+  
 };
 
 export default ExtractSchedule;

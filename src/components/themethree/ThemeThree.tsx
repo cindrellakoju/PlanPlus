@@ -36,7 +36,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
   const columnList = colnames ?? colname;
 
-  console.log( "Collist:",columnList)
+  // console.log( "Collist:",columnList)
   const [showAddForm, setShowAddForm] = useState<boolean>(false); // New state for showing the add form
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isTableEditing, setIsTableEditing] = useState<boolean>(false);
@@ -86,7 +86,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
     axios
     .post(url, payload)
       .then((response) => {
-        console.log("Responsedayayyay for ",table_name,response.data)
+        // console.log("Responsedayayyay for ",table_name,response.data)
         setData(response.data);
       })
       .catch((err) => {
@@ -407,8 +407,10 @@ const ThemeThree: React.FC<ThemeProps> = ({
               themeid = {themeid}
             />
           )}
-          {columnList && columnList.length >= 2 && (
+          { columnList && columnList.length >= 2 && (
+
             <MoreThanOneCol
+              key={`${table_name}`}
               data={datas}
               addcheckbox={checkbox}
               displacolname={displaycolname}
