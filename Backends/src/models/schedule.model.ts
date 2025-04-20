@@ -25,6 +25,7 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
                 if(parsedData[days]){
                     const daydata = parsedData[days]
                     callback(null,daydata)
+                    console.log("Daydata:",daydata)
                 }else{
                     console.log("Day data not found")
                     callback(null,[])

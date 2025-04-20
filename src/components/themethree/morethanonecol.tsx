@@ -37,6 +37,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
   const [filteredData, setFilteredData] = useState<Record<string, any>[]>([]);
+  console.log("Received data:",data)
   useEffect(() => {
     if (col_name && creatingtable) {
       // Assuming col_name is used to filter `datas` somehow — or just a placeholder for demo data?
@@ -150,6 +151,8 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
         })
     })
   }
+
+  console.log("filtered data:",filteredData)
   return (
     <>
       <div className="tables">
@@ -210,10 +213,15 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                 </tr>
               ) : (
                 filteredData.map((item, idx) => {
-                  let parsedColumnData;
+                  let parsedColumnData: Record<string, any> = {};
                   try {
-                    parsedColumnData = JSON.parse(item.column_data);
-                    // console.log("Parsed ColumnDta:", parsedColumnData);
+                    {
+                      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  ?
+                      parsedColumnData = item :
+                      parsedColumnData = JSON.parse(item.column_data)
+                      
+                    }
+                    console.log("Parsed ColumnDta:", parsedColumnData);
                   } catch (e) {
                     parsedColumnData = {};
                   }

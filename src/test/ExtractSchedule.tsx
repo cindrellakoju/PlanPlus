@@ -57,7 +57,7 @@ const ExtractSchedule = () => {
           colnames: columns,
         };
 
-        return <ThemeThree key={index} {...commonProps} />;
+        return <ThemeThree key={day} {...commonProps} />;
       })}
     </>
   );

@@ -59,7 +59,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
   };
 
   const tosend = {
-    days: "Monday"
+    days: table_name
   };
 
   useEffect(() => {
@@ -75,18 +75,18 @@ const ThemeThree: React.FC<ThemeProps> = ({
       });
     }
     const url =
-    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday"
+    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"    
       ? `${backend_url}/user/schedule/2`
       : `${backend_url}/user/columndata/2`;
 
       const payload =
-      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday"
-        ? tosend
+      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
+        ? tosend 
         : insertinurl;
     axios
     .post(url, payload)
       .then((response) => {
-        console.log("Responsedayayyay",response.data)
+        console.log("Responsedayayyay for ",table_name,response.data)
         setData(response.data);
       })
       .catch((err) => {
