@@ -12,55 +12,55 @@ const ExtractSchedule = () => {
   const [localData, setLocalData] = useState<ScheduleProps[]>([]);
   const [columns, setColumns] = useState<string[]>([]);
 
-  const date =  new Date()
-  const days= ["Sunday", "Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday"]
-  const updatedays:string[] = []
-  let today:number = date.getDay();
-  for(let i=0; i< days.length; i++ ){
-    if (today === 7) {
-      today = 0;
-    }
-    updatedays.push(days[today])
-    today++
-  }
+  // Get the current day and rotate the week starting from today
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const today = new Date().getDay();
+  const updatedays = [...Array(7)].map((_, i) => days[(today + i) % 7]);
 
-  
+  // Fetch data
   useEffect(() => {
-    const tosend = {
-      days: "Monday"
-    };
-    axios
-      .post(`${backend_url}/user/schedule/2`, tosend)
-      .then((response) => {
-        setLocalData(response.data);
+    updatedays.forEach((comp) => {
+      const tosend = { days: comp };
 
-        // Extract columns from the first item
-        if (response.data.length > 0) {
-          const valueKeys = Object.keys(response.data[0]);
-          setColumns(valueKeys);
-        }
-      })
-      .catch((err) => {
-        console.log("Error:", err);
-      });
+      axios
+        .post(`${backend_url}/user/schedule/2`, tosend)
+        .then((response) => {
+          setLocalData(response.data);
+
+          // Extract columns from the first item
+          if (response.data.length > 0) {
+            const valueKeys = Object.keys(response.data[0]);
+            setColumns(valueKeys);
+          }
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
+    });
   }, [backend_url]);
 
-  const commonProps = {
-    table_name: "Monday",
-    height: 465,
-    width: 465,
-    checkbox: false,
-    tablemargin: false,
-    backgroundforhead: false,
-    displaycolname: true,
-    themeid: 1,
-    setLocalData,
-    localData,
-    colnames: columns
-  };
+  // Render ThemeThree components for each day
+  return (
+    <>
+      {updatedays.map((day, index) => {
+        const commonProps = {
+          table_name: day,
+          height: 465,
+          width: 465,
+          checkbox: false,
+          tablemargin: false,
+          backgroundforhead: false,
+          displaycolname: true,
+          themeid: 1,
+          setLocalData,
+          localData,
+          colnames: columns,
+        };
 
-  console.log("Columnnme:",columns)
-  return <ThemeThree {...commonProps} />;
+        return <ThemeThree key={index} {...commonProps} />;
+      })}
+    </>
+  );
 };
 
 export default ExtractSchedule;
