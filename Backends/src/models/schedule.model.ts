@@ -43,35 +43,113 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
     });
 };
 
-interface MondayData {
-    monday_data_ids: string; // Or another type depending on your DB schema
-  }
-
 export const addScheduleByDay = ( callback:Callback) => {
-    const query = `
-    UPDATE user_table_data
-    SET column_data = JSON_SET(
-      column_data,
-      '$.Monday',
-      JSON_ARRAY_APPEND(
-        JSON_EXTRACT(column_data, '$.Monday'),
-        '$',
-        JSON_OBJECT(
-          'time', '3:30 PM',
-          'task', 'Coffee with team',
-          'data_id', 9
-        )
-      )
-    )
-    WHERE user_table_id = 8 AND data_id = 26;
-  `;
+    const maxdataidquery = `
+    SELECT 
+        JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.Monday[*].data_id')) AS monday_data_ids
+    FROM 
+        user_table_data
+    WHERE 
+        user_table_id = 8 
+        AND data_id = 26;
+`;
 
-    db.query(query,(err,results) => {
-        if(err){
-            console.log("Error updating Monday", err)
-            return callback(err)
+
+  db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
+    if (err) {
+        console.error("Error querying Monday data:", err);
+        return;
+    }
+
+    if (Array.isArray(results) && results.length > 0) {
+        const result = results[0].monday_data_ids as string;
+        console.log("Raw result:", result);
+
+        try {
+            const mondayDataArray = JSON.parse(result);
+
+            if (!Array.isArray(mondayDataArray)) {
+                throw new Error("Parsed monday_data_ids is not an array");
+            }
+
+            const maxDataId = Math.max(...mondayDataArray);
+            console.log("MAX Id::", maxDataId);
+            const query = `
+            UPDATE user_table_data
+            SET column_data = JSON_SET(
+              column_data,
+              '$.Monday',
+              JSON_ARRAY_APPEND(
+                JSON_EXTRACT(column_data, '$.Monday'),
+                '$',
+                JSON_OBJECT(
+                  'time', '3:45 PM',
+                  'task', 'Play uno',
+                  'data_id', ${maxDataId+1}
+                )
+              )
+            )
+            WHERE user_table_id = 8 AND data_id = 26;
+          `;
+
+          db.query(query,(err,results) => {
+            if(err){
+                console.log("Error updating Monday", err)
+                return callback(err)
+            }
+            console.log("Results:",results)
+            callback(null, results)
+        })  
+
+        } catch (parseError) {
+            console.error("Error parsing monday_data_ids:", parseError);
         }
-        console.log("Results:",results)
-        callback(null, results)
-    })    
+    } else {
+        console.error("No results or invalid result format");
+    }
+});
+  const maxid = maxdataid()
+  console.log("MAxId:",maxid)
+  
 }
+
+
+const maxdataid = () => {
+    const query = `
+        SELECT 
+            JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.Monday[*].data_id')) AS monday_data_ids
+        FROM 
+            user_table_data
+        WHERE 
+            user_table_id = 8 
+            AND data_id = 26;
+    `;
+
+    db.query(query, (err, results: RowDataPacket[]) => {
+        if (err) {
+            console.error("Error querying Monday data:", err);
+            return;
+        }
+
+        if (Array.isArray(results) && results.length > 0) {
+            const result = results[0].monday_data_ids as string;
+            console.log("Raw result:", result);
+
+            try {
+                const mondayDataArray = JSON.parse(result);
+
+                if (!Array.isArray(mondayDataArray)) {
+                    throw new Error("Parsed monday_data_ids is not an array");
+                }
+
+                const maxDataId = Math.max(...mondayDataArray);
+                console.log("MAX Id::", maxDataId);
+                // You can do something with maxDataId here
+            } catch (parseError) {
+                console.error("Error parsing monday_data_ids:", parseError);
+            }
+        } else {
+            console.error("No results or invalid result format");
+        }
+    });
+};
