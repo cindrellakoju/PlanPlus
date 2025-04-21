@@ -41,22 +41,28 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
     });
 };
 
-export const addScheduleByDay = (day:string, callback:Callback) => {
+export const addScheduleByDay = (
+    day: string,
+    time: string,
+    task: string,
+    user_table_id: number,
+    data_id: number,
+    callback: Callback
+) => {
     const maxdataidquery = `
         SELECT 
             JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.${day}[*].data_id')) AS ${day}_data_ids
         FROM 
             user_table_data
         WHERE 
-            user_table_id = 8 
-            AND data_id = 26;
+            user_table_id = ${user_table_id}
+            AND data_id = ${data_id};
     `;
 
-
-  db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
+    db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
         if (err) {
-            console.error("Error querying Monday data:", err);
-            return;
+            console.error(`Error querying ${day} data:`, err);
+            return callback(err);
         }
 
         if (Array.isArray(results) && results.length > 0) {
@@ -67,43 +73,47 @@ export const addScheduleByDay = (day:string, callback:Callback) => {
                 const DataArray = JSON.parse(result);
 
                 if (!Array.isArray(DataArray)) {
-                    throw new Error("Parsed monday_data_ids is not an array");
+                    throw new Error(`Parsed ${day}_data_ids is not an array`);
                 }
 
                 const maxDataId = Math.max(...DataArray);
                 console.log("MAX Id::", maxDataId);
-                const query = `
-                UPDATE user_table_data
-                SET column_data = JSON_SET(
-                column_data,
-                '$.${day}',
-                JSON_ARRAY_APPEND(
-                    JSON_EXTRACT(column_data, '$.${day}'),
-                    '$',
-                    JSON_OBJECT(
-                    'time', '3:45 PM',
-                    'task', 'Play uno',
-                    'data_id', ${maxDataId+1}
-                    )
-                )
-                )
-                WHERE user_table_id = 8 AND data_id = 26;
-            `;
 
-            db.query(query,(err,results) => {
-                if(err){
-                    console.log("Error updating Monday", err)
-                    return callback(err)
-                }
-                console.log("Results:",results)
-                callback(null, results)
-            })  
+                const query = `
+                    UPDATE user_table_data
+                    SET column_data = JSON_SET(
+                        column_data,
+                        '$.${day}',
+                        JSON_ARRAY_APPEND(
+                            JSON_EXTRACT(column_data, '$.${day}'),
+                            '$',
+                            JSON_OBJECT(
+                                'time', '${time}',
+                                'task', '${task}',
+                                'data_id', ${maxDataId + 1}
+                            )
+                        )
+                    )
+                    WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+                `;
+
+                db.query(query, (err, results) => {
+                    if (err) {
+                        console.error(`Error updating ${day}`, err);
+                        return callback(err);
+                    }
+                    console.log("Update Results:", results);
+                    callback(null, results);
+                });
 
             } catch (parseError) {
-                console.error("Error parsing monday_data_ids:", parseError);
+                console.error(`Error parsing ${day}_data_ids:`, parseError);
+                return callback(parseError);
             }
         } else {
-            console.error("No results or invalid result format");
+            const error = new Error(`No results or invalid result format for ${day}`);
+            console.error(error.message);
+            return callback(error);
         }
-    });  
-}
+    });
+};
