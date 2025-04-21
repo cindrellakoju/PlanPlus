@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 
 interface MoreThanOneColProps {
-  key: string,
   data: Record<string, any>[];
   addcheckbox: boolean;
   displacolname: boolean;
@@ -21,7 +20,6 @@ interface MoreThanOneColProps {
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
-  key,
   data,
   addcheckbox,
   displacolname,

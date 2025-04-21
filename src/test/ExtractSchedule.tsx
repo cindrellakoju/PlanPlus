@@ -39,7 +39,8 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
 
           // Extract columns from the first item
           if (response.data.length > 0) {
-            const valueKeys = Object.keys(response.data[0]);
+            const valueKeys = Object.keys(response.data[0]).filter(key => key !== "data_id");
+            console.log("colname:",valueKeys)
             setColumns(valueKeys);
           }
         })
@@ -76,7 +77,7 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
             table_name: day,
             height: 465,
             width: 465,
-            checkbox: false,
+            checkbox: true,
             tablemargin: false,
             backgroundforhead: false,
             displaycolname: true,

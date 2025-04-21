@@ -408,9 +408,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
             />
           )}
           { columnList && columnList.length >= 2 && (
-
             <MoreThanOneCol
-              key={`${table_name}`}
               data={datas}
               addcheckbox={checkbox}
               displacolname={displaycolname}
