@@ -12,7 +12,7 @@ import { getComponentsController, updateComponentsController } from "../../test/
 import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 import { insertTableNameController } from "../controllers/inserttablename.controller";
 import { updateTableInfoController } from "../controllers/crudontable.controller";
-import { extractDayDataController } from "../controllers/schedule.controller";
+import { addScheduleByDayController, extractDayDataController } from "../controllers/schedule.controller";
 
 const router = Router()
 
@@ -44,4 +44,6 @@ router.post("/inserttablename/:user_id",insertTableNameController)
 router.put("/updatetable/:user_id",updateTableInfoController)
 
 router.post('/schedule/:user_id',extractDayDataController)
+
+router.get('/addintoschedule',addScheduleByDayController)
 export default router

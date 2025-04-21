@@ -1,5 +1,6 @@
 import db from "../config/db.config"; // Assuming this exports a database client
 import { Callback } from "../types/todo.type";
+import { OkPacket, RowDataPacket } from 'mysql2';
 
 export const extractDayData = (userId:number,days:string,callback: Callback) => {
     const query = `
@@ -24,6 +25,7 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
                 // const days = Object.keys(parsedData)
                 if(parsedData[days]){
                     const daydata = parsedData[days]
+                    console.log("Keys:",Object.keys(daydata))
                     callback(null,daydata)
                     console.log("Daydata:",daydata)
                 }else{
@@ -40,3 +42,36 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
         }
     });
 };
+
+interface MondayData {
+    monday_data_ids: string; // Or another type depending on your DB schema
+  }
+
+export const addScheduleByDay = ( callback:Callback) => {
+    const query = `
+    UPDATE user_table_data
+    SET column_data = JSON_SET(
+      column_data,
+      '$.Monday',
+      JSON_ARRAY_APPEND(
+        JSON_EXTRACT(column_data, '$.Monday'),
+        '$',
+        JSON_OBJECT(
+          'time', '3:30 PM',
+          'task', 'Coffee with team',
+          'data_id', 9
+        )
+      )
+    )
+    WHERE user_table_id = 8 AND data_id = 26;
+  `;
+
+    db.query(query,(err,results) => {
+        if(err){
+            console.log("Error updating Monday", err)
+            return callback(err)
+        }
+        console.log("Results:",results)
+        callback(null, results)
+    })    
+}

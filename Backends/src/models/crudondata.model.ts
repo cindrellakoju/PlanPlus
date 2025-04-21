@@ -19,7 +19,6 @@ export const InsertData = (insertdata: insertinfo, callback: Callback) => {
     SELECT ut.user_table_id, 
       JSON_OBJECT(${json_obj})
     FROM user_tables ut
-    JOIN user_table_columns utc ON ut.user_table_id = utc.user_table_id
     WHERE ut.user_id = ? 
     AND ut.table_name = ?  
     LIMIT 1;
@@ -71,6 +70,7 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
       AND data_id = ?; 
     `;
 
+    console.log("Query:",query)
     // Add user_id, table_name, and data_id to the query values
     queryValues.push(updatedata.user_id, updatedata.tablename, updatedata.data_id);
     console.log(queryValues);
