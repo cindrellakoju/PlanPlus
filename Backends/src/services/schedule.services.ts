@@ -9,9 +9,9 @@ export const extractDayDataServices = (userId:number, days:string):Promise<void>
     })
 }
 
-export const addScheduleByDayServices = () :Promise<void> => {
+export const addScheduleByDayServices = (day:string) :Promise<void> => {
     return new Promise((resolve,rejects) => {
-        addScheduleByDay((err, results) => {
+        addScheduleByDay(day,(err, results) => {
             if(err) rejects(err);
             resolve(results)
         })

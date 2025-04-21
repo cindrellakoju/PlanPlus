@@ -21,8 +21,6 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
             const columnData = results[0].column_data
             try{
                 const parsedData = JSON.parse(columnData)
-                // console.log("Data of Monday:",parsedData.Monday)
-                // const days = Object.keys(parsedData)
                 if(parsedData[days]){
                     const daydata = parsedData[days]
                     console.log("Keys:",Object.keys(daydata))
@@ -43,81 +41,10 @@ export const extractDayData = (userId:number,days:string,callback: Callback) => 
     });
 };
 
-export const addScheduleByDay = ( callback:Callback) => {
+export const addScheduleByDay = (day:string, callback:Callback) => {
     const maxdataidquery = `
-    SELECT 
-        JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.Monday[*].data_id')) AS monday_data_ids
-    FROM 
-        user_table_data
-    WHERE 
-        user_table_id = 8 
-        AND data_id = 26;
-`;
-
-
-  db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
-    if (err) {
-        console.error("Error querying Monday data:", err);
-        return;
-    }
-
-    if (Array.isArray(results) && results.length > 0) {
-        const result = results[0].monday_data_ids as string;
-        console.log("Raw result:", result);
-
-        try {
-            const mondayDataArray = JSON.parse(result);
-
-            if (!Array.isArray(mondayDataArray)) {
-                throw new Error("Parsed monday_data_ids is not an array");
-            }
-
-            const maxDataId = Math.max(...mondayDataArray);
-            console.log("MAX Id::", maxDataId);
-            const query = `
-            UPDATE user_table_data
-            SET column_data = JSON_SET(
-              column_data,
-              '$.Monday',
-              JSON_ARRAY_APPEND(
-                JSON_EXTRACT(column_data, '$.Monday'),
-                '$',
-                JSON_OBJECT(
-                  'time', '3:45 PM',
-                  'task', 'Play uno',
-                  'data_id', ${maxDataId+1}
-                )
-              )
-            )
-            WHERE user_table_id = 8 AND data_id = 26;
-          `;
-
-          db.query(query,(err,results) => {
-            if(err){
-                console.log("Error updating Monday", err)
-                return callback(err)
-            }
-            console.log("Results:",results)
-            callback(null, results)
-        })  
-
-        } catch (parseError) {
-            console.error("Error parsing monday_data_ids:", parseError);
-        }
-    } else {
-        console.error("No results or invalid result format");
-    }
-});
-  const maxid = maxdataid()
-  console.log("MAxId:",maxid)
-  
-}
-
-
-const maxdataid = () => {
-    const query = `
         SELECT 
-            JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.Monday[*].data_id')) AS monday_data_ids
+            JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.${day}[*].data_id')) AS ${day}_data_ids
         FROM 
             user_table_data
         WHERE 
@@ -125,31 +52,58 @@ const maxdataid = () => {
             AND data_id = 26;
     `;
 
-    db.query(query, (err, results: RowDataPacket[]) => {
+
+  db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
         if (err) {
             console.error("Error querying Monday data:", err);
             return;
         }
 
         if (Array.isArray(results) && results.length > 0) {
-            const result = results[0].monday_data_ids as string;
+            const result = results[0][`${day}_data_ids`] as string;
             console.log("Raw result:", result);
 
             try {
-                const mondayDataArray = JSON.parse(result);
+                const DataArray = JSON.parse(result);
 
-                if (!Array.isArray(mondayDataArray)) {
+                if (!Array.isArray(DataArray)) {
                     throw new Error("Parsed monday_data_ids is not an array");
                 }
 
-                const maxDataId = Math.max(...mondayDataArray);
+                const maxDataId = Math.max(...DataArray);
                 console.log("MAX Id::", maxDataId);
-                // You can do something with maxDataId here
+                const query = `
+                UPDATE user_table_data
+                SET column_data = JSON_SET(
+                column_data,
+                '$.${day}',
+                JSON_ARRAY_APPEND(
+                    JSON_EXTRACT(column_data, '$.${day}'),
+                    '$',
+                    JSON_OBJECT(
+                    'time', '3:45 PM',
+                    'task', 'Play uno',
+                    'data_id', ${maxDataId+1}
+                    )
+                )
+                )
+                WHERE user_table_id = 8 AND data_id = 26;
+            `;
+
+            db.query(query,(err,results) => {
+                if(err){
+                    console.log("Error updating Monday", err)
+                    return callback(err)
+                }
+                console.log("Results:",results)
+                callback(null, results)
+            })  
+
             } catch (parseError) {
                 console.error("Error parsing monday_data_ids:", parseError);
             }
         } else {
             console.error("No results or invalid result format");
         }
-    });
-};
+    });  
+}

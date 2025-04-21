@@ -14,8 +14,9 @@ export const extractDayDataController = async(req:Request, res : Response) => {
 }
 
 export const addScheduleByDayController = async(req:Request, res:Response) => {
+    const day= "Tuesday"
     try{
-        const results=  await addScheduleByDayServices()
+        const results=  await addScheduleByDayServices(day)
         res.status(200).json(results)
     }catch(err){
         res.status(500).json({ message : "Error adding data ", error : err });
