@@ -117,3 +117,62 @@ export const addScheduleByDay = (
         }
     });
 };
+
+export interface UpdateSchedule {
+    time: string;
+    task: string;
+    data_id: number;
+}
+
+export const updateScheduleByDay = (day: string, time: string, task: string, specific_day_col_data_id: number, user_table_id: number, data_id: number, callback: Callback) => {
+    const getDayArrayQuery = `
+        SELECT JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.${day}')) AS ${day}_data
+        FROM user_table_data
+        WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+    `;
+
+    // Fetch the schedule data for the specific day (e.g., Monday, Tuesday, etc.)
+    db.query(getDayArrayQuery, (err, results: RowDataPacket[]) => {
+        if (err) {
+            console.error(`Error fetching ${day} data`, err);
+            return callback(err);
+        }
+
+        if (Array.isArray(results) && results.length > 0) {
+            // Parse the JSON data for the day
+            const dayArray: UpdateSchedule[] = JSON.parse(results[0][`${day}_data`]);
+
+            // Find the index of the item with the matching data_id
+            const index = dayArray.findIndex((item: UpdateSchedule) => item.data_id === specific_day_col_data_id);
+
+            if (index === -1) {
+                return callback(new Error(`No entry found with data_id: ${specific_day_col_data_id}`));
+            }
+
+            console.log(`Index of data_id = ${specific_day_col_data_id}:`, index);
+
+            // Now that you have the index, you can build the query to update the specific entry
+            const updateQuery = `
+                UPDATE user_table_data
+                SET column_data = JSON_SET(
+                    column_data,
+                    '$.${day}[${index}].time', '${time}',   
+                    '$.${day}[${index}].task', '${task}'  
+                )
+                WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+            `;
+
+            // Execute the update query to modify the schedule for the matching data_id
+            db.query(updateQuery, (err, result) => {
+                if (err) {
+                    console.log("Error updating data", err);
+                    return callback(err);
+                }
+                callback(null, result);  // Return the result to the callback
+            });
+        } else {
+            // Handle the case where no data is found for the given day
+            return callback(new Error(`No data found for ${day} with user_table_id: ${user_table_id} and data_id: ${data_id}`));
+        }
+    });
+};
