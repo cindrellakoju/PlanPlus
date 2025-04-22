@@ -229,8 +229,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-      
     console.log('Raw form data:', formData);
 
     const tosend = {
@@ -238,9 +236,23 @@ const ThemeThree: React.FC<ThemeProps> = ({
       value: formData
     }
 
-    console.log("To send:",tosend)
+    const insertintoschedule = {
+      day : table_name,
+      value : formData
+    }
+    const url =
+    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"    
+      ? `${backend_url}/user/addintoschedule`
+      : `${backend_url}/user/insertdata/2`;
+
+      const payload =
+      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
+        ? tosend 
+        : insertintoschedule;
+
+        console.log("To send:",payload)
     axios
-    .post(`${backend_url}/user/insertdata/2`, tosend)
+    .post(url, payload)
       .then((response) => {
         console.log("Response:",response.data)
         alert("Successfully added data")
@@ -248,8 +260,20 @@ const ThemeThree: React.FC<ThemeProps> = ({
       })
       .catch((err) => {
         console.log("Error inserting data:",err)
-      })
+      });
       setShowAddForm(false)
+
+
+    // axios
+    // .post(`${backend_url}/user/insertdata/2`, tosend)
+    //   .then((response) => {
+    //     console.log("Response:",response.data)
+    //     alert("Successfully added data")
+    //     setReloadBool(prev => !prev)
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error inserting data:",err)
+    //   })
 
   };
 

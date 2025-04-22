@@ -14,17 +14,18 @@ export const extractDayDataController = async(req:Request, res : Response) => {
 }
 
 export const addScheduleByDayController = async(req:Request, res:Response) => {
+    console.log("Reqbody:",req.body)
     const day= "Sunday"
     const time = "5.30 PM"
     const task = "To sleep peacefully"
     const user_table_id = 8
     const data_id = 26
-    try{
-        const results=  await addScheduleByDayServices(day,time,task, user_table_id, data_id)
-        res.status(200).json(results)
-    }catch(err){
-        res.status(500).json({ message : "Error adding data ", error : err });
-    }
+//     try{
+//         const results=  await addScheduleByDayServices(day,time,task, user_table_id, data_id)
+//         res.status(200).json(results)
+//     }catch(err){
+//         res.status(500).json({ message : "Error adding data ", error : err });
+//     }
 }
 
 export const updateScheduleByDayController = async(req:Request, res:Response) => {
