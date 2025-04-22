@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { ThemeContext } from '../../context/Theme.context';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
+import { it } from 'node:test';
 
 interface MoreThanOneColProps {
   data: Record<string, any>[];
@@ -217,6 +218,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                   try {
                     {
                       table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  ?
+                      // console.log("Item:",item)
                       parsedColumnData = item :
                       parsedColumnData = JSON.parse(item.column_data)
                       

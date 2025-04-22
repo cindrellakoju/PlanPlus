@@ -86,7 +86,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
     axios
     .post(url, payload)
       .then((response) => {
-        // console.log("Responsedayayyay for ",table_name,response.data)
+        console.log("Responsedayayyay for ",table_name,response.data)
         setData(response.data);
       })
       .catch((err) => {
