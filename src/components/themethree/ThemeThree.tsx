@@ -236,26 +236,29 @@ const ThemeThree: React.FC<ThemeProps> = ({
     e.preventDefault();
     console.log('Raw form data:', formData);
 
+    console.log("TableNAME:",table_name)
     const tosend = {
       tablename: table_name,
-      value: formData
+      value: formData,
     }
-
+    
     const insertintoschedule = {
       day : table_name,
-      value : formData
+      value : formData,
+      data_id : tabledataid
     }
     const url =
-    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"    
+    checkWeekDay(table_name)
       ? `${backend_url}/user/addintoschedule`
       : `${backend_url}/user/insertdata/2`;
 
       const payload =
-      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
-        ? tosend 
-        : insertintoschedule;
+      checkWeekDay(table_name)
+        ? insertintoschedule
+        : tosend;
 
-        console.log("To send:",payload)
+        console.log("URL:",url)
+        console.log("Payload:",payload)
     axios
     .post(url, payload)
       .then((response) => {

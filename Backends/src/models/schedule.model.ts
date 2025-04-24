@@ -49,7 +49,6 @@ export const addScheduleByDay = (
     day: string,
     time: string,
     task: string,
-    user_table_id: number,
     data_id: number,
     callback: Callback
 ) => {
@@ -59,8 +58,7 @@ export const addScheduleByDay = (
         FROM 
             user_table_data
         WHERE 
-            user_table_id = ${user_table_id}
-            AND data_id = ${data_id};
+            data_id = ${data_id};
     `;
 
     db.query(maxdataidquery, (err, results: RowDataPacket[]) => {
@@ -98,7 +96,7 @@ export const addScheduleByDay = (
                             )
                         )
                     )
-                    WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+                    WHERE data_id = ${data_id};
                 `;
 
                 db.query(query, (err, results) => {
