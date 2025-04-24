@@ -7,6 +7,7 @@ import { useUserInfo } from '../../hooks/useUserInfo';
 import { ThemeProps } from '../../types';
 import { EditThemeContext } from '../../context/EditThemeContext';
 import { EachTableEditOption } from '../allrequire/eachtableoption';
+import { checkWeekDay } from '../../utils/checkWeekDau';
 
 interface ColumnData {
   column_name: string;
@@ -26,7 +27,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
     creatingtable,
     themeid,
     localData,
-    setLocalData
+    setLocalData,
+    tabledataid
   }) => {
   const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
@@ -74,13 +76,11 @@ const ThemeThree: React.FC<ThemeProps> = ({
         console.log('Error fetching data', error);
       });
     }
-    const url =
-    table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"    
+    const url = checkWeekDay(table_name)
       ? `${backend_url}/user/schedule/2`
       : `${backend_url}/user/columndata/2`;
 
-      const payload =
-      table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
+      const payload = checkWeekDay(table_name)
         ? tosend 
         : insertinurl;
 
@@ -88,7 +88,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
         .post(url, payload)
         .then((response) => {
         const responses =
-          table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
+          checkWeekDay(table_name)
             ? response.data.column_data
             : response.data;
         console.log("Responsedayayyay for ",table_name,responses)
@@ -267,57 +267,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
         console.log("Error inserting data:",err)
       });
       setShowAddForm(false)
-
-
-    // axios
-    // .post(`${backend_url}/user/insertdata/2`, tosend)
-    //   .then((response) => {
-    //     console.log("Response:",response.data)
-    //     alert("Successfully added data")
-    //     setReloadBool(prev => !prev)
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error inserting data:",err)
-    //   })
-
   };
 
-  // useEffect(() => {
-  //   if (isResizingHeight || isResizingWidth) {
-  //     const handleMouseMove = (e: MouseEvent) => {
-  //       if (!localData || !setLocalData) return;
-  
-  //       if (isResizingHeight) {
-  //         const mousedrag = e.clientY - upheight;
-  //         const updatedHeight = localData.map((comp) =>
-  //           comp.user_table_id === newid ? { ...comp, height: mousedrag } : comp
-  //         );
-  //         setLocalData(updatedHeight);
-  //       }
-  
-  //       if (isResizingWidth) {
-  //         const dragwidth = e.clientX - distwidth;
-  //         const updatedWidth = localData.map((comp) =>
-  //           comp.user_table_id === newid ? { ...comp, width: dragwidth } : comp
-  //         );
-  //         setLocalData(updatedWidth);
-  //       }
-  //     };
-  
-  //     const handleMouseUp = () => {
-  //       setIsResizingHeight(false);
-  //       setIsResizingWidth(false);
-  //     };
-  
-  //     window.addEventListener("mousemove", handleMouseMove);
-  //     window.addEventListener("mouseup", handleMouseUp);
-  
-  //     return () => {
-  //       window.removeEventListener("mousemove", handleMouseMove);
-  //       window.removeEventListener("mouseup", handleMouseUp);
-  //     };
-  //   }
-  // }, [isResizingHeight, isResizingWidth, localData, setLocalData]);
   
     const handleMouseDownWidth = (e:React.MouseEvent<HTMLDivElement>, id:number | undefined, width: number) => {
       if(id){
@@ -451,6 +402,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
               table_name={table_name}
               creatingtable = {creatingtable}
               themeid = { themeid}
+              tabledataid={tabledataid}
             />
           )}
 

@@ -21,6 +21,7 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
   const { userId, backend_url } = useUserInfo();
   const [localData, setLocalData] = useState<ScheduleProps[]>([]);
   const [columns, setColumns] = useState<string[]>([]);
+  const [dataid , setDataId ] = useState<number>(0)
 
   // Get the current day and rotate the week starting from today
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -37,6 +38,7 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
         .then((response) => {
           console.log("REsponse", response.data.column_data)
           setLocalData(response.data.column_data);
+          setDataId(response.data.data_id)
 
           response.data.column_data.map((comp:any[]) => {
             const keys = Object.keys(comp)
@@ -86,6 +88,7 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
             setLocalData,
             localData,
             colnames: columns,
+            tabledataid: dataid
           };
   
           return <ThemeThree key={day} {...commonProps} />;

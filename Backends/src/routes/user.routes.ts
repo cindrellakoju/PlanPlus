@@ -46,5 +46,5 @@ router.put("/updatetable/:user_id",updateTableInfoController)
 router.post('/schedule/:user_id',extractDayDataController)
 
 router.post('/addintoschedule',addScheduleByDayController)
-router.get('/updateintoschedule',updateScheduleByDayController)
+router.put('/updateintoschedule',updateScheduleByDayController)
 export default router

@@ -128,11 +128,11 @@ export interface UpdateSchedule {
     data_id: number;
 }
 
-export const updateScheduleByDay = (day: string, time: string, task: string, specific_day_col_data_id: number, user_table_id: number, data_id: number, callback: Callback) => {
+export const updateScheduleByDay = (day: string, time: string, task: string, specific_day_col_data_id: number, data_id: number, callback: Callback) => {
     const getDayArrayQuery = `
         SELECT JSON_UNQUOTE(JSON_EXTRACT(column_data, '$.${day}')) AS ${day}_data
         FROM user_table_data
-        WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+        WHERE data_id = ${data_id};
     `;
 
     // Fetch the schedule data for the specific day (e.g., Monday, Tuesday, etc.)
@@ -163,7 +163,7 @@ export const updateScheduleByDay = (day: string, time: string, task: string, spe
                     '$.${day}[${index}].time', '${time}',   
                     '$.${day}[${index}].task', '${task}'  
                 )
-                WHERE user_table_id = ${user_table_id} AND data_id = ${data_id};
+                WHERE data_id = ${data_id};
             `;
 
             // Execute the update query to modify the schedule for the matching data_id
@@ -176,7 +176,7 @@ export const updateScheduleByDay = (day: string, time: string, task: string, spe
             });
         } else {
             // Handle the case where no data is found for the given day
-            return callback(new Error(`No data found for ${day} with user_table_id: ${user_table_id} and data_id: ${data_id}`));
+            return callback(new Error(`No data found for ${day} and data_id: ${data_id}`));
         }
     });
 };

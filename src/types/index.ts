@@ -48,6 +48,7 @@ export interface ThemeProps{
   setLocalData?: Dispatch<SetStateAction<any[]>>;
   localData ?: any[]
   colnames ?: string | string[]
+  tabledataid ?: number
   creatingtable ?: boolean ,
-  themeid : number
+  themeid : number,
 }

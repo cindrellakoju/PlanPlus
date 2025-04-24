@@ -18,9 +18,9 @@ export const addScheduleByDayServices = (day:string, time:string, task: string,u
     })
 }
 
-export const updateScheduleByDayServices = (day:string, time:string, task: string,specific_day_col_data_id:number,user_table_id : number,data_id:number) :Promise<void> => {
+export const updateScheduleByDayServices = (day:string, time:string, task: string,specific_day_col_data_id:number,data_id:number) :Promise<void> => {
     return new Promise((resolve,rejects) => {
-        updateScheduleByDay(day,time, task,specific_day_col_data_id,user_table_id, data_id,(err, results) => {
+        updateScheduleByDay(day,time, task,specific_day_col_data_id,data_id,(err, results) => {
             if(err) rejects(err);
             resolve(results)
         })

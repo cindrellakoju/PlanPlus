@@ -2,7 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { ThemeContext } from '../../context/Theme.context';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
-import { it } from 'node:test';
+import { checkWeekDay } from '../../utils/checkWeekDau';
+import { time } from 'console';
 
 interface MoreThanOneColProps {
   data: Record<string, any>[];
@@ -18,6 +19,7 @@ interface MoreThanOneColProps {
   table_name ?: string,
   creatingtable ?: boolean,
   themeid : number,
+  tabledataid ?: number,
 }
 
 const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
@@ -33,7 +35,8 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
   setCheckedItems,
   table_name,
   creatingtable,
-  themeid
+  themeid,
+  tabledataid
 }) => {
   const {userId , backend_url} = useUserInfo()
   const context = React.useContext(ThemeContext);
@@ -70,7 +73,6 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       return updatedCheckedItems;
     });
   };
-
   // Filter data based on checked items or edit mode
   useEffect(() => {
     if (checkitemEditing ) {
@@ -117,6 +119,28 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
     // setFilteredData(updatedData)
   }
 
+  const handleScheduleChange = (
+    e: React.FormEvent<HTMLTableCellElement>,
+    dataId: number,
+    colName: string
+  ) => {
+    const newVal = e.currentTarget.innerText;
+    const sourceData = (newData && newData.length > 0) ? newData : filteredData;
+
+  console.log("source data:",sourceData)
+    const updatedData = sourceData.map((item) => {
+      if (item.data_id === dataId) {
+        return {
+          ...item,
+          [colName]: newVal
+        };
+      }
+      return item;
+    });
+  
+    setNewData(updatedData);
+  };
+
   const handleDelete = (e:React.MouseEvent<HTMLTableCellElement>,dataId: number) => {
     e.preventDefault()
     const sendData = {
@@ -132,26 +156,61 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       })
   }
   
-  const handleSave = () => {
-    newData.map((item) => {
-      const tosend = {
-        tablename: table_name,
-        data_id: item.data_id,
-        value: item.column_data
-      }
+const handleSave = () => {
+  console.log("NewData:", newData);
 
-      axios
-        .put(`${backend_url}/user/updatedata/2`,tosend)
-        .then((response) => {
-          if(response){
-            alert("Successfully edited the data")
-          }
-        })
-        .catch((error) => {
-          console.log("Error while updating:",error)
-        })
+  const requests = newData.map((item) => {
+    const tosend = {
+      tablename: table_name,
+      data_id: item.data_id,
+      value: item.column_data,
+    };
+
+    return axios.put(`${backend_url}/user/updatedata/2`, tosend);
+  });
+
+  Promise.all(requests)
+    .then(() => {
+      alert(`Successfully edited the ${table_name}`);
     })
-  }
+    .catch((error) => {
+      console.log("Error while updating:", error);
+    });
+};
+
+
+  const handleScheduleSave = () => {
+    const requests = newData.map((comp) => {
+      const tosend = {
+        day: table_name,
+        time: comp.time,
+        task: comp.task,
+        data_id: tabledataid,
+        specific_day_col_data_id: comp.data_id,
+      };
+  
+      return axios.put(`${backend_url}/user/updateintoschedule`, tosend);
+    });
+  
+    Promise.all(requests)
+      .then(() => {
+        alert("Successfully edited the Schedule");
+      })
+      .catch((error) => {
+        console.error("Error while updating Schedule:", error);
+      });
+  };
+  
+  const getInputHandler = () => {
+    if (!table_name) return handleInputChange;
+    return checkWeekDay(table_name) ? handleScheduleChange : handleInputChange;
+  };
+  
+  const getSaveHandler = () => {
+    if (!table_name) return handleSave;
+    return checkWeekDay(table_name) ? handleScheduleSave : handleSave;
+  };
+  
 
   // console.log("filtered data:",filteredData)
   return (
@@ -258,7 +317,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
                             }}
                             contentEditable={isEditing}
                             suppressContentEditableWarning
-                            onInput={(e) => handleInputChange(e, item.data_id, colName)}
+                            onInput={(e) => getInputHandler()(e, item.data_id, colName)}
                           >
                             {parsedColumnData[colName] || "N/A"}
                           </td>
@@ -285,7 +344,7 @@ const MoreThanOneCol: React.FC<MoreThanOneColProps> = ({
       {
         (isEditing || checkitemEditing) && (
           <div className="savebutton">
-            <button onClick={handleSave}>Save</button>
+            <button onClick={getSaveHandler()}>Save</button>
           </div>
         )
       }
