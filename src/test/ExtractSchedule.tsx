@@ -35,14 +35,15 @@ const ExtractSchedule:React.FC<ExtractScheduleProps> = ({receiveday, height, wid
       axios
         .post(`${backend_url}/user/schedule/2`, tosend)
         .then((response) => {
-          setLocalData(response.data);
+          console.log("REsponse", response.data.column_data)
+          setLocalData(response.data.column_data);
 
-          // Extract columns from the first item
-          if (response.data.length > 0) {
-            const valueKeys = Object.keys(response.data[0]).filter(key => key !== "data_id");
-            console.log("colname:",valueKeys)
-            setColumns(valueKeys);
-          }
+          response.data.column_data.map((comp:any[]) => {
+            const keys = Object.keys(comp)
+            const filterkeys = keys.filter((comp) => comp !== 'data_id')
+            setColumns(filterkeys)
+          })
+
         })
         .catch((err) => {
           console.log("Error:", err);

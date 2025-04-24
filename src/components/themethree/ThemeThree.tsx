@@ -83,11 +83,16 @@ const ThemeThree: React.FC<ThemeProps> = ({
       table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
         ? tosend 
         : insertinurl;
-    axios
-    .post(url, payload)
-      .then((response) => {
-        console.log("Responsedayayyay for ",table_name,response.data)
-        setData(response.data);
+
+        axios
+        .post(url, payload)
+        .then((response) => {
+        const responses =
+          table_name === "Sunday" || table_name === "Monday" || table_name === "Tuesday" || table_name === "Wednesday" || table_name === "Thursday" || table_name === "Friday" || table_name === "Saturday"  
+            ? response.data.column_data
+            : response.data;
+        console.log("Responsedayayyay for ",table_name,responses)
+        setData(responses);
       })
       .catch((err) => {
         console.log('Error fetching', err);
