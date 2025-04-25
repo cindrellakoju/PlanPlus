@@ -16,7 +16,7 @@ const SideBar = () => {
                     <i className='bx bx-time'></i>
                     <p>Schedule</p>
                 </div>
-                <div className="calender">
+                <div className="calender" onClick={() => navigate('/calender')}>
                     <i className='bx bx-calendar' ></i>
                     <p>Calender</p>
                 </div>

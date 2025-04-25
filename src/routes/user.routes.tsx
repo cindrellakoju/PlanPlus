@@ -10,6 +10,7 @@ import EditPage from "../pages/EditPage";
 import { EditThemeProvider } from "../context/EditThemeContext";
 import AddPage from "../components/allrequire/Addpage";
 import Schedule from "../pages/Schedule";
+import { CalenderPage } from "../pages/CalenderPage";
 
 // Create a PrivateRoute component to protect routes
 const PrivateRoute = ({ element }: { element: React.ReactNode }) => {
@@ -47,6 +48,10 @@ const routes = createBrowserRouter([
   {
     path: "/schedule",
     element: <PrivateRoute element={<Schedule/>}/>
+  },
+  {
+    path: "/calender",
+    element: <PrivateRoute element={<CalenderPage/>}/>
   },
 ]);
 

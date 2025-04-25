@@ -1,0 +1,84 @@
+.calender{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.calender-body-field{
+    width: 60%;
+    height: 100%;
+}
+
+.calender-info-field{
+    width: 40%;
+    background-color:lavender ;
+}
+
+.calenderssss{
+    margin: 0;
+    font-family: 'Comic Sans MS', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    /* background-color: red; */
+}
+.planner {
+    background-color: #d4e3bc;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    height: 90%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.planner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.planner-header h1 {
+    font-size: 1.8em;
+    color: #4c432e;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    color: #4c432e;
+    margin-bottom: 10px;
+}
+
+.weekdays div {
+    text-transform: lowercase;
+    padding-bottom: 5px;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.day {
+    background-color: #6bd5995c;
+    border-radius: 10px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .planner-img {
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    width: 80px;
+  }
