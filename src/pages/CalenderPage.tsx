@@ -3,6 +3,7 @@ import SideBar from "../components/homepage/sidebar"
 import UpHeader from "../components/homepage/upheader"
 import "../styles/Calender.css"
 import Calendar from '../components/calender/datefield';
+import DataInfo from '../components/calender/datainfo';
 
 export const CalenderPage:React.FC = () => {
     return(
@@ -17,7 +18,7 @@ export const CalenderPage:React.FC = () => {
                     <Calendar/>
                 </div>
                 <div className="calender-info-field">
-
+                    <DataInfo/>
                 </div>
             </div>
         </div>
