@@ -130,12 +130,16 @@ const createUserTableData = () => {
 
 // 0 flase 1 true
 const UpdateTable = () => {
+  // const alterUserTableQuery = `
+  //   ALTER TABLE user_tables
+  //     ADD COLUMN checkbox TINYINT(1) NOT NULL DEFAULT 0,
+  //     ADD COLUMN table_margin TINYINT(1) NOT NULL DEFAULT 0,
+  //     ADD COLUMN bg_for_header TINYINT(1) NOT NULL DEFAULT 0,
+  //     ADD COLUMN col_name TINYINT(1) NOT NULL DEFAULT 0;
+  // `;
   const alterUserTableQuery = `
-    ALTER TABLE user_tables
-      ADD COLUMN checkbox TINYINT(1) NOT NULL DEFAULT 0,
-      ADD COLUMN table_margin TINYINT(1) NOT NULL DEFAULT 0,
-      ADD COLUMN bg_for_header TINYINT(1) NOT NULL DEFAULT 0,
-      ADD COLUMN col_name TINYINT(1) NOT NULL DEFAULT 0;
+    ALTER TABLE user_table_data
+    ADD COLUMN IF NOT EXISTS completed_at DATE DEFAULT NULL;
   `;
 
   sendQuery(alterUserTableQuery, "Alter User Table - Add Boolean Flags");

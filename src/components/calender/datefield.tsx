@@ -26,7 +26,7 @@ const Calendar:React.FC = () => {
                         <div key={`empty-${index}`}></div>
                     ))}
                     {dates.map((comp) => (
-                        <div key={comp} className="day"><h1>{comp}</h1></div>
+                        <div key={comp} className="day" onClick={() => alert(comp)}><h1>{comp}</h1></div>
                     ))}
                 </div>
             </div>

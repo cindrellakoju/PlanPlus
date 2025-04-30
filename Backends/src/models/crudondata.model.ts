@@ -39,26 +39,33 @@ export const InsertData = (insertdata: insertinfo, callback: Callback) => {
 export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
   let keyval = '';
   let queryValues = [];
+  let updateCompletedAt = false;
 
   try {
-    // Ensure updatedata.value is a string before parsing
-    const valueObj: { [key: string]: string } = typeof updatedata.value === 'string' ? JSON.parse(updatedata.value) : {};
+    const valueObj: { [key: string]: string } =
+      typeof updatedata.value === 'string' ? JSON.parse(updatedata.value) : {};
 
-    // Loop through the parsed object and build the keyval string
     for (const [key, val] of Object.entries(valueObj)) {
       keyval += `'$."${key}"', ?, `;
-      queryValues.push(val);  // Add the value to the query values array
+      queryValues.push(val);
+
+      if (key === 'status' && val.toLowerCase() === 'completed') {
+        updateCompletedAt = true;
+      }
     }
 
-    // Remove trailing comma and space
+    // ✅ Slice before building setClause
     keyval = keyval.slice(0, -2);
 
-    // SQL query construction
+    // ✅ Now build the SET clause safely
+    let setClause = `column_data = JSON_SET(column_data, ${keyval})`;
+    if (updateCompletedAt) {
+      setClause += `, completed_at = CURDATE()`;
+    }
+
     const query = `
       UPDATE user_table_data
-      SET column_data = JSON_SET(column_data, 
-        ${keyval} 
-      )
+      SET ${setClause}
       WHERE user_table_id = (
         SELECT ut.user_table_id
         FROM user_tables ut
@@ -67,18 +74,17 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
           AND ut.table_name = ? 
         LIMIT 1
       )
-      AND data_id = ?; 
+      AND data_id = ?;
     `;
 
-    console.log("Query:",query)
-    // Add user_id, table_name, and data_id to the query values
     queryValues.push(updatedata.user_id, updatedata.tablename, updatedata.data_id);
-    console.log(queryValues);
 
-    // Execute the query (uncomment and use your DB method here)
+    console.log("Query:", query);
+    console.log("Values:", queryValues);
+
     db.query(query, queryValues, (err, results) => {
       if (err) {
-        console.log("Error updating Data");
+        console.log("Error updating Data:", err);
         return callback(err);
       }
       callback(null, results);
@@ -86,9 +92,10 @@ export const UpdateData = (updatedata: updateinfo, callback: Callback) => {
 
   } catch (error) {
     console.error("Error parsing updatedata.value:", error);
-    return callback(error);  // Handle error during parsing
+    return callback(error);
   }
 };
+
 
 export const DeleteData = (user_id:number,data_id:number,callback:Callback) => {
   const query = `
