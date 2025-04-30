@@ -23,7 +23,7 @@ export const tablename = (user_id: number, callback: Callback): void => {
         }
 
         if (results && Array.isArray(results) && results.length > 0) {
-            console.log(results);
+            // console.log(results);
         
             // Map through the results and modify table_name and exclude created_at, deleted_at
             const modifiedResults = results.map((row: any) => {

@@ -12,8 +12,11 @@ const DataInfo: React.FC<DataInfoProps> = ({ userselecteddate }) => {
 
   useEffect(() => {
     if (userselecteddate) {
+        const tosend = {
+            'completed_at' : userselecteddate
+        }
       axios
-        .get(`${backend_url}/user/completedtask/${userId}`)
+        .post(`${backend_url}/user/completedtask/${userId}`,tosend)
         .then((response) => {
           const groupedData: { [table: string]: string[] } = {};
 
@@ -53,7 +56,7 @@ const DataInfo: React.FC<DataInfoProps> = ({ userselecteddate }) => {
         columnData.map(([table, tasks], index) => (
           <div key={index} className="eachdatainfo">
             <div className="colname">
-              <div className="tag">{table}</div>
+              <div className="tag">{formatTableName(table)}</div>
             </div>
             <div className="card">
               <ul>
@@ -71,4 +74,15 @@ const DataInfo: React.FC<DataInfoProps> = ({ userselecteddate }) => {
   );
 };
 
+function formatTableName(rawName: string): string {
+    // Remove known suffixes like "_table"
+    const cleanedName = rawName.replace(/_table$/, "");
+  
+    // Split by underscores, capitalize each word
+    return cleanedName
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+  
 export default DataInfo;
