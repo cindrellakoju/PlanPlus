@@ -13,6 +13,7 @@ import { fetchtableinfo } from "../controllers/tableinfo.controllers";
 import { insertTableNameController } from "../controllers/inserttablename.controller";
 import { updateTableInfoController } from "../controllers/crudontable.controller";
 import { addScheduleByDayController, extractDayDataController, updateScheduleByDayController } from "../controllers/schedule.controller";
+import { completedTaskController } from "../controllers/extractcompletedtask.controller";
 
 const router = Router()
 
@@ -47,4 +48,6 @@ router.post('/schedule/:user_id',extractDayDataController)
 
 router.post('/addintoschedule',addScheduleByDayController)
 router.put('/updateintoschedule',updateScheduleByDayController)
+
+router.get('/completedtask/:user_id',completedTaskController)
 export default router
