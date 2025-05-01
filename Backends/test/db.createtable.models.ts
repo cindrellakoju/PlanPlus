@@ -42,26 +42,35 @@ export const CreateTableByUserModel = (userId:number,userinputfortable: userinpu
                 callback(err,null);
                 return
             }
-            const rows = results as { user_table_id : number | null}[];
-            const tableid = rows[0]?.user_table_id ?? 0
-            const insertcolumnquery = `
-                INSERT INTO user_table_columns(user_table_id,column_name,column_type,theme_id)
-                VALUES (?, ?, ?, ?)
-            `
-        
-            userinputfortable.colname
-            .map((colname, index) => {
-                const coltype = userinputfortable.coltype[index];
-                const columnname = colname.toLowerCase()
-                db.query(insertcolumnquery,[tableid, columnname,coltype,userinputfortable.themeid],(err,results) => {
-                    if(err){
-                        console.log("Error inserting colname:",err.message)
-                        callback(err,null);
-                        return
+                const rows = results as { user_table_id: number | null }[];
+                const tableid = rows[0]?.user_table_id ?? 0;
+
+                const insertColumnQuery = `
+                INSERT INTO user_table_columns(user_table_id, column_name, column_type, theme_id, options)
+                VALUES (?, ?, ?, ?, ?)
+                `;
+
+                userinputfortable.colname.map((colname, index) => {
+                const colType = userinputfortable.coltype[index];
+                const columnName = colname.toLowerCase();
+
+                // Check if options exist for 'SELECTTYPE' columns
+                let options: string | null = null; // Default to null
+                if (userinputfortable.options && colType === 'SELECTTYPE') {
+                    options = userinputfortable.options[index]; // Get options for the 'SELECTTYPE' column
+                }
+                // Insert the column with the appropriate options (if it exists)
+                db.query(insertColumnQuery, [tableid, columnName, colType, userinputfortable.themeid, options], (err, results) => {
+                    if (err) {
+                    console.log("Error inserting colname:", err.message);
+                    callback(err, null);
+                    return;
                     }
-                    callback(null, results);
-                })
-                })
+                    console.log("Successfully inserted column:", columnName);
+                    callback(null, results); // Only call the callback once all columns are inserted
+                });
+                });
+
             })
 
         })

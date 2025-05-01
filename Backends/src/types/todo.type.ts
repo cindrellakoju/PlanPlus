@@ -46,7 +46,8 @@ export interface userinputfortable {
     checkbox : boolean,
     tablemargin : boolean,
     bgforhead : boolean,
-    displaycolname : boolean
+    displaycolname : boolean,
+    options ?: string[]
 }
 
 export interface Datas {

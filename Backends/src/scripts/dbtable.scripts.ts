@@ -138,8 +138,8 @@ const UpdateTable = () => {
   //     ADD COLUMN col_name TINYINT(1) NOT NULL DEFAULT 0;
   // `;
   const alterUserTableQuery = `
-    ALTER TABLE user_table_data
-    ADD COLUMN IF NOT EXISTS completed_at DATE DEFAULT NULL;
+    ALTER TABLE user_table_columns
+    ADD COLUMN IF NOT EXISTS options TEXT DEFAULT NULL;
   `;
 
   sendQuery(alterUserTableQuery, "Alter User Table - Add Boolean Flags");

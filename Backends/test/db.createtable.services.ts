@@ -23,6 +23,9 @@ export const CreateTableByUserServices = (userId:number,userinputfortable: useri
             if(col === 'number-int'){
                 coltype[index] = "INT"
             }
+            if(col === 'select'){
+                coltype[index] = "SELECTTYPE"
+            }
         });
         extracttablename(userId,(err,results) => {
             if(err) reject(err);
