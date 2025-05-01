@@ -66,8 +66,6 @@ const Selecttheme= () => {
   }, [editcontext.savemode, editcontext.editPosition]);
   
     
-
-
     const handleDragEnd = (result: DropResult) => {
       const { source, destination } = result;
       if (!destination) return;

@@ -13,6 +13,10 @@ interface ColumnData {
   column_name: string;
 }
 
+interface coltype{
+  column_type : string;
+}
+
 const ThemeThree: React.FC<ThemeProps> = ({ 
     table_name,
     urlname,
@@ -32,6 +36,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
   }) => {
   const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
+  const [coltype, setColType] = useState<string | string[]>();
+
   const [datas, setData] = useState<Record<string, any>[]>([]);
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -71,6 +77,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
       .then((response) => {
         const columns = response.data.map((item: ColumnData) => item.column_name);
         setColName(columns);
+        const coltypes = response.data.map((item: coltype) => item.column_type);
+        setColType(coltypes)
       })
       .catch((error) => {
         console.log('Error fetching data', error);
@@ -91,7 +99,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
           checkWeekDay(table_name)
             ? response.data.column_data
             : response.data;
-        console.log("Responsedayayyay for ",table_name,responses)
         setData(responses);
       })
       .catch((err) => {
@@ -353,14 +360,27 @@ const ThemeThree: React.FC<ThemeProps> = ({
                   <form className="add-form" onSubmit={handleSubmit}>
                     <h3>{table_name}</h3>
           
-                    {Array.isArray(columnList) &&
-                      columnList.map((column, index) => (
+                    {Array.isArray(columnList) && Array.isArray(coltype) &&
+                       columnList.map((column, index) => {
+                      const type = coltype[index]?.toUpperCase(); // Normalize casing
+
+                      let inputType = 'text'; // Default
+                      if (type.includes('DATE')) {
+                        inputType = 'date';
+                      } else if (type.includes('TIME')) {
+                        inputType = 'time';
+                      } else if (type.includes('VARCHAR')) {
+                        inputType = 'text';
+                      }
+
+                      console.log("Column List:",columnList, "columntype:",type)
+                      return (
                         <div key={index} className="field">
                           <label htmlFor={column}>
                             {column.charAt(0).toUpperCase() + column.slice(1)}
                           </label>
                           <input
-                            type="text"
+                            type={inputType}
                             id={column}
                             name={column}
                             value={formData[column] || ''}
@@ -368,7 +388,9 @@ const ThemeThree: React.FC<ThemeProps> = ({
                             placeholder={`Enter value for ${column}`}
                           />
                         </div>
-                      ))}
+                      );
+                    })}
+
           
                     <button type="submit">Save</button>
                     <button type="button" onClick={() => setShowAddForm(false)}>

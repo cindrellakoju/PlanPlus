@@ -4,9 +4,6 @@ import { getColumnName } from "../services/extractusertablecolumn.services";
 export const fetchtablecolumn = async(req:Request, res:Response) => {
     const user_id = Number(req.params.user_id)
     const tablename =  req.body.tablename
-
-    console.log("Req,body",tablename)
-
     const data={
         user_id,
         tablename

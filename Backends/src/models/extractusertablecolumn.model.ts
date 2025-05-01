@@ -4,7 +4,7 @@ import { Callback, Datas } from "../types/todo.type";
 
 export const tablecolumnname = (udata: Datas, callback: Callback): void => {
   const query = `
-    SELECT utc.column_name
+    SELECT utc.column_name, utc.column_type
     FROM user_table_columns utc
     JOIN user_tables ut ON utc.user_table_id = ut.user_table_id
     WHERE ut.user_id = ? AND ut.table_name = ?
@@ -17,7 +17,7 @@ export const tablecolumnname = (udata: Datas, callback: Callback): void => {
       return callback(err);  // Pass error to callback
     }
 
-    console.log(results);  // Log results for debugging (remove in production)
+    console.log("TablecolumnResults",results);  // Log results for debugging (remove in production)
 
     // Call the callback with null error and the results
     callback(null, results);

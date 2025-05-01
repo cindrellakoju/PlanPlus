@@ -3,7 +3,6 @@ import { ThemeContext } from '../../context/Theme.context';
 import axios from 'axios';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { checkWeekDay } from '../../utils/checkWeekDau';
-import { time } from 'console';
 
 interface MoreThanOneColProps {
   data: Record<string, any>[];
