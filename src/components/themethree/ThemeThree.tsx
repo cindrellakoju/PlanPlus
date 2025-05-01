@@ -16,6 +16,9 @@ interface ColumnData {
 interface coltype{
   column_type : string;
 }
+interface coloptions{
+  options : string;
+}
 
 const ThemeThree: React.FC<ThemeProps> = ({ 
     table_name,
@@ -37,6 +40,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
   const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const [coltype, setColType] = useState<string | string[]>();
+  const [coloptions, setColOptions] = useState<string[][]>();
 
   const [datas, setData] = useState<Record<string, any>[]>([]);
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
@@ -79,6 +83,11 @@ const ThemeThree: React.FC<ThemeProps> = ({
         setColName(columns);
         const coltypes = response.data.map((item: coltype) => item.column_type);
         setColType(coltypes)
+        const selectTypeOptions = response.data
+          .filter((item: coltype) => item.column_type === "SELECTTYPE")
+          .map((item: coloptions) => item.options.split(','));
+        console.log("SELECT",selectTypeOptions)
+        setColOptions(selectTypeOptions)
       })
       .catch((error) => {
         console.log('Error fetching data', error);
@@ -230,7 +239,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
     setReloadBool(prev => !prev)
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setFormData((prevData) => ({
@@ -371,6 +380,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
                         inputType = 'time';
                       } else if (type.includes('VARCHAR')) {
                         inputType = 'text';
+                      } else if (type.includes('SELECTTYPE')){
+                        inputType = 'select'
                       }
 
                       console.log("Column List:",columnList, "columntype:",type)
@@ -379,14 +390,33 @@ const ThemeThree: React.FC<ThemeProps> = ({
                           <label htmlFor={column}>
                             {column.charAt(0).toUpperCase() + column.slice(1)}
                           </label>
-                          <input
-                            type={inputType}
-                            id={column}
-                            name={column}
-                            value={formData[column] || ''}
-                            onChange={handleInputChange}
-                            placeholder={`Enter value for ${column}`}
-                          />
+                          {inputType === 'select' ? (
+                      <select
+                        id={column}
+                        name={column}
+                        value={formData[column] || ''}
+                        onChange={handleInputChange}
+                      >
+                        {/* Render options from coloptions */}
+                        {coloptions?.[0]?.map((option, optionIndex) => {
+                          return (
+                            <option key={optionIndex} value={option}>
+                              {option}
+                            </option>
+                          );
+                        })}
+
+                      </select>
+                    ) : (
+                      <input
+                        type={inputType}
+                        id={column}
+                        name={column}
+                        value={formData[column] || ''}
+                        onChange={handleInputChange}
+                        placeholder={`Enter value for ${column}`}
+                      />
+                    )}
                         </div>
                       );
                     })}
