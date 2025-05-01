@@ -40,7 +40,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
   const { backend_url } = useUserInfo();
   const [colname, setColName] = useState<string | string[]>();
   const [coltype, setColType] = useState<string | string[]>();
-  const [coloptions, setColOptions] = useState<string[][]>();
+  const [coloptions, setColOptions] = useState<string[]>();
 
   const [datas, setData] = useState<Record<string, any>[]>([]);
   const [checkitemEditing, setCheckedItemEditing] = useState<boolean>(false);
@@ -61,6 +61,8 @@ const ThemeThree: React.FC<ThemeProps> = ({
 
   const [reloadbool,setReloadBool] = useState<boolean>(false)
 
+  const [colindex,setColIndex] = useState<number>(0)
+
   const editcontext = useContext(EditThemeContext);
   if (!editcontext) {
     throw new Error('Theme Three must be within EditThemeProvider');
@@ -79,13 +81,14 @@ const ThemeThree: React.FC<ThemeProps> = ({
     axios
       .post(`${backend_url}/user/tablecolumn/2`, insertinurl)
       .then((response) => {
+        console.log("REs",response.data)
         const columns = response.data.map((item: ColumnData) => item.column_name);
         setColName(columns);
         const coltypes = response.data.map((item: coltype) => item.column_type);
         setColType(coltypes)
-        const selectTypeOptions = response.data
-          .filter((item: coltype) => item.column_type === "SELECTTYPE")
-          .map((item: coloptions) => item.options.split(','));
+        const selectTypeOptions = response.data.map((item: coloptions) => item.options);
+          // .filter((item: coltype) => item.column_type === "SELECTTYPE")
+          // .map((item: coloptions) => item.options.split(','));
         console.log("SELECT",selectTypeOptions)
         setColOptions(selectTypeOptions)
       })
@@ -372,7 +375,6 @@ const ThemeThree: React.FC<ThemeProps> = ({
                     {Array.isArray(columnList) && Array.isArray(coltype) &&
                        columnList.map((column, index) => {
                       const type = coltype[index]?.toUpperCase(); // Normalize casing
-
                       let inputType = 'text'; // Default
                       if (type.includes('DATE')) {
                         inputType = 'date';
@@ -384,7 +386,7 @@ const ThemeThree: React.FC<ThemeProps> = ({
                         inputType = 'select'
                       }
 
-                      console.log("Column List:",columnList, "columntype:",type)
+                      console.log("Column List:",columnList, "columntype:",type,"coloption:",coloptions?.[index])
                       return (
                         <div key={index} className="field">
                           <label htmlFor={column}>
@@ -397,15 +399,15 @@ const ThemeThree: React.FC<ThemeProps> = ({
                         value={formData[column] || ''}
                         onChange={handleInputChange}
                       >
-                        {/* Render options from coloptions */}
-                        {coloptions?.[0]?.map((option, optionIndex) => {
-                          return (
-                            <option key={optionIndex} value={option}>
-                              {option}
-                            </option>
-                          );
-                        })}
-
+                        {
+                          coloptions?.[index]?.split(',').map((comp,compindex) => {
+                            return(
+                              <option key={compindex} value={comp}>
+                                {comp}
+                              </option>
+                            )
+                          })
+                        }
                       </select>
                     ) : (
                       <input
